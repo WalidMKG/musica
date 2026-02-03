@@ -1,0 +1,21 @@
+.vbox{
+    -fx-alignment: center;
+    -fx-background-color: #e4edf2;
+}
+
+.text-field{
+    -fx-max-width: 200;
+    -fx-border-radius: 0;
+}
+
+.text{
+    -fx-text-alignment: left;
+}
+
+.label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-max-width: 200;       /* Stessa larghezza dei text-field */
+    -fx-alignment: center-left; /* Allinea il testo a sinistra DENTRO la label */
+}

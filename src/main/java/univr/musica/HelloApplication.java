@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
         // Crea la scena
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
 
-        stage.setTitle("Musica Univr");
+        stage.setTitle("Musica");
         stage.setScene(scene);
         stage.show();
     }
