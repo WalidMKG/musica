@@ -1,0 +1,29 @@
+.hbox-container {
+    -fx-spacing: 0;
+    -fx-alignment: center;
+}
+
+.login-container {
+    -fx-background-color: #011f4b;
+    -fx-padding: 30;
+    -fx-spacing: 20;
+    -fx-alignment: center-left;
+    -fx-min-width: 200;
+    -fx-pref-width: 200;
+    -fx-max-width: 200;
+    -fx-pref-height: 400;
+    -fx-max-height: 400;
+}
+
+
+.login_box {
+    -fx-background-color: #e4edf2;
+    -fx-padding: 30;
+    -fx-spacing: 20;
+    -fx-alignment: center-right;
+    -fx-min-width: 400;
+    -fx-pref-width: 400;
+    -fx-max-width: 400;
+    -fx-pref-height: 400;
+    -fx-max-height: 400;
+}
