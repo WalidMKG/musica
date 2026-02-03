@@ -2,8 +2,14 @@ package univr.musica.view;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import univr.musica.config.AppConfig;
+
 import java.io.IOException;
+
+// Caricamento del font (es. Montserrat Regular)
+
 
 public class ViewFactory {
     private static ViewFactory instance;
@@ -18,8 +24,11 @@ public class ViewFactory {
         return instance;
     }
 
-    public void showLoginWindow() {
-        createStage("/fxml/LoginView.fxml", "Login - DashApp");
+    public void showLoginWindow(Stage currentStage) {
+        if (currentStage != null) {
+            currentStage.close();
+        }
+        createStage("/univr/musica/fxml/LoginView.fxml", AppConfig.APP_TITLE);
     }
 
     public void showRegisterWindow(Stage currentStage) {
@@ -42,6 +51,7 @@ public class ViewFactory {
             stage.setScene(scene);
             stage.setTitle(title);
             stage.show();
+            stage.setResizable(false);
         } catch (IOException e) {
             System.err.println("Errore caricamento vista: " + fxmlPath);
             e.printStackTrace();

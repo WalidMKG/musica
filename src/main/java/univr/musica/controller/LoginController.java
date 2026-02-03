@@ -36,7 +36,6 @@ public class LoginController implements Initializable {
 
     public void register(ActionEvent actionEvent) {
         Stage currentStage = (Stage) register_btn.getScene().getWindow();
-
         ViewFactory.getInstance().showRegisterWindow(currentStage);
     }
 }

@@ -4,15 +4,16 @@
 }
 
 .login-container {
-    -fx-background-color: #011f4b;
+    -fx-background-color: linear-gradient(to right,#011f4b ,#e4edf2);
     -fx-pref-width: 200;
     -fx-pref-height: 400;
 }
 
 
 .login_box {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "Montserrat";
     -fx-font-size: 15;
+    -fx-text-fill: red;
     -fx-background-color: #e4edf2;
     -fx-pref-width: 400;
     -fx-alignment: center;
@@ -21,28 +22,28 @@
 }
 
 .wlc_text{
-    -fx-font-family: "Segoe UI";
-    -fx-font-size: 20;
+    -fx-font-family: "Montserrat";
     -fx-font-weight: bold;
+    -fx-fill: #011f4b;
+    -fx-font-size: 25px;
+    -fx-letter-spacing: -1px;
 }
 
 
 
 .label {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "Montserrat";
     -fx-font-size: 14px;
     -fx-text-fill: #b3b3b3;
-
-    /* AGGIUNGI QUESTE RIGHE */
-    -fx-alignment: center;       /* Allinea il contenuto della label al centro */
-    -fx-max-width: infinity;     /* Permette alla label di espandersi quanto i campi */
-    -fx-text-alignment: center;  /* Centra il testo internamente */
+    -fx-alignment: center;
+    -fx-max-width: infinity;
+    -fx-text-alignment: center;
 }
 
 .button{
-    -fx-background-color: #3E3E3E;
+    -fx-background-color: #011f4b;
     -fx-text-fill: white;
-    -fx-prompt-text-fill: #A7A7A7;
+    -fx-prompt-text-fill: #011f4b;
     -fx-max-width: 200;
     -fx-pref-height: 30;
 }
@@ -50,8 +51,8 @@
 .text-field{
     -fx-background-color: #e4edf2;
     -fx-text-fill: black;
-    -fx-prompt-text-fill: black;
-    -fx-border-color: black;
+    -fx-border-color: #011f4b;
+    -fx-border-width: 0.1;
     -fx-max-width: 200;
     -fx-pref-height: 30;
 }
@@ -59,8 +60,9 @@
 .choice-box{
     -fx-background-color: #e4edf2;
     -fx-text-fill: black;
-    -fx-prompt-text-fill: black;
-    -fx-border-color: black;
+    -fx-prompt-text-fill: #011f4b;
+    -fx-border-color: #011f4b;
+    -fx-border-width: 0.1;
     -fx-max-width: 200;
     -fx-pref-height: 30;
 }

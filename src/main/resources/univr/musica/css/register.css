@@ -1,6 +1,8 @@
 .vbox{
     -fx-alignment: center;
     -fx-background-color: #e4edf2;
+    -fx-padding: 20;
+    -fx-spacing: 10;
 }
 
 .text-field{
@@ -9,11 +11,15 @@
 }
 
 .text{
+    -fx-font-family: "Montserrat Bold";
     -fx-text-alignment: left;
 }
 
+.button{
+    -fx-pref-width: 200;
+}
 .label {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "Montserrat Bold";
     -fx-font-size: 14px;
     -fx-text-fill: black;
     -fx-max-width: 200;       /* Stessa larghezza dei text-field */

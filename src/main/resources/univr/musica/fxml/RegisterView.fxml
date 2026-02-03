@@ -6,20 +6,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" stylesheets="@../css/register.css" xmlns="http://javafx.com/javafx/25"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.RegistrationController">
-    <VBox layoutX="250.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0" styleClass="vbox"
-          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0">
-        <Label text="Username"/>
-        <TextField fx:id="reg_user"/>
-        <Label text="Password"/>
-        <TextField fx:id="reg_pwd"/>
-        <Label text="Confirm Password"/>
-        <TextField fx:id="reg_pwd_confirm"/>
-        <Button fx:id="register_btn" mnemonicParsing="false" text="Button"/>
-        <Label fx:id="register_label" text="Label"/>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/register.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.RegistrationController">
+    <VBox layoutX="250.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Label text="Username" />
+        <TextField fx:id="reg_user" />
+        <Label text="Password" />
+        <TextField fx:id="reg_pwd" />
+        <Label text="Confirm Password" />
+        <TextField fx:id="reg_pwd_confirm" />
+        <Button fx:id="register_btn" mnemonicParsing="false" onAction="#register" text="REGISTER" />
+      <Button mnemonicParsing="false" text="BACK" />
+        <Label fx:id="register_label" text="Label" visible="false" />
     </VBox>
 </AnchorPane>
