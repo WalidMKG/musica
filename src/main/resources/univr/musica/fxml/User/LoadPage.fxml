@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.LoadController">
+   <children>
+      <VBox layoutX="369.0" layoutY="186.0" prefHeight="428.0" prefWidth="463.0">
+         <children>
+            <TextField fx:id="load_song_title" promptText="Title" />
+            <Button fx:id="load_song_btn" mnemonicParsing="false" onAction="#load_song" text="LOAD" />
+            <Button fx:id="load_pdf_btn" mnemonicParsing="false" onAction="#load_pdf" text="PDF" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

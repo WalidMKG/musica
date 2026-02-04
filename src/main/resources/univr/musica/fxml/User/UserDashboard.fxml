@@ -1,110 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox prefHeight="800.0" prefWidth="1200.0" spacing="20.0" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <HBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="1080.0" spacing="20.0" styleClass="primary_color">
-            <children>
-                <HBox alignment="CENTER_LEFT">
-                    <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
-                            <graphic>
-                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../../img/ic_back.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                        <Button mnemonicParsing="false" style="-fx-background-color: transparent;">
-                            <graphic>
-                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../../img/ic_forward.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                    </children>
-                </HBox>
-                <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="35.0" prefWidth="215.0" styleClass="search-container" stylesheets="@../../css/style.css">
-                    <children>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../img/ic_search.png" />
-                            </image>
-                        </ImageView>
-                        <TextField prefHeight="31.0" prefWidth="173.0" promptText="Search" style="-fx-background-color: transparent;" />
-                    </children>
-                </HBox>
-                <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" styleClass="upgrade-button" stylesheets="@../../css/style.css" text="UPGRADE" textFill="WHITE" />
-                <HBox alignment="CENTER" prefHeight="56.0" prefWidth="256.0" spacing="10.0">
-                    <children>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../img/user.png" />
-                            </image>
-                        </ImageView>
-                        <Label prefHeight="27.0" prefWidth="171.0" text="Username" textFill="WHITE">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
-                    </children>
-                </HBox>
-            </children>
-        </HBox>
-        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="secondary-color">
-            <children>
-                <ImageView fitHeight="240.0" fitWidth="1080.0" pickOnBounds="true" smooth="false">
-                    <image>
-                        <Image url="@../../img/sponsered.png" />
-                    </image>
-                </ImageView>
-            </children>
-        </VBox>
-        <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
-            <content>
-                <VBox prefHeight="570.0" prefWidth="1665.0" spacing="10.0">
-                    <children>
-                        <Label text="Recently Played" textFill="WHITE">
-                            <font>
-                                <Font name="System Bold" size="20.0" />
-                            </font>
-                        </Label>
-                        <ScrollPane fitToWidth="true" minViewportHeight="270.0" prefHeight="229.0" prefViewportWidth="10.0" prefWidth="1059.0" style="-fx-background-color: transparent;">
-                            <content>
-                                <HBox fx:id="recentlyPlayedContainer" spacing="30.0" />
-                            </content>
-                        </ScrollPane>
-                        <Label text="Favorite" textFill="WHITE">
-                            <font>
-                                <Font name="System Bold" size="20.0" />
-                            </font>
-                        </Label>
-                        <ScrollPane fitToWidth="true" minViewportHeight="270.0" prefHeight="229.0" prefWidth="1059.0" style="-fx-background-color: transparent;">
-                            <content>
-                                <HBox fx:id="favoriteContainer" prefHeight="0.0" prefWidth="0.0" spacing="30.0" />
-                            </content>
-                        </ScrollPane>
-                    </children>
-                    <padding>
-                        <Insets left="20.0" right="20.0" />
-                    </padding>
-                </VBox>
-            </content>
-        </ScrollPane>
-    </children>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="primary_color" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.HomeController">
+   <children>
+      <ListView fx:id="songTest" layoutX="64.0" layoutY="421.0" prefHeight="193.0" prefWidth="421.0" />
+       <HBox alignment="CENTER" layoutX="50.0" layoutY="37.0" maxWidth="1100.0" prefHeight="300.0" prefWidth="1100.0" spacing="10" styleClass="scroll-pane">
+           <Button onAction="#scrollLeft" styleClass="scroll-button" text="&lt;" />
+
+           <ScrollPane fx:id="scrollPane" fitToHeight="true" hbarPolicy="NEVER" pannable="true" prefHeight="280.0" vbarPolicy="NEVER">
+               <content>
+                   <HBox fx:id="song_container" alignment="CENTER_LEFT" spacing="15.0" />
+               </content>
+           </ScrollPane>
+
+           <Button onAction="#scrollRight" styleClass="scroll-button" text="&gt;" />
+       </HBox>
+   </children>
+</AnchorPane>

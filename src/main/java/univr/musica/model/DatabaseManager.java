@@ -48,6 +48,14 @@ public class DatabaseManager {
                         year   TEXT
                     )""");
 
+            stmt.executeUpdate("""
+                    CREATE TABLE IF NOT EXISTS comments (
+                        id      INTEGER PRIMARY KEY AUTOINCREMENT,
+                        text  TEXT NOT NULL,
+                        username TEXT NOT NULL,
+                        song_id  INTEGER
+                    )""");
+
             /*stmt.executeUpdate("""
             CREATE TABLE IF NOT EXISTS Project (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,

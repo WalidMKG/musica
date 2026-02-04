@@ -8,6 +8,7 @@ public class Song {
     private String author;
     private String genre;
     private String year;
+    private String path = "/1.jpg";
 
 
     public Song(int id,String title, String author, String genre, String year){
@@ -16,6 +17,7 @@ public class Song {
         this.genre = genre;
         this.year = year;
         this.id = id;
+        path = "/"+ id + ".jpg";
     }
 
 
@@ -25,6 +27,7 @@ public class Song {
         this.genre = genre;
         this.year = year;
     }
+
     public Song(String title, String author, String genre){
         this.title = title;
         this.author = author;
@@ -48,5 +51,10 @@ public class Song {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return title+ "-"+author+"-"+year;
     }
 }
