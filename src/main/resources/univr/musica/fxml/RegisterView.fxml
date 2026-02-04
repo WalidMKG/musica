@@ -15,7 +15,7 @@
         <Label text="Confirm Password" />
         <TextField fx:id="reg_pwd_confirm" />
         <Button fx:id="register_btn" mnemonicParsing="false" onAction="#register" text="REGISTER" />
-      <Button mnemonicParsing="false" text="BACK" />
+        <Button fx:id="back_to_login" mnemonicParsing="false" onAction="#back_to_login" text="BACK" />
         <Label fx:id="register_label" text="Label" visible="false" />
     </VBox>
 </AnchorPane>

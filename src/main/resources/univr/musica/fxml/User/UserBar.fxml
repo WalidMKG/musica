@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="800.0" prefWidth="250.0" spacing="20.0" styleClass="secondary-color" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.UserController">
+    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+        <VBox.margin>
+            <Insets left="20.0" top="20.0" />
+        </VBox.margin>
+        <Image url="@../../img/ic_more.png" />
+    </ImageView>
+    <VBox prefHeight="182.0" prefWidth="235.0" spacing="10.0">
+        <HBox fx:id="home_icon" alignment="CENTER" onMouseClicked="#go_home" prefHeight="50.0" prefWidth="200.0" spacing="20.0" stylesheets="@../../css/style.css">
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../../img/ic_home.png" />
+            </ImageView>
+            <Label prefHeight="21.0" prefWidth="101.0" text="Home" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="18.0" />
+                </font>
+            </Label>
+         <styleClass>
+            <String fx:value="selected" />
+            <String fx:value="sidebar-item" />
+         </styleClass>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar-item">
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../../img/ic_browse.png" />
+            </ImageView>
+            <Label prefHeight="21.0" prefWidth="101.0" text="Explore" textFill="#a1a1a1">
+                <font>
+                    <Font name="System Bold" size="18.0" />
+                </font>
+            </Label>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar-item">
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../../img/ic_radio.png" />
+            </ImageView>
+            <Label prefHeight="21.0" prefWidth="101.0" text="Radio" textFill="#a1a1a1">
+                <font>
+                    <Font name="System Bold" size="18.0" />
+                </font>
+            </Label>
+        </HBox>
+    </VBox>
+    <VBox prefHeight="292.0" prefWidth="235.0">
+        <padding>
+            <Insets left="20.0" right="20.0" />
+        </padding>
+        <Label prefHeight="48.0" prefWidth="192.0" text="YOUR LIBRARY" textFill="#a1a1a1">
+            <font>
+                <Font size="18.0" />
+            </font>
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+        </Label>
+        <Label prefHeight="40.0" prefWidth="192.0" text="Made For You" textFill="#a1a1a1">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <Label prefHeight="40.0" prefWidth="192.0" text="Recently Played" textFill="#a1a1a1">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <Label prefHeight="40.0" prefWidth="192.0" text="Liked Songs" textFill="#a1a1a1">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <Label prefHeight="40.0" prefWidth="192.0" text="Albums" textFill="#a1a1a1">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <Label prefHeight="40.0" prefWidth="192.0" text="Artists" textFill="#a1a1a1">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <Label prefHeight="40.0" prefWidth="192.0" text="Poscasts" textFill="#a1a1a1">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+    </VBox>
+    <Label prefHeight="48.0" prefWidth="192.0" text="PLAYLISTS" textFill="#a1a1a1">
+        <font>
+            <Font size="18.0" />
+        </font>
+        <VBox.margin>
+            <Insets left="20.0" />
+        </VBox.margin>
+    </Label>
+    <Pane prefHeight="12.0" prefWidth="235.0" VBox.vgrow="ALWAYS" />
+    <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="top-border" stylesheets="@../../css/style.css">
+        <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../../img/ic_add.png" />
+        </ImageView>
+        <Label prefHeight="40.0" prefWidth="120.0" text="Upload" textFill="#a1a1a1">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+    </HBox>
+   <stylesheets>
+      <URL value="@../../css/style.css" />
+      <URL value="@../../css/UserBar.css" />
+   </stylesheets>
+</VBox>

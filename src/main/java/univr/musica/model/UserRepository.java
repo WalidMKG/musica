@@ -28,7 +28,7 @@ public class UserRepository {
                     String password = rs.getString("password");
                     boolean isAdmin = rs.getInt("is_admin") == 1;
                     
-                    User user = new User(username, password, isAdmin);
+                    User user = new User(username, password, isAdmin, false );
                     userCache.put(username, user);
                 }
                 return null;
@@ -75,7 +75,7 @@ public class UserRepository {
             }
         }
     }
-    
+
     /**
      * Get a user by username
      */

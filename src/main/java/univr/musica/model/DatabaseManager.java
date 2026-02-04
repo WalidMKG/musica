@@ -37,6 +37,17 @@ public class DatabaseManager {
                          "is_admin INTEGER" +
                          ")");
 
+
+
+            stmt.executeUpdate("""
+                    CREATE TABLE IF NOT EXISTS songs (
+                        id      INTEGER PRIMARY KEY AUTOINCREMENT,
+                        title  TEXT NOT NULL,
+                        author TEXT NOT NULL,
+                        genre  TEXT,
+                        year   TEXT
+                    )""");
+
             /*stmt.executeUpdate("""
             CREATE TABLE IF NOT EXISTS Project (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,6 +58,8 @@ public class DatabaseManager {
                 manager_id TEXT NOT NULL,
                 FOREIGN KEY (manager_id) REFERENCES users(id)
             )""");*/
+
+
 
            /* stmt.executeUpdate("""
             CREATE TABLE IF NOT EXISTS ProjectAssignment (

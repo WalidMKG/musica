@@ -1,6 +1,8 @@
 package univr.musica.controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,6 +19,7 @@ public class RegistrationController {
     public TextField reg_pwd_confirm;
     public Button register_btn;
     public Label register_label;
+    public Button back_to_login;
     private UserRepository userRepository;
 
 
@@ -30,7 +33,7 @@ public class RegistrationController {
         String password = reg_pwd.getText();
         String confirmPassword = reg_pwd_confirm.getText();
         if(!username.isEmpty() && reg_pwd.getText().equals( reg_pwd_confirm.getText())) {
-            User newUser = new User(reg_user.getText(), reg_pwd.getText(), false);
+            User newUser = new User(reg_user.getText(), reg_pwd.getText(), false, false);
             userRepository.saveUser(newUser);
 
             register_label.setText("Bella");
@@ -42,5 +45,10 @@ public class RegistrationController {
             register_label.setTextFill(Color.RED);
             register_label.setVisible(true);
         }
+    }
+
+    public void back_to_login(ActionEvent actionEvent) {
+        Stage currentScene = (Stage) back_to_login.getScene().getWindow();
+        ViewFactory.getInstance().showLoginWindow(currentScene);
     }
 }

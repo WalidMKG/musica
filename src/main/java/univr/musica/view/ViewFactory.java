@@ -2,7 +2,6 @@ package univr.musica.view;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import univr.musica.config.AppConfig;
 
@@ -13,9 +12,6 @@ import java.io.IOException;
 
 public class ViewFactory {
     private static ViewFactory instance;
-
-
-    private ViewFactory() {}
 
     public static ViewFactory getInstance() {
         if (instance == null) {
@@ -35,9 +31,16 @@ public class ViewFactory {
         if (currentStage != null) {
             currentStage.close();
         }
-
         createStage("/univr/musica/fxml/RegisterView.fxml", "Registrazione");
     }
+
+    public void showMainWindow(Stage currentStage) {
+        if (currentStage != null) {
+            currentStage.close();
+        }
+        createStage("/univr/musica/fxml/User/UserView.fxml", AppConfig.APP_TITLE);
+    }
+
 
     private void createStage(String fxmlPath, String title) {
         try {

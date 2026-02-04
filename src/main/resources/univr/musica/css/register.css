@@ -5,9 +5,14 @@
     -fx-spacing: 10;
 }
 
-.text-field{
-    -fx-max-width: 200;
-    -fx-border-radius: 0;
+.vbox_textfield .text-field {
+    -fx-background-color: transparent; /* Rimuove lo sfondo grigio standard */
+    -fx-border-color: #011f4b;         /* Il tuo blu scuro */
+    -fx-border-width: 0 0 1 0;         /* Spessore 1px solo sotto */
+    -fx-text-fill: #011f4b;            /* Colore del testo che scrivi */
+    -fx-prompt-text-fill: #b3b3b3;     /* Colore del testo suggerito (es. "Username") */
+    -fx-padding: 8 0 8 0;              /* Più spazio sopra e sotto il testo */
+    -fx-font-size: 14px;
 }
 
 .text{

@@ -4,6 +4,7 @@ module univr.musica {
     requires javafx.graphics;
     requires java.sql;
     requires jdk.compiler;
+    requires java.desktop;
 
 
     opens univr.musica to javafx.fxml;

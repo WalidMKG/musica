@@ -5,6 +5,7 @@ public class User {
     private String username;
     private String password;
     private boolean isAdmin;
+    private boolean isActive;
     
     /**
      * Constructor for creating a user with username and password
@@ -12,11 +13,12 @@ public class User {
      * @param username The user's username
      * @param password The user's password (stored in plain text for educational purposes)
      */
-    public User(String username, String password, boolean isAdmin) {
+    public User(String username, String password, boolean isAdmin, boolean isActive) {
         this.id = username; // Using username as ID for simplicity
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
+        this.isActive = false;
     }
     
     /**
@@ -27,11 +29,11 @@ public class User {
      * @return A new User object
      */
     public static User create(String username, String password, boolean isAdmin) {
-        return new User(username, password, isAdmin);
+        return new User(username, password, isAdmin, false);
     }
 
     public static User create(String username, String password) {
-        return new User(username, password, false);
+        return new User(username, password, false, false);
     }
     
     /**
@@ -71,7 +73,14 @@ public class User {
         return password;
     }
 
+    public boolean getStatus(){
+        return isActive;
+    }
+
+
     public boolean isAdmin() {
         return isAdmin;
     }
+
+
 }
