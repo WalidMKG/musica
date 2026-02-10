@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import univr.musica.Main;
 import univr.musica.model.Model;
+import univr.musica.model.Song;
 import univr.musica.model.User;
 import univr.musica.model.UserRepository;
 import univr.musica.view.ViewFactory;
@@ -47,6 +48,7 @@ public class LoginController implements Initializable {
             return;
         }
         User user = userRepository.getUser(username);
+
         if(login_choice.getValue().equals("User")) {
             checkLogin(password, user);
         }
@@ -62,10 +64,19 @@ public class LoginController implements Initializable {
 
     private void checkLogin(String password, User user) {
         if (user != null && user.checkPassword(password)) {
-            login_lbl.setVisible(true);
-            login_lbl.setText("Login successful");
+            Model.getInstance().getViewFactory().setUser(user);
+
+            int lastId = user.getLastSongId();
+            if (lastId > 0) {
+                Song s = Main.getSongRepository().getSong(lastId);
+                if (s != null) {
+                    Main.getPlaybackManager().setCurrentSong(s);
+                    System.out.println("DEBUG: Sessione ripristinata per " + s.getTitle());
+                }
+            }
+
+            // 3. Ora apriamo la finestra
             Model.getInstance().getViewFactory().showMainWindow((Stage)login_lbl.getScene().getWindow());
-            login_lbl.setTextFill(Color.DARKGREEN);
         } else {
             login_lbl.setVisible(true);
             login_lbl.setText("Login Error");
@@ -77,6 +88,6 @@ public class LoginController implements Initializable {
     //Caso in cui l'utente clicca il tasto per registrarsi
     public void register(ActionEvent actionEvent) {
         Stage currentStage = (Stage) register_btn.getScene().getWindow();
-        ViewFactory.getInstance().showRegisterWindow(currentStage);
+        ViewFactory.getInstance().showRegisterWindow();
     }
 }

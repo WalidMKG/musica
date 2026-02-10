@@ -3,10 +3,7 @@ package univr.musica;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import univr.musica.model.DatabaseManager;
-import univr.musica.model.Model;
-import univr.musica.model.SongRepository;
-import univr.musica.model.UserRepository;
+import univr.musica.model.*;
 import univr.musica.view.ViewFactory;
 
 import java.io.IOException;
@@ -17,6 +14,7 @@ public class Main extends Application {
     private static DatabaseManager dbManager;
     private static UserRepository userRepository;
     private static SongRepository songRepository;
+    private static PlaybackManager playbackManager;
 
 
     public static DatabaseManager getDatabaseManager() {
@@ -30,20 +28,32 @@ public class Main extends Application {
         return songRepository;
     }
 
+    public static PlaybackManager getPlaybackManager() {
+        return playbackManager;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
         dbManager = new DatabaseManager();
         userRepository = new UserRepository();
         songRepository = new SongRepository();
+        playbackManager = PlaybackManager.getInstance();
 
 
         //mostra la finestra
-        Model.getInstance().getViewFactory().showLoginWindow(stage);
+        Model.getInstance().getViewFactory().showLoginWindow();
 
     }
 
     public static void main(String[] args) {
         launch();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        String username = Model.getInstance().getViewFactory().getUser().getUsername();
+        System.out.println(playbackManager.currentSongProperty());
+        userRepository.updateLastSong(username,1);
+        System.out.println("chiudioooo");
     }
 }

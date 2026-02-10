@@ -5,6 +5,9 @@ module univr.musica {
     requires java.sql;
     requires jdk.compiler;
     requires java.desktop;
+    requires javafx.base;
+    requires javafx.media;
+
 
 
     opens univr.musica to javafx.fxml;

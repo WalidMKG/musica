@@ -15,12 +15,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import univr.musica.Main;
 import univr.musica.model.Song;
+import univr.musica.view.ViewFactory;
 
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
 
 public class HomeController implements Initializable {
 
@@ -38,7 +40,9 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadMediaFromDatabase();
+
         songTest.setItems(songList);
+
         songTest.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 System.out.println("Selezionato: " + newVal.getTitle());
@@ -65,7 +69,6 @@ public class HomeController implements Initializable {
     @FXML
     private ScrollPane scrollPane;
 
-    // Quanto deve scorrere a ogni click (0.1 = 10% della lunghezza totale)
     private final double scrollAmount = 0.2;
 
     @FXML
@@ -81,7 +84,6 @@ public class HomeController implements Initializable {
     }
 
     private void loadMediaFromDatabase() {
-        // Esempio: songList.addAll(Main.getSongRepository().getAllSongs());
         songList.addAll(Main.getSongRepository().getAllSongs());
     }
 

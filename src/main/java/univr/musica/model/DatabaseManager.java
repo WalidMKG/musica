@@ -32,10 +32,11 @@ public class DatabaseManager {
             
             // Create users table if it doesn't exist
             stmt.execute("CREATE TABLE IF NOT EXISTS users (" +
-                         "username TEXT PRIMARY KEY, " +
-                         "password TEXT, " +
-                         "is_admin INTEGER" +
-                         ")");
+                    "username TEXT PRIMARY KEY, " +
+                    "password TEXT, " +
+                    "is_admin INTEGER, " +
+                    "last_song_id INTEGER" +
+                    ")");
 
 
 

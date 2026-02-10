@@ -5,7 +5,11 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import univr.musica.Main;
 import univr.musica.config.AppConfig;
+import univr.musica.model.PlaybackManager;
+import univr.musica.model.Song;
+import univr.musica.model.User;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -16,7 +20,9 @@ import java.util.Objects;
 public class ViewFactory {
     private static ViewFactory instance;
     private BorderPane mainView;
+    private User user;
 
+    Stage stage;
 
     public static ViewFactory getInstance() {
         if (instance == null) {
@@ -25,23 +31,30 @@ public class ViewFactory {
         return instance;
     }
 
-    public void showLoginWindow(Stage currentStage) {
-        if (currentStage != null) {
-            currentStage.close();
+    public void showLoginWindow() {
+        if (stage != null) {
+            stage.close();
         }
         createStage("/univr/musica/fxml/LoginView.fxml", AppConfig.APP_TITLE);
     }
 
-    public void showRegisterWindow(Stage currentStage) {
-        if (currentStage != null) {
-            currentStage.close();
+    public void showRegisterWindow() {
+        if (stage != null) {
+            stage.close();
         }
         createStage("/univr/musica/fxml/RegisterView.fxml", "Registrazione");
     }
 
     public void showMainWindow(Stage currentStage) {
-        if (currentStage != null) {
-            currentStage.close();
+        if (stage != null) {
+            stage.close();
+        }
+        if (this.user != null && this.user.getLastSongId() > 0) {
+            Song s = Main.getSongRepository().getSong(this.user.getLastSongId());
+            if (s != null) {
+                PlaybackManager.getInstance().setCurrentSong(s);
+                System.out.println("Canzone caricata nel Manager: " + s.getTitle());
+            }
         }
         createStage("/univr/musica/fxml/User/UserView.fxml", AppConfig.APP_TITLE);
     }
@@ -55,7 +68,7 @@ public class ViewFactory {
         try {
             Node node = createNode(path);
 
-            // USIAMO "this.mainView" che abbiamo settato nel setMainView
+
             if (this.mainView != null && node != null) {
                 this.mainView.setCenter(node);
                 System.out.println("DEBUG: Vista aggiornata con successo!");
@@ -83,11 +96,8 @@ public class ViewFactory {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Scene scene = new Scene(loader.load());
-
-
-            //scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
-
             Stage stage = new Stage();
+            this.stage = stage;
             stage.setScene(scene);
             stage.setTitle(title);
             stage.show();
@@ -95,6 +105,37 @@ public class ViewFactory {
         } catch (IOException e) {
             System.err.println("Errore caricamento vista: " + fxmlPath);
             e.printStackTrace();
+        }
+    }
+
+    public void createScene(String fxmlPath, String title) throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        } catch (IOException e) {
+            System.err.println("Errore caricamento vista: " + fxmlPath);
+            e.printStackTrace();
+        }
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void loadLastUserSession() {
+        int lastSongId = user.getLastSongId();
+        if (lastSongId > 0) {
+            Song lastSong = Main.getSongRepository().getSong(lastSongId);
+            if (lastSong != null) {
+                PlaybackManager.getInstance().setCurrentSong(lastSong);
+                System.out.println("Sessione ripristinata: " + lastSong.getTitle());
+            }
         }
     }
 }

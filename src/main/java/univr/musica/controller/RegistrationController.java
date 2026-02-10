@@ -33,7 +33,7 @@ public class RegistrationController {
         String password = reg_pwd.getText();
         String confirmPassword = reg_pwd_confirm.getText();
         if(!username.isEmpty() && reg_pwd.getText().equals( reg_pwd_confirm.getText())) {
-            User newUser = new User(reg_user.getText(), reg_pwd.getText(), false, false);
+            User newUser = new User(reg_user.getText(), reg_pwd.getText(), false, false,0);
             userRepository.saveUser(newUser);
 
             register_label.setText("Bella");
@@ -49,6 +49,6 @@ public class RegistrationController {
 
     public void back_to_login(ActionEvent actionEvent) {
         Stage currentScene = (Stage) back_to_login.getScene().getWindow();
-        ViewFactory.getInstance().showLoginWindow(currentScene);
+        ViewFactory.getInstance().showLoginWindow();
     }
 }

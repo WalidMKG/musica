@@ -8,50 +8,43 @@ import java.util.Map;
 public class UserRepository {
     private final DatabaseManager dbManager;
     private Map<String, User> userCache = new HashMap<>();
-    
+
     public UserRepository() {
         this.dbManager = Main.getDatabaseManager();
         refreshUserCache();
     }
-    
-    /**
-     * Refresh the user cache from the database
-     */
+
     private void refreshUserCache() {
         userCache.clear();
-        
+        // AGGIUNTO last_song_id nella query
         dbManager.executeQuery(
-            "SELECT username, password, is_admin FROM users",
-            rs -> {
-                while (rs.next()) {
-                    String username = rs.getString("username");
-                    String password = rs.getString("password");
-                    boolean isAdmin = rs.getInt("is_admin") == 1;
-                    
-                    User user = new User(username, password, isAdmin, false );
-                    userCache.put(username, user);
+                "SELECT username, password, is_admin, last_song_id FROM users",
+                rs -> {
+                    while (rs.next()) {
+                        String username = rs.getString("username");
+                        String password = rs.getString("password");
+                        boolean isAdmin = rs.getInt("is_admin") == 1;
+                        int lastSongId = rs.getInt("last_song_id");
+
+                        // Verifica che il costruttore corrisponda ai tuoi parametri
+                        User user = new User(username, password, isAdmin, true, lastSongId);
+                        userCache.put(username, user);
+                    }
+                    return null;
                 }
-                return null;
-            }
         );
     }
 
-    public User getUserById(String userId) {
-        return userCache.get(userId);
-    }
-
-
-    /**
-     * Save a user to the repository
-     */
     public void saveUser(User user) {
+        // AGGIUNTO il quarto parametro per non perdere il last_song_id durante il salvataggio
         boolean success = dbManager.executeUpdate(
-            "INSERT OR REPLACE INTO users (username, password, is_admin) VALUES (?, ?, ?)",
-            user.getUsername(),
-            user.getPassword(),
-            user.isAdmin() ? 1 : 0
+                "INSERT OR REPLACE INTO users (username, password, is_admin, last_song_id) VALUES (?, ?, ?, ?)",
+                user.getUsername(),
+                user.getPassword(),
+                user.isAdmin() ? 1 : 0,
+                user.getLastSongId()
         );
-        
+
         if (success) {
             userCache.put(user.getUsername(), user);
         }
@@ -89,6 +82,27 @@ public class UserRepository {
     public boolean usernameExists(String username) {
         return userCache.containsKey(username);
     }
+
+    /**
+     * Aggiorna nel database l'ID dell'ultima canzone ascoltata dall'utente
+     */
+    public void updateLastSong(String username, int songId) {
+        boolean success = dbManager.executeUpdate(
+                "UPDATE users SET last_song_id = ? WHERE username = ?",
+                songId,
+                username
+        );
+
+        if (success) {
+            User user = userCache.get(username);
+            if (user != null) {
+                user.setLastSongId(songId);
+            }
+            System.out.println("Ultima canzone salvata per " + username + ": " + songId);
+        }
+    }
+
+
     
     /**
      * Get all users

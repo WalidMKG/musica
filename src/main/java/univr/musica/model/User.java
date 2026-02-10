@@ -6,6 +6,7 @@ public class User {
     private String password;
     private boolean isAdmin;
     private boolean isActive;
+    private int last_song_id;
     
     /**
      * Constructor for creating a user with username and password
@@ -13,12 +14,14 @@ public class User {
      * @param username The user's username
      * @param password The user's password (stored in plain text for educational purposes)
      */
-    public User(String username, String password, boolean isAdmin, boolean isActive) {
+    public User(String username, String password, boolean isAdmin, boolean isActive, int last_song_id) {
         this.id = username; // Using username as ID for simplicity
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
         this.isActive = false;
+        this.last_song_id = last_song_id;
+
     }
     
     /**
@@ -28,14 +31,7 @@ public class User {
      * @param password The user's password
      * @return A new User object
      */
-    public static User create(String username, String password, boolean isAdmin) {
-        return new User(username, password, isAdmin, false);
-    }
 
-    public static User create(String username, String password) {
-        return new User(username, password, false, false);
-    }
-    
     /**
      * Verify if the provided password matches the stored password
      * 
@@ -83,4 +79,11 @@ public class User {
     }
 
 
+    public void setLastSongId(int songId) {
+        this.last_song_id = songId;
+    }
+
+    public int getLastSongId() {
+        return last_song_id;
+    }
 }

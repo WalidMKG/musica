@@ -57,4 +57,8 @@ public class Song {
     public String toString() {
         return title+ "-"+author+"-"+year;
     }
+
+    public String getPath(String pathType) {
+        return id + pathType;
+    }
 }

@@ -21,6 +21,7 @@ public class UserController implements Initializable {
     public HBox go_to_profile;
     public BorderPane mainView;
     public HBox upload_btn;
+    public HBox go_to_search;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -40,12 +41,16 @@ public class UserController implements Initializable {
 
     public void go_to_profile(MouseEvent mouseEvent) {
         System.out.println("click ricevuto");
-        // Chiama DIRETTAMENTE la ViewFactory per evitare discrepanze nel Model
         ViewFactory.getInstance().updateMainView("/univr/musica/fxml/User/UserProfile.fxml");
     }
 
     public void open_load_page(MouseEvent mouseEvent) {
         ViewFactory.getInstance().updateMainView("/univr/musica/fxml/User/LoadPage.fxml");
+    }
+
+    public void go_to_search(MouseEvent mouseEvent) {
+        System.out.println("Going to search");
+        ViewFactory.getInstance().updateMainView("/univr/musica/fxml/User/SearchPage.fxml");
     }
 }
 

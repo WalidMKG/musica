@@ -1,5 +1,6 @@
 package univr.musica.model;
 
+import javafx.event.ActionEvent;
 import univr.musica.Main;
 
 import java.sql.Connection;
@@ -64,7 +65,6 @@ public class SongRepository {
 
         dbManager.executeQuery(sql, rs -> {
             while (rs.next()) {
-                //ID aggiunto dal costruttore
                 Song song = new Song(
                         rs.getInt("id"),
                         rs.getString("title"),
@@ -72,8 +72,6 @@ public class SongRepository {
                         rs.getString("genre"),
                         rs.getString("year")
                 );
-                // Se hai aggiunto il campo path, ricordati di caricarlo:
-                // song.setPath(rs.getString("path"));
                 songs.add(song);
             }
             return null;
@@ -81,4 +79,28 @@ public class SongRepository {
 
         return songs;
     }
+
+
+    public List<Song> searchSongRep(String searchTerm) {
+        List<Song> songs = new ArrayList<>();
+
+        String sql = "SELECT id, title, author, genre, year FROM songs " +
+                "WHERE title LIKE ? OR author LIKE ?";
+
+        dbManager.executeQuery(sql, rs -> {
+            while (rs.next()) {
+                songs.add(new Song(
+                        rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getString("genre"),
+                        rs.getString("year")
+                ));
+            }
+            return null;
+        }, "%" + searchTerm + "%", "%" + searchTerm + "%");
+
+        return songs;
+    }
+
 }

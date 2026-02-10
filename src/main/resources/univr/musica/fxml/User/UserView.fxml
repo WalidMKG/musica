@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="mainView"
-            xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="univr.musica.controller.UserController">
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane  styleClass="secondary-color" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.UserController">
     <left>
         <fx:include source="UserBar.fxml" />
     </left>
 
     <center>
-        <fx:include source="UserDashboard.fxml"/>
+        <BorderPane fx:id="mainView" >
+
+            <center><fx:include source="UserDashboard.fxml" /></center>
+
+            <bottom>
+                <fx:include source="MediaBar.fxml" />
+            </bottom>
+        </BorderPane>
+
     </center>
+
+
 
 </BorderPane>
