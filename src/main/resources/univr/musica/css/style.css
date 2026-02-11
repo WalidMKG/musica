@@ -60,3 +60,6 @@
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
+.Text{
+    -fx-text-fill: white;
+}

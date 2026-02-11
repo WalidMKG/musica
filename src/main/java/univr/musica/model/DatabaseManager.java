@@ -110,23 +110,29 @@ public class DatabaseManager {
     /**
      * Execute an update query (INSERT, UPDATE, DELETE)
      */
-    public boolean executeUpdate(String sql, Object... params) {
+    public int executeUpdate(String sql, Object... params) {
+        // Specifichiamo di voler tornare le chiavi generate
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            // Set parameters
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
             for (int i = 0; i < params.length; i++) {
                 pstmt.setObject(i + 1, params[i]);
             }
-            
-            // Execute the query
-            pstmt.executeUpdate();
-            return true;
-            
+
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows == 0) return 0;
+
+            // Recuperiamo l'ID assegnato da SQLite
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+            }
         } catch (SQLException e) {
-            System.err.println("Error executing update: " + e.getMessage());
-            return false;
+            System.err.println("Errore nell'inserimento con recupero ID: " + e.getMessage());
         }
+        return 0;
     }
     
     /**

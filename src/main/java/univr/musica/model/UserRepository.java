@@ -37,7 +37,7 @@ public class UserRepository {
 
     public void saveUser(User user) {
         // AGGIUNTO il quarto parametro per non perdere il last_song_id durante il salvataggio
-        boolean success = dbManager.executeUpdate(
+        int success = dbManager.executeUpdate(
                 "INSERT OR REPLACE INTO users (username, password, is_admin, last_song_id) VALUES (?, ?, ?, ?)",
                 user.getUsername(),
                 user.getPassword(),
@@ -45,7 +45,7 @@ public class UserRepository {
                 user.getLastSongId()
         );
 
-        if (success) {
+        if (success!=0) {
             userCache.put(user.getUsername(), user);
         }
     }
@@ -58,12 +58,12 @@ public class UserRepository {
         
         // Never delete admin users as a safety measure
         if (user != null && !user.isAdmin()) {
-            boolean success = dbManager.executeUpdate(
+            int success = dbManager.executeUpdate(
                 "DELETE FROM users WHERE username = ?",
                 username
             );
             
-            if (success) {
+            if (success!=0) {
                 userCache.remove(username);
             }
         }
@@ -87,13 +87,13 @@ public class UserRepository {
      * Aggiorna nel database l'ID dell'ultima canzone ascoltata dall'utente
      */
     public void updateLastSong(String username, int songId) {
-        boolean success = dbManager.executeUpdate(
+        int success = dbManager.executeUpdate(
                 "UPDATE users SET last_song_id = ? WHERE username = ?",
                 songId,
                 username
         );
 
-        if (success) {
+        if (success!=0) {
             User user = userCache.get(username);
             if (user != null) {
                 user.setLastSongId(songId);

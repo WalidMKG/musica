@@ -1,6 +1,10 @@
 package univr.musica.model;
+import javafx.scene.image.Image;
+import univr.musica.config.AppConfig;
+
 import java.awt.Desktop;
 import java.io.File;
+import java.util.Objects;
 
 public class Song {
     private int id;
@@ -60,5 +64,23 @@ public class Song {
 
     public String getPath(String pathType) {
         return id + pathType;
+    }
+
+    public Image getCover() {
+        File file = new File(AppConfig.DATA_DIR + "/jpg/" + id + ".jpg");
+
+        if (file.exists()) {
+            return new Image(file.toURI().toString());
+        } else {
+            System.err.println("Cover non trovata in: " + file.getAbsolutePath());
+            var stream = getClass().getResourceAsStream("/univr/musica/data/jpg/default.png");
+
+            if (stream != null) {
+                return new Image(stream);
+            } else {
+                System.err.println("ATTENZIONE: Immagine di default non trovata nelle risorse!");
+                return new Image("https://via.placeholder.com/150");
+            }
+        }
     }
 }

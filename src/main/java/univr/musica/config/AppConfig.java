@@ -7,8 +7,8 @@ public class AppConfig {
     public static final String APP_TITLE = "Spartiti";
     
     // Data storage settings
-    public static final String DATA_DIR = "src/main/resources/univr/musica/data";
-    public static final String DATABASE_PATH = DATA_DIR + "/musica.db";
+    public static final String DATA_DIR = "data";
+    public static final String DATABASE_PATH = DATA_DIR + "/database/musica.db";
     
     // Create data directory if it doesn't exist
     static {

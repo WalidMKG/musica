@@ -1,0 +1,43 @@
+.root {
+    -fx-background-color: #121212;
+    -fx-alignment: center;
+}
+
+/* Nota la "v" minuscola e il trattino */
+.v-box {
+    -fx-background-color: #121212;
+    -fx-alignment: center;
+    -fx-pref-height: 800;
+}
+
+.v-box .button{
+    -fx-margin-top: 30;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 40px;
+    -fx-min-width: 60px;
+    -fx-min-height: 40px;
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+    -fx-alignment: center;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+}
+
+.v-box .text-field {
+    -fx-pref-width: 200px;
+    -fx-max-width: 200px;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent white transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-text-fill: white;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 5 0 5 0;
+}
+
+
+.text-field:focused {
+    -fx-border-color: transparent transparent #1DB954 transparent;
+    -fx-border-width: 0 0 2 0;
+}
+

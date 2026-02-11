@@ -47,15 +47,27 @@ public class SongRepository {
         return songCache.get(id);
     }
 
-    public void saveSong(Song song) {
-        boolean success = dbManager.executeUpdate(
-                "INSERT OR REPLACE INTO songs (title, author, genre, year) VALUES (?, ?, ?, ?)",
+    public boolean saveSong(Song song) {
+        int rowsAffected = dbManager.executeUpdate(
+                "INSERT INTO songs (title, author, genre, year) VALUES (?, ?, ?, ?)",
                 song.getTitle(), song.getAuthor(), song.getGenre(), song.getYear()
         );
 
-        if (success) {
-            songCache.put(song.getId(), song);
+        if (rowsAffected > 0) {
+            refreshSongCache(); // Aggiorna la cache per includere la nuova canzone
+            return true;
         }
+        return false;
+    }
+
+    // Metodo extra per recuperare l'ID appena creato
+    public int getLastInsertedId() {
+        return dbManager.executeQuery("SELECT id FROM songs ORDER BY id DESC LIMIT 1", rs -> {
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+            return 0;
+        });
     }
 
 

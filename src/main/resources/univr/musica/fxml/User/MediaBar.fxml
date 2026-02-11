@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="60.0" prefWidth="1200.0" styleClass="secondary-color" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.MediaBarController">
+<AnchorPane prefHeight="60.0" prefWidth="1200.0" styleClass="BorderPane" stylesheets="@../../css/MediaBar.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.MediaBarController">
    <children>
       <ImageView fx:id="play_music" fitHeight="40.0" fitWidth="40.0" layoutX="580.0" layoutY="10.0" onMouseClicked="#play_music" pickOnBounds="true" preserveRatio="true" styleClass="clickable-icon" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="580.0" AnchorPane.rightAnchor="580.0" AnchorPane.topAnchor="10.0">
          <image>
@@ -21,5 +22,8 @@
             <Image url="@../../img/ic_end.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="currentSongCover" fitHeight="50.0" fitWidth="50.0" layoutX="267.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="currentSongTitle" layoutX="344.0" layoutY="14.0" prefHeight="17.0" prefWidth="105.0" styleClass="Title" text="Label" />
+      <Label fx:id="currentArtName" layoutX="344.0" layoutY="30.0" prefHeight="17.0" prefWidth="105.0" styleClass="Artist" text="Label" />
    </children>
 </AnchorPane>

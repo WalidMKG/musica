@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.LoadController">
-   <children>
-      <VBox layoutX="369.0" layoutY="186.0" prefHeight="428.0" prefWidth="463.0">
-         <children>
-            <TextField fx:id="load_song_title" promptText="Title" />
-            <Button fx:id="load_song_btn" mnemonicParsing="false" onAction="#load_song" text="LOAD" />
-            <Button fx:id="load_pdf_btn" mnemonicParsing="false" onAction="#load_pdf" text="PDF" />
-         </children>
-      </VBox>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+            prefWidth="1200.0" stylesheets="@../../css/LoadPage.css" xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.LoadController">
+    <VBox layoutX="369.0" prefHeight="428.0" prefWidth="463.0" styleClass="v-box">
+        <ImageView fx:id="loaded_cover" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#load_cover"
+                   pickOnBounds="true" preserveRatio="true">
+            <Image url="@../../data/img/ic_upload.png"/>
+        </ImageView>
+        <TextField fx:id="load_song_title" promptText="Title"/>
+        <TextField fx:id="load_song_Art" promptText="Artist"/>
+        <TextField fx:id="load_song_Genre" promptText="Genre"/>
+        <TextField fx:id="load_song_Year" promptText="Year"/>
+        <Region prefHeight="119.0" prefWidth="463.0"/>
+        <Button fx:id="Load_mp3_btn" mnemonicParsing="false" onAction="#load_mp3" text="ADD MP3"/>
+        <Button fx:id="load_pdf_btn" mnemonicParsing="false" onAction="#load_pdf" text="ADD PDF"/>
+        <Button fx:id="load_song_btn" mnemonicParsing="false" onAction="#load_song" text="LOAD"/>
+        <Region prefHeight="20.0" prefWidth="463.0"/>
+        <Label text="Label" fx:id="error_lbl" visible="false"/>
+    </VBox>
 </AnchorPane>
