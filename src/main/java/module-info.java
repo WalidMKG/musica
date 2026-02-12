@@ -9,7 +9,6 @@ module univr.musica {
     requires javafx.media;
 
 
-
     opens univr.musica to javafx.fxml;
     exports univr.musica;
     exports univr.musica.controller;

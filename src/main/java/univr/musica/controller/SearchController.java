@@ -5,18 +5,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import univr.musica.Main;
-import univr.musica.model.Model;
 import univr.musica.model.Song;
-import univr.musica.model.SongRepository;
+import univr.musica.model.CommentsRepository;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +23,7 @@ public class SearchController implements Initializable {
     public ListView<Song> search_results;
     public Button search_button;
     public StackPane SearchUI;
-    SongRepository songRepository;
+    CommentsRepository songRepository;
 
     private ObservableList<Song> songList = FXCollections.observableArrayList();
 

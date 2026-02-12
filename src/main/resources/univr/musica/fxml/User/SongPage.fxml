@@ -1,29 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" minHeight="600.0" minWidth="400.0" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: white; -fx-padding: 20;" styleClass="primary_color" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.SongPageController">
+<AnchorPane minHeight="700.0" minWidth="1000.0" prefHeight="700.0" prefWidth="1100.0" styleClass="anchor-pane" stylesheets="@../../css/SongPage.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.SongPageController">
     <children>
-      <HBox fx:id="close_popup" onMouseClicked="#close_popup" prefHeight="40.0" prefWidth="91.0">
+      <VBox fx:id="vbox1" layoutX="14.0" layoutY="51.0" prefHeight="600.0" prefWidth="500.0" styleClass="vbox1">
          <children>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../img/user.png" />
-               </image>
-            </ImageView>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="10.0" text="BACK" translateY="10.0" />
-         </children>
-      </HBox>
-      <VBox prefHeight="575.0" prefWidth="360.0">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="song_title" text="titolo" />
-            <Button fx:id="play_cur_song" mnemonicParsing="false" onAction="#play_cur_song" text="PLAY" />
+            <ImageView fitHeight="334.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="song_title" styleClass="song_title" text="titolo" />
+            <Label fx:id="artist_name" styleClass="artist_name" text="titolo" />
+            <Button fx:id="play_cur_song" mnemonicParsing="false" onAction="#play_cur_song">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../img/ic_play.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="pdf_btn" mnemonicParsing="false" onAction="#play_cur_song">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../img/ic_play.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="video_btn" mnemonicParsing="false" onAction="#play_cur_song">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../img/ic_play.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </VBox>
-    </children></VBox>
+      <HBox fx:id="close_popup" prefHeight="50.0" prefWidth="1100.0" styleClass="hbox">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#close_popup" pickOnBounds="true" preserveRatio="true" styleClass="Image" x="10.0">
+               <image>
+                  <Image url="@../../img/ic_back_arrow.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="10.0" onMouseClicked="#close_popup" styleClass="back_lbl" text="BACK" translateY="10.0" />
+         </children>
+      </HBox>
+      <VBox layoutX="586.0" layoutY="58.0" prefHeight="600.0" prefWidth="500.0">
+         <children>
+            <ImageView fitHeight="49.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" />
+            <ScrollPane fx:id="comments_view" prefHeight="513.0" prefWidth="500.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ScrollPane>
+            <HBox prefHeight="41.0" prefWidth="545.0">
+               <children>
+                  <TextField fx:id="comment_text" prefHeight="40.0" prefWidth="487.0" />
+                  <Button fx:id="post_comment" mnemonicParsing="false" onAction="#post_comment" prefHeight="38.0" prefWidth="64.0">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+    </children></AnchorPane>

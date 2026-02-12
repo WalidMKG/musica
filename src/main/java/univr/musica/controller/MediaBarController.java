@@ -1,20 +1,16 @@
 package univr.musica.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import univr.musica.Main;
 import univr.musica.model.Model;
 import univr.musica.model.PlaybackManager;
 import univr.musica.model.Song;
-import univr.musica.model.SongRepository;
 
-import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 

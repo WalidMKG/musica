@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="90.0" prefWidth="496.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.CommentController">
+   <children>
+      <Label fx:id="comment_username" layoutX="14.0" layoutY="6.0" maxHeight="20.0" maxWidth="125.0" prefHeight="20.0" prefWidth="125.0" text="Label" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <Label fx:id="comment_text" layoutX="14.0" layoutY="23.0" text="Label" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0" />
+   </children>
+</AnchorPane>

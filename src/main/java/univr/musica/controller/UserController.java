@@ -1,18 +1,13 @@
 package univr.musica.controller;
 
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import univr.musica.Main;
-import univr.musica.model.Model;
 import univr.musica.model.Song;
-import univr.musica.model.SongRepository;
 import univr.musica.view.ViewFactory;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 

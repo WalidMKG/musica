@@ -1,0 +1,59 @@
+.anchor-pane{
+    -fx-background-color: #2c2f33;
+    -fx-border-color: #121212;
+}
+
+.vbox1{
+    -fx-background-color: #121212;
+    -fx-alignment: center;
+    -fx-padding: 20;
+    -fx-spacing: 20;
+}
+
+.song_title{
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+}
+
+.back_lbl{
+    -fx-text-fill: white;
+    -fx-font-size: 15;
+    -fx-alignment: center;
+}
+.back_lbl:hover{
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+
+.artist_name{
+    -fx-text-fill: #bcbcbc;
+    -fx-font-size: 15;
+}
+
+.root .hbox{
+    -fx-background-color: #121212;
+    -fx-padding: 5;
+}
+
+.hbox .Image:hover{
+    -fx-underline: true;
+    -fx-cursor: hand;
+
+
+}
+
+.vbox1 .button{
+    -fx-background-color: #99aab5;
+    -fx-pref-width: 150;
+    -fx-min-width: 100;
+    -fx-pref-height: 30;
+    -fx-min-height: 30;
+    -fx-border-radius: 0;
+}
+
+.button:hover{
+    -fx-underline: true;
+    -fx-cursor: hand;
+
+}

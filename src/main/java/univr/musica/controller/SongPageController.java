@@ -6,10 +6,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import univr.musica.Main;
+import univr.musica.model.Comments;
+import univr.musica.model.Model;
 import univr.musica.model.PlaybackManager;
 import univr.musica.model.Song;
 
@@ -21,6 +27,15 @@ public class SongPageController implements Initializable {
     public Label song_title;
     public HBox close_popup;
     public Button play_cur_song;
+    public Label artist_name;
+    public Button play_cur_song1;
+    public Button play_cur_song2;
+    public ScrollPane comments_view;
+    public TextField comment_text;
+    public Button post_comment;
+    public VBox vbox1;
+    public Button pdf_btn;
+    public Button video_btn;
     private Song song;
 
     @Override
@@ -32,6 +47,7 @@ public class SongPageController implements Initializable {
         if (song != null) {
             this.song = song;
             song_title.setText(song.getTitle());
+            artist_name.setText(song.getAuthor());
         }
     }
 
@@ -49,5 +65,12 @@ public class SongPageController implements Initializable {
 
     public void play_cur_song(ActionEvent actionEvent) {
         PlaybackManager.getInstance().play(song);
+    }
+
+    public void post_comment(ActionEvent actionEvent) {
+        Main.getCommentsRepository().saveComment(
+                new Comments(comment_text.getText(),
+                Model.getInstance().getViewFactory().getUser().getUsername(),
+                song.getId()));
     }
 }

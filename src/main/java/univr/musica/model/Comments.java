@@ -13,6 +13,12 @@ public class Comments {
             this.song_id = song_id;
         }
 
+        public Comments( String text, String username, int song_id) {
+            this.text = text;
+            this.username = username;
+            this.song_id = song_id;
+        }
+
     public String getText() {
         return text;
     }
@@ -21,5 +27,9 @@ public class Comments {
     }
     public String getUsername() {
         return username;
+    }
+
+    public int getSong_id() {
+        return song_id;
     }
 }

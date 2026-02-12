@@ -1,10 +1,8 @@
 package univr.musica;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 import univr.musica.model.*;
-import univr.musica.view.ViewFactory;
 
 import java.io.IOException;
 
@@ -13,8 +11,10 @@ import static javafx.application.Application.launch;
 public class Main extends Application {
     private static DatabaseManager dbManager;
     private static UserRepository userRepository;
-    private static SongRepository songRepository;
+    private static CommentsRepository commentsRepository;
     private static PlaybackManager playbackManager;
+    private static SongRepository songRepository;
+
 
 
     public static DatabaseManager getDatabaseManager() {
@@ -24,20 +24,25 @@ public class Main extends Application {
         return userRepository;
     }
 
-    public static SongRepository getSongRepository() {
-        return songRepository;
+    public static CommentsRepository getCommentsRepository() {
+        return commentsRepository;
     }
 
     public static PlaybackManager getPlaybackManager() {
         return playbackManager;
     }
 
+    public static SongRepository getSongRepository() {
+        return songRepository;
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         dbManager = new DatabaseManager();
         userRepository = new UserRepository();
-        songRepository = new SongRepository();
+        commentsRepository = new CommentsRepository();
         playbackManager = PlaybackManager.getInstance();
+        songRepository = new SongRepository();
 
 
         //mostra la finestra
