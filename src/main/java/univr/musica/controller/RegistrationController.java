@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import univr.musica.Main;
+import univr.musica.model.Model;
 import univr.musica.model.User;
 import univr.musica.model.UserRepository;
 import univr.musica.view.ViewFactory;
@@ -24,7 +25,7 @@ public class RegistrationController {
 
 
     public void initialize() {
-        userRepository = Main.getUserRepository();
+        userRepository = Model.getInstance().getUserRepository();
         register_label.setVisible(false);
     }
 

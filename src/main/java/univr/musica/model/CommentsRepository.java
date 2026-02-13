@@ -1,7 +1,5 @@
 package univr.musica.model;
 
-import univr.musica.Main;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,8 +9,8 @@ public class CommentsRepository {
     private final DatabaseManager dbManager;
     private Map<Integer, Comments> CommentsCache = new HashMap<>();
 
-    public CommentsRepository() {
-        this.dbManager = Main.getDatabaseManager();
+    public CommentsRepository(DatabaseManager dbManager) {
+        this.dbManager = dbManager;
         refreshCommentsCache();
     }
 

@@ -26,7 +26,7 @@ public class MediaBarController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        PlaybackManager.getInstance().setCurrentSong(Main.getSongRepository().getSong(Model.getInstance().getViewFactory().getUser().getLastSongId()));
+        PlaybackManager.getInstance().setCurrentSong(Model.getInstance().getSongRepository().getSong(Model.getInstance().getViewFactory().getUser().getLastSongId()));
         System.out.println("Ultima canzone "+Model.getInstance().getViewFactory().getUser().getLastSongId());
         PlaybackManager.getInstance().currentSongProperty().addListener((obs, oldSong, newSong) -> {
             if (newSong != null) {

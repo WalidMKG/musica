@@ -30,7 +30,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        userRepository = Main.getUserRepository();
+        userRepository = Model.getInstance().getUserRepository();
         login_choice.getItems().addAll("Admin","User");
         login_choice.setValue("User");
     }
@@ -68,9 +68,9 @@ public class LoginController implements Initializable {
 
             int lastId = user.getLastSongId();
             if (lastId > 0) {
-                Song s = Main.getSongRepository().getSong(lastId);
+                Song s = Model.getInstance().getSongRepository().getSong(lastId);
                 if (s != null) {
-                    Main.getPlaybackManager().setCurrentSong(s);
+                    Model.getInstance().getPlaybackManager().setCurrentSong(s);
                     System.out.println("DEBUG: Sessione ripristinata per " + s.getTitle());
                 }
             }

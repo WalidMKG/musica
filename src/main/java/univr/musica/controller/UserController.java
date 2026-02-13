@@ -5,6 +5,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import univr.musica.Main;
+import univr.musica.model.Model;
 import univr.musica.model.Song;
 import univr.musica.view.ViewFactory;
 
@@ -31,7 +32,7 @@ public class UserController implements Initializable {
         ViewFactory.getInstance().updateMainView("/univr/musica/fxml/User/UserDashboard.fxml");
 
         Song prova = new Song("Cazzo","Culo", "Rock", "1982");
-        Main.getSongRepository() .saveSong(prova);
+        Model.getInstance().getSongRepository() .saveSong(prova);
     }
 
     public void go_to_profile(MouseEvent mouseEvent) {

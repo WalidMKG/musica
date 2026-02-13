@@ -15,7 +15,7 @@ public class PlaybackManager {
     private final ObjectProperty<Song> currentSong = new SimpleObjectProperty<>();
     private final ObjectProperty<Song> nextSong = new SimpleObjectProperty<>();
     private final ObjectProperty<Song> prevSong = new SimpleObjectProperty<>();
-    private PlaybackManager() {}
+    public PlaybackManager() {}
 
     private final ObjectProperty<MediaPlayer.Status> playerStatus = new SimpleObjectProperty<>();
 

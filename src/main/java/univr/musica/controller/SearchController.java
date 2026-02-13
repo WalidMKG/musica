@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import univr.musica.Main;
+import univr.musica.model.Model;
 import univr.musica.model.Song;
 import univr.musica.model.CommentsRepository;
 
@@ -60,7 +61,7 @@ public class SearchController implements Initializable {
             return;
         }
         songList.clear();
-        songList.addAll(Main.getSongRepository().searchSongRep(searchTerm));
+        songList.addAll(Model.getInstance().getSongRepository().searchSongRep(searchTerm));
         search_results.setItems(songList);
     }
 }

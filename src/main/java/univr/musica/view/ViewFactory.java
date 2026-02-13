@@ -7,6 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import univr.musica.Main;
 import univr.musica.config.AppConfig;
+import univr.musica.model.Model;
 import univr.musica.model.PlaybackManager;
 import univr.musica.model.Song;
 import univr.musica.model.User;
@@ -50,7 +51,7 @@ public class ViewFactory {
             stage.close();
         }
         if (this.user != null && this.user.getLastSongId() > 0) {
-            Song s = Main.getSongRepository().getSong(this.user.getLastSongId());
+            Song s = Model.getInstance().getSongRepository().getSong(this.user.getLastSongId());
             if (s != null) {
                 PlaybackManager.getInstance().setCurrentSong(s);
                 System.out.println("Canzone caricata nel Manager: " + s.getTitle());
@@ -131,7 +132,7 @@ public class ViewFactory {
     public void loadLastUserSession() {
         int lastSongId = user.getLastSongId();
         if (lastSongId > 0) {
-            Song lastSong = Main.getSongRepository().getSong(lastSongId);
+            Song lastSong = Model.getInstance().getSongRepository().getSong(lastSongId);
             if (lastSong != null) {
                 PlaybackManager.getInstance().setCurrentSong(lastSong);
                 System.out.println("Sessione ripristinata: " + lastSong.getTitle());

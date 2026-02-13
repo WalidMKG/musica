@@ -1,7 +1,5 @@
 package univr.musica.model;
 
-import univr.musica.Main;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,8 +7,8 @@ public class UserRepository {
     private final DatabaseManager dbManager;
     private Map<String, User> userCache = new HashMap<>();
 
-    public UserRepository() {
-        this.dbManager = Main.getDatabaseManager();
+    public UserRepository(DatabaseManager dbManager) {
+        this.dbManager = dbManager;
         refreshUserCache();
     }
 

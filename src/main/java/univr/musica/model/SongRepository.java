@@ -1,12 +1,5 @@
 package univr.musica.model;
 
-import javafx.event.ActionEvent;
-import univr.musica.Main;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +9,8 @@ public class SongRepository {
     private final DatabaseManager dbManager;
     private Map<Integer, Song> songCache = new HashMap<>();
 
-    public SongRepository() {
-        this.dbManager = Main.getDatabaseManager();
+    public SongRepository(DatabaseManager dbManager) {
+        this.dbManager = dbManager;
         refreshSongCache();
     }
 

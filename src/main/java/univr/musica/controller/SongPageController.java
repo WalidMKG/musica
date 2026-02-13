@@ -68,7 +68,7 @@ public class SongPageController implements Initializable {
     }
 
     public void post_comment(ActionEvent actionEvent) {
-        Main.getCommentsRepository().saveComment(
+        Model.getInstance().getCommentsRepository().saveComment(
                 new Comments(comment_text.getText(),
                 Model.getInstance().getViewFactory().getUser().getUsername(),
                 song.getId()));

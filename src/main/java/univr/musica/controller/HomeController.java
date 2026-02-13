@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import univr.musica.Main;
+import univr.musica.model.Model;
 import univr.musica.model.Song;
 import univr.musica.view.ViewFactory;
 
@@ -84,7 +85,7 @@ public class HomeController implements Initializable {
     }
 
     private void loadMediaFromDatabase() {
-        songList.addAll(Main.getSongRepository().getAllSongs());
+        songList.addAll(Model.getInstance().getSongRepository().getAllSongs());
     }
 
 

@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import univr.musica.Main;
 import univr.musica.config.AppConfig;
+import univr.musica.model.Model;
 import univr.musica.model.Song;
 
 
@@ -112,11 +113,11 @@ public class LoadController implements Initializable {
             Song song = new Song(load_song_title.getText(), load_song_Art.getText(), load_song_Genre.getText(), yearStr);
 
             // 1. Salva e controlla il boolean
-            boolean success = Main.getSongRepository().saveSong(song);
+            boolean success = Model.getInstance().getSongRepository().saveSong(song);
 
             if (success) {
 
-                int realId = Main.getSongRepository().getLastInsertedId();
+                int realId = Model.getInstance().getSongRepository().getLastInsertedId();
                 String id = String.valueOf(realId);
 
                 System.out.println("Canzone salvata nel DB con ID: " + id);
