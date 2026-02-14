@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="primary_color" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.HomeController">
-   <children>
-      <ListView fx:id="songTest" layoutX="64.0" layoutY="421.0" prefHeight="193.0" prefWidth="421.0" />
-       <HBox alignment="CENTER" layoutX="50.0" layoutY="37.0" maxWidth="1100.0" prefHeight="300.0" prefWidth="1100.0" spacing="10" styleClass="scroll-pane">
-           <Button onAction="#scrollLeft" styleClass="scroll-button" text="&lt;" />
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<StackPane fx:id="homeStack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="primary_color" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.AdminHomeController">
+    <children>
+        <AnchorPane>
+           <children>
+               <HBox alignment="CENTER" layoutX="18.0" layoutY="15.0" maxWidth="1200.0" prefHeight="800.0" prefWidth="1200.0" spacing="10" styleClass="scroll-pane">
 
-           <ScrollPane fx:id="scrollPane" fitToHeight="true" hbarPolicy="NEVER" pannable="true" prefHeight="280.0" vbarPolicy="NEVER">
-               <content>
-                   <HBox fx:id="song_container" alignment="CENTER_LEFT" spacing="15.0" />
-               </content>
-           </ScrollPane>
-
-           <Button onAction="#scrollRight" styleClass="scroll-button" text="&gt;" />
-       </HBox>
-   </children>
-</AnchorPane>
+                   <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" pannable="true" prefHeight="280.0" vbarPolicy="NEVER">
+                       <content>
+                           <GridPane fx:id="songGrid" hgap="10" vgap="25" alignment="TOP_CENTER">
+                               <padding>
+                                   <Insets top="20" right="20" bottom="20" left="20"/>
+                               </padding>
+                               <columnConstraints>
+                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="180.0" prefWidth="180.0" />
+                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="180.0" prefWidth="180.0" />
+                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="180.0" prefWidth="180.0" />
+                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="180.0" prefWidth="180.0" />
+                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="180.0" prefWidth="180.0" />
+                               </columnConstraints>
+                           </GridPane>
+                       </content>
+                   </ScrollPane>
+               </HBox>
+           </children>
+        </AnchorPane>
+    </children>
+</StackPane>

@@ -22,7 +22,7 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
-        String username = Model.getInstance().getViewFactory().getUser().getUsername();
+        String username = Model.getInstance().getAuthenticatedUser().getUsername();
         System.out.println(Model.getInstance().getPlaybackManager().currentSongProperty());
         Model.getInstance().getUserRepository().updateLastSong(username,1);
         System.out.println("chiudioooo");

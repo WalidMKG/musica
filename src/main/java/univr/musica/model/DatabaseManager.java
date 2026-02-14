@@ -34,8 +34,19 @@ public class DatabaseManager {
             stmt.execute("CREATE TABLE IF NOT EXISTS users (" +
                     "username TEXT PRIMARY KEY, " +
                     "password TEXT, " +
-                    "is_admin INTEGER, " +
+                    "is_admin INTEGER DEFAULT 0, " +
+                    "status INTEGER DEFAULT 0, " + // 0 = Pending, 1 = Approved
                     "last_song_id INTEGER" +
+                    ")");
+
+// 2. Tabella Comments con Foreign Keys
+            stmt.execute("CREATE TABLE IF NOT EXISTS comments (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "text TEXT NOT NULL, " +
+                    "username TEXT NOT NULL, " +
+                    "song_id INTEGER, " +
+                    "FOREIGN KEY(username) REFERENCES users(username) ON DELETE CASCADE, " +
+                    "FOREIGN KEY(song_id) REFERENCES songs(id) ON DELETE CASCADE" +
                     ")");
 
 
@@ -49,36 +60,19 @@ public class DatabaseManager {
                         year   TEXT
                     )""");
 
-            stmt.executeUpdate("""
-                    CREATE TABLE IF NOT EXISTS comments (
-                        id      INTEGER PRIMARY KEY AUTOINCREMENT,
-                        text  TEXT NOT NULL,
-                        username TEXT NOT NULL,
-                        song_id  INTEGER
-                    )""");
 
-            /*stmt.executeUpdate("""
-            CREATE TABLE IF NOT EXISTS Project (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                description TEXT,
-                start_date TEXT,
-                end_date TEXT,
-                manager_id TEXT NOT NULL,
-                FOREIGN KEY (manager_id) REFERENCES users(id)
-            )""");*/
-
-
-
-           /* stmt.executeUpdate("""
-            CREATE TABLE IF NOT EXISTS ProjectAssignment (
-                assignment_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                project_id TEXT NOT NULL,
-                user_id INTEGER NOT NULL,
-                FOREIGN KEY(project_id) REFERENCES Project(project_id) ON DELETE CASCADE,
-                FOREIGN KEY(user_id) REFERENCES User(user_id) ON DELETE CASCADE,
-                UNIQUE(project_id, user_id)
-            )""");*/
+            try (ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE username = 'admin'")) {
+                if (!rs.next()) {
+                    try (PreparedStatement pstmt = conn.prepareStatement(
+                            "INSERT INTO users (username, password, is_admin, status) VALUES (?, ?, ?, ?)")) {
+                        pstmt.setString(1, "admin");
+                        pstmt.setString(2, "admin");
+                        pstmt.setInt(3, 1); // is_admin
+                        pstmt.setInt(4, 1); // status = Approved
+                        pstmt.executeUpdate();
+                    }
+                }
+            }
             
             // Create other tables as needed
             // Check if admin user exists, create if it doesn't
@@ -95,9 +89,13 @@ public class DatabaseManager {
                 }
             }
             
-        } catch (SQLException e) {
-            System.err.println("Error initializing database: " + e.getMessage());
-        }
+            } catch (SQLException e) {
+                System.err.println("Error initializing database: " + e.getMessage());
+            }
+
+
+
+
     }
     
     /**
@@ -111,7 +109,6 @@ public class DatabaseManager {
      * Execute an update query (INSERT, UPDATE, DELETE)
      */
     public int executeUpdate(String sql, Object... params) {
-        // Specifichiamo di voler tornare le chiavi generate
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -123,14 +120,17 @@ public class DatabaseManager {
 
             if (affectedRows == 0) return 0;
 
-            // Recuperiamo l'ID assegnato da SQLite
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     return generatedKeys.getInt(1);
                 }
             }
+
+
+            return affectedRows;
+
         } catch (SQLException e) {
-            System.err.println("Errore nell'inserimento con recupero ID: " + e.getMessage());
+            System.err.println("Errore executeUpdate: " + e.getMessage());
         }
         return 0;
     }

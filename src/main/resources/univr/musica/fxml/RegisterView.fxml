@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -11,11 +12,11 @@
         <Label text="Username" />
         <TextField fx:id="reg_user" />
         <Label text="Password" />
-        <TextField fx:id="reg_pwd" />
+        <PasswordField fx:id="reg_pwd" />
         <Label text="Confirm Password" />
-        <TextField fx:id="reg_pwd_confirm" />
+        <PasswordField fx:id="reg_pwd_confirm" />
         <Button fx:id="register_btn" mnemonicParsing="false" onAction="#register" text="REGISTER" />
         <Button fx:id="back_to_login" mnemonicParsing="false" onAction="#back_to_login" text="BACK" />
-        <Label fx:id="register_label" text="Label" visible="false" />
+        <Label fx:id="register_label" maxWidth="400.0" prefHeight="20.0" prefWidth="309.0" text="Label" visible="false" />
     </VBox>
 </AnchorPane>

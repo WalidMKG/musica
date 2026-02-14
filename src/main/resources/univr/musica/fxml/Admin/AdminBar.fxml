@@ -8,10 +8,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="800.0" prefWidth="250.0" spacing="20.0" styleClass="secondary-color" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.UserController">
+<VBox prefHeight="800.0" prefWidth="250.0" spacing="20.0" styleClass="secondary-color" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.Admin.AdminController">
     <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
         <VBox.margin>
             <Insets left="20.0" top="20.0" />
@@ -43,16 +45,39 @@
                 </font>
             </Label>
         </HBox>
-        <HBox fx:id="go_to_search" alignment="CENTER" onMouseClicked="#go_to_search" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar-item">
+        <HBox fx:id="go_to_users" alignment="CENTER" onMouseClicked="#go_to_users" prefHeight="50.0" prefWidth="200.0" spacing="15.0" styleClass="sidebar-item">
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                 <Image url="@../../img/ic_radio.png" />
             </ImageView>
-            <Label prefHeight="21.0" prefWidth="101.0" text="Search" textFill="#a1a1a1">
+            <Label prefHeight="27.0" prefWidth="53.0" text="Users" textFill="#a1a1a1">
                 <font>
                     <Font name="System Bold" size="18.0" />
                 </font>
             </Label>
+         <StackPane prefHeight="30.0" prefWidth="33.0">
+            <children>
+               <Circle fx:id="Users_notification_shape" fill="DODGERBLUE" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+               <Label fx:id="USers_not_label" alignment="CENTER" maxHeight="20.0" maxWidth="20.0" text="x" textAlignment="CENTER" visible="false" StackPane.alignment="CENTER" />
+            </children>
+         </StackPane>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
         </HBox>
+      <HBox fx:id="go_to_search" alignment="CENTER" onMouseClicked="#go_to_search" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar-item">
+         <children>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/ic_radio.png" />
+               </image>
+            </ImageView>
+            <Label prefHeight="21.0" prefWidth="101.0" text="Search" textFill="#a1a1a1">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
     </VBox>
     <Pane prefHeight="12.0" prefWidth="235.0" VBox.vgrow="ALWAYS" />
     <HBox fx:id="upload_btn" alignment="CENTER" onMouseClicked="#open_load_page" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="top-border" stylesheets="@../../css/style.css">
@@ -65,18 +90,26 @@
             </font>
         </Label>
     </HBox>
-   <HBox fx:id="logout_btn" alignment="CENTER" onMouseClicked="#logout_request" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar-item">
+   <HBox fx:id="logout_request" alignment="CENTER" onMouseClicked="#logout_request" prefHeight="50.0" prefWidth="200.0" spacing="15.0" styleClass="sidebar-item">
+      <padding>
+         <Insets right="10.0" />
+      </padding>
       <children>
          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@../../img/ic_radio.png" />
             </image>
          </ImageView>
-         <Label prefHeight="21.0" prefWidth="101.0" text="LOGOUT" textFill="#a1a1a1">
+         <Label prefHeight="27.0" prefWidth="75.0" text="LOGOUT" textFill="#a1a1a1">
             <font>
                <Font name="System Bold" size="18.0" />
             </font>
          </Label>
+         <StackPane prefHeight="30.0" prefWidth="33.0">
+            <children>
+               <Label fx:id="USers_not_label1" alignment="CENTER" maxHeight="20.0" maxWidth="20.0" text="x" textAlignment="CENTER" visible="false" StackPane.alignment="CENTER" />
+            </children>
+         </StackPane>
       </children>
    </HBox>
    <stylesheets>

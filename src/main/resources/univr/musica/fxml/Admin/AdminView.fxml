@@ -4,13 +4,13 @@
 
 <BorderPane  styleClass="secondary-color" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.UserController">
     <left>
-        <fx:include source="UserBar.fxml" />
+        <fx:include source="AdminBar.fxml" />
     </left>
 
     <center>
         <BorderPane fx:id="mainView" >
 
-            <center><fx:include source="UserDashboard.fxml" /></center>
+            <center><fx:include source="AdminDash.fxml" /></center>
 
             <bottom>
                 <fx:include source="MediaBar.fxml" />

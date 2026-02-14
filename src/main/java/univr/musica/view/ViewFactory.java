@@ -15,122 +15,112 @@ import univr.musica.model.User;
 import java.io.IOException;
 import java.util.Objects;
 
-// Caricamento del font (es. Montserrat Regular)
+
 
 
 public class ViewFactory {
-    private static ViewFactory instance;
+    private final Model model;
     private BorderPane mainView;
-    private User user;
+    private Stage stage;
 
-    Stage stage;
-
-    public static ViewFactory getInstance() {
-        if (instance == null) {
-            instance = new ViewFactory();
-        }
-        return instance;
-    }
-
-    public void showLoginWindow() {
-        if (stage != null) {
-            stage.close();
-        }
-        createStage("/univr/musica/fxml/LoginView.fxml", AppConfig.APP_TITLE);
-    }
-
-    public void showRegisterWindow() {
-        if (stage != null) {
-            stage.close();
-        }
-        createStage("/univr/musica/fxml/RegisterView.fxml", "Registrazione");
-    }
-
-    public void showMainWindow(Stage currentStage) {
-        if (stage != null) {
-            stage.close();
-        }
-        if (this.user != null && this.user.getLastSongId() > 0) {
-            Song s = Model.getInstance().getSongRepository().getSong(this.user.getLastSongId());
-            if (s != null) {
-                PlaybackManager.getInstance().setCurrentSong(s);
-                System.out.println("Canzone caricata nel Manager: " + s.getTitle());
-            }
-        }
-        createStage("/univr/musica/fxml/User/UserView.fxml", AppConfig.APP_TITLE);
+    public ViewFactory(Model model) {
+        this.model = model;
     }
 
 
-    public void setMainView(BorderPane mainView) {
-        this.mainView = mainView;
-    }
-
-    public void updateMainView(String path) {
+    private Scene loadScene(String fxmlPath) {
         try {
-            Node node = createNode(path);
-
-
-            if (this.mainView != null && node != null) {
-                this.mainView.setCenter(node);
-                System.out.println("DEBUG: Vista aggiornata con successo!");
-            } else {
-                System.out.println("DEBUG: Errore! mainView è " + (this.mainView == null ? "NULL" : "OK")
-                        + " e node è " + (node == null ? "NULL" : "OK"));
-            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            loader.setControllerFactory(controllerClass -> {
+                try {
+                    return controllerClass.getConstructor(Model.class)
+                            .newInstance(Model.getInstance());
+                } catch (Exception e) {
+                    try { return controllerClass.getDeclaredConstructor().newInstance(); }
+                    catch (Exception ex) { throw new RuntimeException(ex); }
+                }
+            });
+            return new Scene(loader.load());
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public Node createNode(String path) throws IOException {
-        try {
-            return FXMLLoader.load(Objects.requireNonNull(getClass().getResource(path)));
-        } catch (IOException e) {
+            System.err.println("Errore caricamento FXML: " + fxmlPath);
             e.printStackTrace();
             return null;
         }
     }
 
+    public void setMainView(BorderPane mainView) {
 
-    private void createStage(String fxmlPath, String title) {
+        this.mainView = mainView;
+
+    }
+
+
+    public void updateMainView(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Scene scene = new Scene(loader.load());
-            Stage stage = new Stage();
-            this.stage = stage;
-            stage.setScene(scene);
-            stage.setTitle(title);
-            stage.show();
+            loader.setControllerFactory(controllerClass -> {
+                try {
+                    return controllerClass.getConstructor(Model.class)
+                            .newInstance(Model.getInstance());
+                } catch (Exception e) {
+                    try { return controllerClass.getDeclaredConstructor().newInstance(); }
+                    catch (Exception ex) { throw new RuntimeException(ex); }
+                }
+            });
+
+            Node node = loader.load();
+
+            if (this.mainView != null) {
+                this.mainView.setCenter(node);
+                System.out.println(" Vista centrale aggiornata con: " + fxmlPath);
+            } else {
+                System.err.println("ERRORE: mainView è null! Non posso aggiornare il centro.");
+            }
+        } catch (IOException e) {
+            System.err.println("Errore durante l'update della MainView: " + fxmlPath);
+            e.printStackTrace();
+        }
+    }
+
+    public void showLoginWindow() {
+        Scene scene = loadScene("/univr/musica/fxml/LoginView.fxml");
+        if (stage == null) {
+            stage = new Stage();
             stage.setResizable(false);
-        } catch (IOException e) {
-            System.err.println("Errore caricamento vista: " + fxmlPath);
-            e.printStackTrace();
         }
+        stage.setScene(scene);
+        stage.setTitle(AppConfig.APP_TITLE);
+        stage.show();
     }
 
-    public void createScene(String fxmlPath, String title) throws IOException {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-        } catch (IOException e) {
-            System.err.println("Errore caricamento vista: " + fxmlPath);
-            e.printStackTrace();
-        }
+    public void showRegisterWindow() {
+        Scene scene = loadScene("/univr/musica/fxml/RegisterView.fxml");
+        stage.setScene(scene);
+        stage.setTitle("Registrazione");
     }
 
-    public void setUser(User user) {
-        this.user = user;
-
+    public void showMainWindow() {
+        loadLastUserSession();
+        Scene scene = loadScene("/univr/musica/fxml/User/UserView.fxml");
+        stage.setScene(scene);
+        stage.setTitle(AppConfig.APP_TITLE);
+        stage.setResizable(true);
+        stage.centerOnScreen();
     }
 
-    public User getUser() {
-        return user;
+    public void showAdminWindow() {
+        loadLastUserSession();
+        Scene scene = loadScene("/univr/musica/fxml/Admin/AdminView.fxml");
+        stage.setScene(scene);
+        stage.setTitle(AppConfig.APP_TITLE);
+        stage.setResizable(true);
+        stage.centerOnScreen();
     }
+
+
 
     public void loadLastUserSession() {
-        int lastSongId = user.getLastSongId();
+        int lastSongId = model.getAuthenticatedUser().getLastSongId();
         if (lastSongId > 0) {
             Song lastSong = Model.getInstance().getSongRepository().getSong(lastSongId);
             if (lastSong != null) {
@@ -139,4 +129,19 @@ public class ViewFactory {
             }
         }
     }
+
+    public void logout() {
+        PlaybackManager.getInstance().stop();
+
+        if (this.stage != null) {
+            this.stage.close();
+        }
+
+
+        this.mainView = null;
+
+
+        showLoginWindow();
+    }
+
 }

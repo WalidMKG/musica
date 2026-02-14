@@ -117,6 +117,16 @@ public class PlaybackManager {
         return mediaPlayer;
     }
 
+    public void stop() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.dispose();
+            mediaPlayer = null;
+            playerStatus.set(MediaPlayer.Status.STOPPED);
+            System.out.println("Riproduzione interrotta e risorse liberate.");
+        }
+    }
+
 
 
 }

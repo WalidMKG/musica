@@ -1,9 +1,8 @@
-package univr.musica.controller;
+package univr.musica.controller.Admin;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -12,8 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import univr.musica.Main;
 import univr.musica.model.Comments;
 import univr.musica.model.Model;
 import univr.musica.model.PlaybackManager;
@@ -22,8 +19,8 @@ import univr.musica.model.Song;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SongPageController implements Initializable {
-
+public class AdminSongPageController implements Initializable {
+    private final Model model;
     public Label song_title;
     public HBox close_popup;
     public Button play_cur_song;
@@ -37,6 +34,10 @@ public class SongPageController implements Initializable {
     public Button pdf_btn;
     public Button video_btn;
     private Song song;
+
+    public AdminSongPageController(Model model) {
+        this.model = model;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -68,9 +69,33 @@ public class SongPageController implements Initializable {
     }
 
     public void post_comment(ActionEvent actionEvent) {
+        System.out.println("Commento postato : "+ comment_text.getText());
         Model.getInstance().getCommentsRepository().saveComment(
                 new Comments(comment_text.getText(),
-                Model.getInstance().getViewFactory().getUser().getUsername(),
+                model.getAuthenticatedUser().getUsername(),
                 song.getId()));
     }
+
+    public void deleteSong(ActionEvent actionEvent) {
+        if (song != null) {
+            System.out.println("Eliminazione canzone ID: " + song.getId());
+            model.getSongRepository().deleteSong(song.getId());
+            Node source = (Node) actionEvent.getSource();
+            closeOverlay(source);
+        }
+    }
+
+
+    private void closeOverlay(Node node) {
+        Node pageToClose = node;
+        while (pageToClose.getParent() != null && !(pageToClose.getParent() instanceof StackPane)) {
+            pageToClose = pageToClose.getParent();
+        }
+
+        if (pageToClose.getParent() instanceof StackPane container) {
+            container.getChildren().remove(pageToClose);
+        }
+    }
+
+
 }

@@ -9,7 +9,7 @@ public class CommentsRepository {
     private final DatabaseManager dbManager;
     private Map<Integer, Comments> CommentsCache = new HashMap<>();
 
-    public CommentsRepository(DatabaseManager dbManager) {
+    public CommentsRepository(Model model, DatabaseManager dbManager) {
         this.dbManager = dbManager;
         refreshCommentsCache();
     }

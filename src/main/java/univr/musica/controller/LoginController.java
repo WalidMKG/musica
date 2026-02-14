@@ -6,17 +6,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import univr.musica.Main;
 import univr.musica.model.Model;
 import univr.musica.model.Song;
 import univr.musica.model.User;
 import univr.musica.model.UserRepository;
-import univr.musica.view.ViewFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+    private final Model model;
     public Button login_btn;
     public TextField username_txt;
     public ChoiceBox<String> login_choice;
@@ -26,6 +25,10 @@ public class LoginController implements Initializable {
     @FXML
     private Label welcomeText;
     private UserRepository userRepository;
+
+    public LoginController(Model model) {
+        this.model = model;
+    }
 
 
     @Override
@@ -64,19 +67,29 @@ public class LoginController implements Initializable {
 
     private void checkLogin(String password, User user) {
         if (user != null && user.checkPassword(password)) {
-            Model.getInstance().getViewFactory().setUser(user);
+
+            if (!user.isAdmin() && !user.getStatus()) {
+                login_lbl.setVisible(true);
+                login_lbl.setText("Account in attesa di approvazione admin.");
+                login_lbl.setTextFill(Color.ORANGE);
+                return;
+            }
+
+            model.setAuthenticatedUser(user);
 
             int lastId = user.getLastSongId();
             if (lastId > 0) {
-                Song s = Model.getInstance().getSongRepository().getSong(lastId);
+                Song s = model.getSongRepository().getSong(lastId);
                 if (s != null) {
-                    Model.getInstance().getPlaybackManager().setCurrentSong(s);
+                    model.getPlaybackManager().setCurrentSong(s);
                     System.out.println("DEBUG: Sessione ripristinata per " + s.getTitle());
                 }
             }
-
-            // 3. Ora apriamo la finestra
-            Model.getInstance().getViewFactory().showMainWindow((Stage)login_lbl.getScene().getWindow());
+            if (user.isAdmin()) {
+                model.getViewFactory().showAdminWindow();
+            } else {
+                model.getViewFactory().showMainWindow();
+            }
         } else {
             login_lbl.setVisible(true);
             login_lbl.setText("Login Error");
@@ -88,6 +101,6 @@ public class LoginController implements Initializable {
     //Caso in cui l'utente clicca il tasto per registrarsi
     public void register(ActionEvent actionEvent) {
         Stage currentStage = (Stage) register_btn.getScene().getWindow();
-        ViewFactory.getInstance().showRegisterWindow();
+        model.getViewFactory().showRegisterWindow();
     }
 }

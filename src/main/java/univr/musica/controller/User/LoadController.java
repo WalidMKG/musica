@@ -1,4 +1,4 @@
-package univr.musica.controller;
+package univr.musica.controller.User;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-import univr.musica.Main;
 import univr.musica.config.AppConfig;
 import univr.musica.model.Model;
 import univr.musica.model.Song;

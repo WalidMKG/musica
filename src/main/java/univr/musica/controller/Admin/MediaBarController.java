@@ -1,4 +1,4 @@
-package univr.musica.controller;
+package univr.musica.controller.Admin;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.MediaPlayer;
-import univr.musica.Main;
 import univr.musica.model.Model;
 import univr.musica.model.PlaybackManager;
 import univr.musica.model.Song;
@@ -15,6 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MediaBarController implements Initializable {
+    private final Model model;
     public ImageView play_music;
     public Label currentArtName;
     public Label currentSongTitle;
@@ -22,12 +22,15 @@ public class MediaBarController implements Initializable {
     MediaBarController mediaBarController;
     Image image = new Image(getClass().getResource("/univr/musica/img/ic_home.png").toExternalForm());
 
+    public MediaBarController(Model model) {
+        this.model = model;
+    }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        PlaybackManager.getInstance().setCurrentSong(Model.getInstance().getSongRepository().getSong(Model.getInstance().getViewFactory().getUser().getLastSongId()));
-        System.out.println("Ultima canzone "+Model.getInstance().getViewFactory().getUser().getLastSongId());
+        PlaybackManager.getInstance().setCurrentSong(Model.getInstance().getSongRepository().getSong(model.getAuthenticatedUser().getLastSongId()));
+        System.out.println("Ultima canzone "+ model.getAuthenticatedUser().getLastSongId());
         PlaybackManager.getInstance().currentSongProperty().addListener((obs, oldSong, newSong) -> {
             if (newSong != null) {
 
@@ -56,7 +59,7 @@ public class MediaBarController implements Initializable {
     @FXML
     public void play_music() {
         MediaPlayer player = PlaybackManager.getInstance().getMediaPlayer();
-        System.out.println("Ultima canzone "+Model.getInstance().getViewFactory().getUser().getLastSongId());
+        System.out.println("Ultima canzone "+ model.getAuthenticatedUser().getLastSongId());
         if (player == null) {
             System.out.println("Nessuna canzone caricata. Selezionane una prima di premere Play!");
             return;

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+
+<?import javafx.scene.control.Separator?>
+<VBox spacing="20" style="-fx-padding: 20;" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.Admin.AdminUsersController">
+
+    <VBox spacing="10" VBox.vgrow="ALWAYS">
+        <Label text="Richieste di Registrazione (Pending)" style="-fx-font-size: 18; -fx-text-fill: #e67e22; -fx-font-weight: bold;"/>
+        <TableView fx:id="pendingTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="col_pending_user" text="Username" prefWidth="200" />
+                <TableColumn fx:id="col_pending_actions" text="Azioni" prefWidth="300" />
+            </columns>
+        </TableView>
+    </VBox>
+
+    <Separator />
+
+    <VBox spacing="10" VBox.vgrow="ALWAYS">
+        <Label text="Utenti Registrati (Attivi)" style="-fx-font-size: 18; -fx-text-fill: #27ae60; -fx-font-weight: bold;"/>
+        <TableView fx:id="activeTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="col_active_user" text="Username" prefWidth="200" />
+                <TableColumn fx:id="col_active_actions" text="Moderazione" prefWidth="300" />
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>

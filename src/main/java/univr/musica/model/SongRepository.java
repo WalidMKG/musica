@@ -1,5 +1,7 @@
 package univr.musica.model;
 
+import javafx.event.ActionEvent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +11,7 @@ public class SongRepository {
     private final DatabaseManager dbManager;
     private Map<Integer, Song> songCache = new HashMap<>();
 
-    public SongRepository(DatabaseManager dbManager) {
+    public SongRepository(Model model, DatabaseManager dbManager) {
         this.dbManager = dbManager;
         refreshSongCache();
     }
@@ -89,6 +91,26 @@ public class SongRepository {
         return songs;
     }
 
+    public List<Song> getLatestSongs(int limit) {
+        List<Song> songs = new ArrayList<>();
+        String sql = "SELECT id, title, author, genre, year FROM songs ORDER BY id DESC LIMIT ?";
+
+        dbManager.executeQuery(sql, rs -> {
+            while (rs.next()) {
+                songs.add(new Song(
+                        rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getString("genre"),
+                        rs.getString("year")
+                ));
+            }
+            return null;
+        }, limit);
+
+        return songs;
+    }
+
 
     public List<Song> searchSongRep(String searchTerm) {
         List<Song> songs = new ArrayList<>();
@@ -110,6 +132,27 @@ public class SongRepository {
         }, "%" + searchTerm + "%", "%" + searchTerm + "%");
 
         return songs;
+    }
+
+
+    public void deleteSong(int songID) {
+        Song songToDelete = getSong(songID);
+
+        if (songToDelete == null) {
+            System.out.println("DEBUG: Errore! Canzone con ID " + songID + " non trovata nella cache.");
+            return;
+        }
+
+        String title = songToDelete.getTitle();
+
+        int success = dbManager.executeUpdate("DELETE FROM songs WHERE id = ?", songID);
+
+        if (success > 0) {
+            songCache.remove(songID);
+            System.out.println("DEBUG: Song '" + title + "' rimossa con successo dal DB e dalla cache.");
+        } else {
+            System.out.println("DEBUG: Il database non ha eliminato alcuna riga per l'ID: " + songID);
+        }
     }
 
 }

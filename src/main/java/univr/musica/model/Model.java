@@ -6,7 +6,7 @@ public class Model {
 
     private  static Model model;
     private  ViewFactory viewFactory;
-    private  User authenticatedUser = null;
+    private  User authenticatedUser ;
     private  DatabaseManager dbManager;
     private  UserRepository userRepository;
     private  CommentsRepository commentsRepository;
@@ -16,16 +16,15 @@ public class Model {
 
 
     private Model() {
-        this.viewFactory = new ViewFactory();
+        this.viewFactory = new ViewFactory(this);
         this.dbManager = new DatabaseManager();
 
-        this.userRepository = new UserRepository(dbManager);
-        this.commentsRepository = new CommentsRepository(dbManager);
-        this.songRepository = new  SongRepository(dbManager);
+
+        this.userRepository = new UserRepository(this, dbManager);
+        this.songRepository = new SongRepository(this, dbManager);
+        this.commentsRepository = new CommentsRepository(this, dbManager);
 
         this.playbackManager = new PlaybackManager();
-
-
     }
 
 
@@ -48,6 +47,8 @@ public class Model {
         return songRepository;
     }
 
+    public User getAuthenticatedUser() { return authenticatedUser; }
+    public void setAuthenticatedUser(User user) { this.authenticatedUser = user; }
 
 
     public ViewFactory getViewFactory() {

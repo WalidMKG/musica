@@ -1,8 +1,7 @@
-package univr.musica.controller;
+package univr.musica.controller.User;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -10,8 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="700.0" minWidth="1000.0" prefHeight="700.0" prefWidth="1100.0" styleClass="anchor-pane" stylesheets="@../../css/SongPage.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.SongPageController">
+<AnchorPane minHeight="700.0" minWidth="1000.0" prefHeight="700.0" prefWidth="1100.0" styleClass="anchor-pane" stylesheets="@../../css/SongPage.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.Admin.AdminSongPageController">
     <children>
       <VBox fx:id="vbox1" layoutX="14.0" layoutY="51.0" prefHeight="600.0" prefWidth="500.0" styleClass="vbox1">
          <children>
@@ -35,13 +36,9 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="video_btn" mnemonicParsing="false" onAction="#play_cur_song">
+            <Button fx:id="delteBtn" mnemonicParsing="false" onAction="#deleteSong">
                <graphic>
-                  <ImageView fitHeight="29.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../img/ic_play.png" />
-                     </image>
-                  </ImageView>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CANCELLA" />
                </graphic>
             </Button>
          </children>

@@ -19,7 +19,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
-        this.isActive = false;
+        this.isActive = isActive;
         this.last_song_id = last_song_id;
 
     }
@@ -73,11 +73,9 @@ public class User {
         return isActive;
     }
 
-
     public boolean isAdmin() {
         return isAdmin;
     }
-
 
     public void setLastSongId(int songId) {
         this.last_song_id = songId;
@@ -85,5 +83,9 @@ public class User {
 
     public int getLastSongId() {
         return last_song_id;
+    }
+
+    public void setStatus(boolean b) {
+        this.isActive = b;
     }
 }
