@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Repository che gestisce la tabella delle canzoni
+ */
 public class SongRepository {
     private final DatabaseManager dbManager;
     private Map<Integer, Song> songCache = new HashMap<>();
@@ -16,6 +19,9 @@ public class SongRepository {
         refreshSongCache();
     }
 
+    /**
+     * Aggiornamento delal cache delle canzoni
+     */
     private void refreshSongCache() {
         songCache.clear();
 
@@ -38,10 +44,20 @@ public class SongRepository {
         );
     }
 
+    /**
+     * Partendo dall'id ritorna la canzone mappata nella cache
+     * @param id
+     * @return
+     */
     public Song getSong(int id) {
         return songCache.get(id);
     }
 
+    /**
+     * Salva la canzone nella base di dati e aggiorna la cache
+     * @param song
+     * @return
+     */
     public boolean saveSong(Song song) {
         int rowsAffected = dbManager.executeUpdate(
                 "INSERT INTO songs (title, author, genre, year) VALUES (?, ?, ?, ?)",
@@ -60,6 +76,10 @@ public class SongRepository {
         return false;
     }
 
+    /**
+     * Ritorna l'ultima canzone inserita
+     * @return
+     */
     public int getLastInsertedId() {
         return dbManager.executeQuery("SELECT id FROM songs ORDER BY id DESC LIMIT 1", rs -> {
             if (rs.next()) {
@@ -91,6 +111,11 @@ public class SongRepository {
         return songs;
     }
 
+    /**
+     * Ritorna le ultime n canzoni inserite, dove n = limit.
+     * @param limit
+     * @return
+     */
     public List<Song> getLatestSongs(int limit) {
         List<Song> songs = new ArrayList<>();
         String sql = "SELECT id, title, author, genre, year FROM songs ORDER BY id DESC LIMIT ?";
@@ -111,7 +136,11 @@ public class SongRepository {
         return songs;
     }
 
-
+    /**
+     * Ricerca la base di dati delle canzoni a partire dalla stringa SearchTerm, che può essere titolo e autore.
+     * @param searchTerm
+     * @return
+     */
     public List<Song> searchSongRep(String searchTerm) {
         List<Song> songs = new ArrayList<>();
 
@@ -134,7 +163,10 @@ public class SongRepository {
         return songs;
     }
 
-
+    /**
+     * Cancella la canzone dal db
+     * @param songID
+     */
     public void deleteSong(int songID) {
         Song songToDelete = getSong(songID);
 

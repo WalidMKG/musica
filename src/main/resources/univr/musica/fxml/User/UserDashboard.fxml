@@ -8,7 +8,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<StackPane fx:id="homeStack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="primary_color" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.AdminHomeController">
+<StackPane fx:id="homeStack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="primary_color" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.HomeController">
     <children>
         <AnchorPane>
            <children>

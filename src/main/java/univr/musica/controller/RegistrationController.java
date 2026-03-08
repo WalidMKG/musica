@@ -9,6 +9,10 @@ import javafx.scene.paint.Color;
 import univr.musica.model.Model;
 import univr.musica.model.User;
 
+/**
+ * Classe che gestisce la registrazione dell'utente
+ */
+
 public class RegistrationController {
     private final Model model;
     public TextField reg_user;
@@ -27,6 +31,11 @@ public class RegistrationController {
         register_label.setVisible(false);
     }
 
+    /**
+     * Controlla la validità del sign-in, l'user deve essere non preso e la password di conferma deve coincidere, genera errori
+     * mostrati aall'utente in caso
+     * @param actionEvent
+     */
     public void register(ActionEvent actionEvent) {
         String username = reg_user.getText();
         String password = reg_pwd.getText();
@@ -53,10 +62,20 @@ public class RegistrationController {
         reg_pwd_confirm.clear();
     }
 
+    /**
+     * Controlla che i due campi password coincidano
+     * @param password1
+     * @param password2
+     * @return
+     */
     private boolean passwordsMatch(String password1, String password2) {
         return password1.equals(password2) && !password1.isEmpty();
     }
 
+    /**
+     * Button back che riporta alla login view
+     * @param actionEvent
+     */
     public void back_to_login(ActionEvent actionEvent) {
         model.getViewFactory().showLoginWindow();
     }

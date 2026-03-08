@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Reposistory che gestisce la tabella dei commenti all'interno della base di dati.
+ * Gestisce inserimento, rimozione, oltre alal comment cache
+ */
 public class CommentsRepository {
     private final DatabaseManager dbManager;
     private Map<Integer, Comments> CommentsCache = new HashMap<>();
@@ -38,6 +42,12 @@ public class CommentsRepository {
         return CommentsCache.get(id);
     }
 
+    /**
+     * Preso un object comment viene messo nella base di dati
+     * Allora viene preso l'id appena generato e usato per mappare il nuovo oggetto nella cache
+     * @param comment
+     * @return
+     */
     public boolean saveComment(Comments comment) {
         int rowsAffected = dbManager.executeUpdate(
                 "INSERT INTO comments (text, username, song_id) VALUES (?, ?, ?)",
@@ -53,6 +63,10 @@ public class CommentsRepository {
         return false;
     }
 
+    /**
+     * Metodo che ritorna l'id dell'ultimo commento
+     * @return
+     */
     public int getLastInsertedId() {
         return dbManager.executeQuery("SELECT id FROM comments ORDER BY id DESC LIMIT 1", rs -> {
             if (rs.next()) {
@@ -63,7 +77,11 @@ public class CommentsRepository {
     }
 
 
-
+    /**
+     * Ricerca di commenti nella base di dati a partire dalla canzone che si considera
+     * @param songID
+     * @return
+     */
     public List<Comments> searchCommentsRep(int songID) {
         List<Comments> comments = new ArrayList<>();
 

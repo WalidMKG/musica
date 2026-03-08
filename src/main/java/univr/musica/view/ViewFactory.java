@@ -15,8 +15,10 @@ import univr.musica.model.User;
 import java.io.IOException;
 import java.util.Objects;
 
-
-
+/**
+ * Classe viewfactory.
+ * Questa gestisce tutto ciò che riguarda la gestione delle viste, caricamtno stage e scene
+ */
 
 public class ViewFactory {
     private final Model model;
@@ -27,7 +29,13 @@ public class ViewFactory {
         this.model = model;
     }
 
-
+    /**
+     * Funzione che carica una scene.
+     * Riceve il path del file fxml e lo carica.
+     * Inoltre prepara il controller della nuova view passando il model al costruttore.
+     * @param fxmlPath
+     * @return
+     */
     private Scene loadScene(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -48,13 +56,20 @@ public class ViewFactory {
         }
     }
 
+    /**
+     * Setta la mainView della viewfactory
+     * @param mainView
+     */
     public void setMainView(BorderPane mainView) {
 
         this.mainView = mainView;
 
     }
 
-
+    /**
+     * Aggiorna la main view con un nuovo fxml ricevuto
+     * @param fxmlPath
+     */
     public void updateMainView(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -82,6 +97,9 @@ public class ViewFactory {
         }
     }
 
+    /**
+     * metodo eseguito per ritornare alla login view
+     */
     public void showLoginWindow() {
         Scene scene = loadScene("/univr/musica/fxml/LoginView.fxml");
         if (stage == null) {
@@ -92,6 +110,9 @@ public class ViewFactory {
         stage.setTitle(AppConfig.APP_TITLE);
         stage.show();
     }
+    /**
+     * metodo eseguito per ritornare alla register view
+     */
 
     public void showRegisterWindow() {
         Scene scene = loadScene("/univr/musica/fxml/RegisterView.fxml");
@@ -99,6 +120,9 @@ public class ViewFactory {
         stage.setTitle("Registrazione");
     }
 
+    /**
+     * metodo eseguito per caricare la main view dell'USER
+     */
     public void showMainWindow() {
         loadLastUserSession();
         Scene scene = loadScene("/univr/musica/fxml/User/UserView.fxml");
@@ -108,6 +132,9 @@ public class ViewFactory {
         stage.centerOnScreen();
     }
 
+    /**
+     * Metodo per caricare la main view dell'ADMIN
+     */
     public void showAdminWindow() {
         loadLastUserSession();
         Scene scene = loadScene("/univr/musica/fxml/Admin/AdminView.fxml");
@@ -130,6 +157,10 @@ public class ViewFactory {
         }
     }
 
+    /**
+     * Metodo che gestisce la richiesta di logout
+     * Ferma il playbackmanager, chiude lo stage e torna al login
+     */
     public void logout() {
         PlaybackManager.getInstance().stop();
 
