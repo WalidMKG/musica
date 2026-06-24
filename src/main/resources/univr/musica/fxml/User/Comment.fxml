@@ -2,10 +2,32 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="90.0" prefWidth="496.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.CommentController">
-   <children>
-      <Label fx:id="comment_username" layoutX="14.0" layoutY="6.0" maxHeight="20.0" maxWidth="125.0" prefHeight="20.0" prefWidth="125.0" text="Label" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      <Label fx:id="comment_text" layoutX="14.0" layoutY="23.0" text="Label" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0" />
-   </children>
-</AnchorPane>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<VBox prefWidth="496.0" spacing="8.0" style="-fx-background-color: #2b2b2b; -fx-background-radius: 8;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.CommentController">
+    <children>
+        <Label fx:id="comment_username" text="Label" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Label>
+
+        <TextFlow>
+            <children>
+                <Text fx:id="comment_text" fill="WHITE">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                </Text>
+            </children>
+        </TextFlow>
+    </children>
+
+    <padding>
+        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+    </padding>
+</VBox>

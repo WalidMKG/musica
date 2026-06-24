@@ -45,14 +45,6 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadMediaFromDatabase();
 
-        //songTest.setItems(songList);
-
-        /*songTest.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                System.out.println("Selezionato: " + newVal.getTitle());
-                System.out.println(newVal.getTitle());
-            }
-        });*/
 
         int column = 0;
         int row = 1;

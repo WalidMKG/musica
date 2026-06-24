@@ -67,8 +67,7 @@ public class CommentsRepository {
     public List<Comments> searchCommentsRep(int songID) {
         List<Comments> comments = new ArrayList<>();
 
-        String sql = "SELECT text, username, song_id FROM comments " +
-                "WHERE song_id LIKE ? ";
+        String sql = "SELECT id, text, username, song_id FROM comments WHERE song_id = ?";
 
         dbManager.executeQuery(sql, rs -> {
             while (rs.next()) {
@@ -80,7 +79,7 @@ public class CommentsRepository {
                 ));
             }
             return null;
-        }, "%" + songID + "%");
+        }, songID); // <-- intero, non "%" + songID + "%"
 
         return comments;
     }
