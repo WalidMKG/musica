@@ -6,6 +6,9 @@ import java.awt.Desktop;
 import java.io.File;
 import java.util.Objects;
 
+/**
+ * Classe che descrive un oggetto song
+ */
 public class Song {
     private int id;
     private String title;
@@ -14,7 +17,15 @@ public class Song {
     private String year;
     private String path = "/1.jpg";
 
-
+    /**
+     * Crea una canzone ricevuta con id, autore, titolo, genere e anno
+     * Questo viene solitamente chiamato noto l'id ovvero con song presa dal database
+     * @param id
+     * @param title
+     * @param author
+     * @param genre
+     * @param year
+     */
     public Song(int id,String title, String author, String genre, String year){
         this.title = title;
         this.author = author;
@@ -24,7 +35,13 @@ public class Song {
         path = "/"+ id + ".jpg";
     }
 
-
+    /**
+     *
+     * @param title
+     * @param author
+     * @param genre
+     * @param year
+     */
     public Song(String title, String author, String genre, String year){
         this.title = title;
         this.author = author;
@@ -32,6 +49,12 @@ public class Song {
         this.year = year;
     }
 
+    /**
+     *
+     * @param title
+     * @param author
+     * @param genre
+     */
     public Song(String title, String author, String genre){
         this.title = title;
         this.author = author;
@@ -66,6 +89,10 @@ public class Song {
         return id + pathType;
     }
 
+    /**
+     * Carica la cover prendendo il file dal path ottenuto da config + id canzone
+     * @return cover
+     */
     public Image getCover() {
         File file = new File(AppConfig.DATA_DIR + "/jpg/" + id + ".jpg");
 

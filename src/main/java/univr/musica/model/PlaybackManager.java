@@ -9,6 +9,9 @@ import univr.musica.config.AppConfig;
 import java.io.File;
 import java.net.URL;
 
+/**
+ * Classe del palyback manager ch egestice la riproduzione dei brani el programma
+ */
 public class PlaybackManager {
     private static PlaybackManager instance;
     private MediaPlayer mediaPlayer;
@@ -29,13 +32,19 @@ public class PlaybackManager {
     }
 
 
-
-
+    /**
+     * Ritorna la canzone attualmente in riproduzione
+     * @return
+     */
     public ObjectProperty<Song> currentSongProperty() {
         return currentSong;
     }
 
-
+    /**
+     * Cambia la proprietà currentsong ovvero rimane in ascolto e cambia la canzone attuale
+     * Gestisce poi la ricerca del file e esegue la canzone richiesta da song
+     * @param song canzone richiesta
+     */
     public void setCurrentSong(Song song) {
         this.currentSong.set(song); // Notifica la barra (titolo, autore, ecc.)
 
@@ -67,7 +76,10 @@ public class PlaybackManager {
         }
     }
 
-
+    /**
+     * Riproduce la canzone ricevuta
+     * @param song canzone da mettere in play
+     */
     public void play(Song song) {
         if (song == null) return;
 
@@ -103,6 +115,9 @@ public class PlaybackManager {
         }
     }
 
+    /**
+     * Gestisce il play button
+     */
     public void togglePlayPause() {
         if (mediaPlayer == null) return;
 
@@ -117,6 +132,9 @@ public class PlaybackManager {
         return mediaPlayer;
     }
 
+    /**
+     * Ferma la riproduzione
+     */
     public void stop() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();

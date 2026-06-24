@@ -14,6 +14,11 @@ import univr.musica.model.UserRepository;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller della login view
+ */
+
+
 public class LoginController implements Initializable {
     private final Model model;
     public Button login_btn;
@@ -26,11 +31,20 @@ public class LoginController implements Initializable {
     private Label welcomeText;
     private UserRepository userRepository;
 
+
+    /**
+     * inizializza il controller con il model singleton
+     * @param model
+     */
     public LoginController(Model model) {
         this.model = model;
     }
 
-
+    /**
+     * Inizializza caricando la userRep e la choiceBox
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userRepository = Model.getInstance().getUserRepository();
@@ -39,11 +53,16 @@ public class LoginController implements Initializable {
     }
 
 
+    /**
+     * Metodo chiamato dal click del login button
+     * @param actionEvent
+     */
     public void login(ActionEvent actionEvent) {
         String username = username_txt.getText();
         String password = pwd_fld.getText();
 
         //Se al login i campi sono vuoti da errore
+
         if(username.isEmpty() || password.isEmpty()) {
             login_lbl.setVisible(true);
             login_lbl.setText("Inserire username e password validi");
@@ -65,6 +84,13 @@ public class LoginController implements Initializable {
         }
     }
 
+
+    /**
+     * Metodo che controlla la validita del login,
+     * gestisce : controllo password, controllo attivazione user
+     * @param password
+     * @param user
+     */
     private void checkLogin(String password, User user) {
         if (user != null && user.checkPassword(password)) {
 
@@ -98,7 +124,10 @@ public class LoginController implements Initializable {
         System.out.println("ciaone");
     }
 
-    //Caso in cui l'utente clicca il tasto per registrarsi
+    /**
+     * Metodo che rimanda alla registrazione
+     * @param actionEvent
+     */
     public void register(ActionEvent actionEvent) {
         Stage currentStage = (Stage) register_btn.getScene().getWindow();
         model.getViewFactory().showRegisterWindow();

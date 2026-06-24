@@ -5,15 +5,22 @@ import univr.musica.config.AppConfig;
 import java.io.File;
 import java.sql.*;
 
+/**
+ * Classe centrale che gestisce il database, verrà usato dai vari repository.
+ * Funge da centro del database, la gestione delle singole tabelle viene fatta dalle repository
+ */
 public class DatabaseManager {
     private  String dbUrl;
     
     public DatabaseManager() {
         this(AppConfig.DATABASE_PATH);
     }
-    
+
+    /**
+     * Inizializza il database, creando il file .db se non esiste
+     * @param dbPath
+     */
     public DatabaseManager(String dbPath) {
-        // Create parent directories if they don't exist
         File dbFile = new File(dbPath);
         if (dbFile.getParentFile() != null && !dbFile.getParentFile().exists()) {
             dbFile.getParentFile().mkdirs();

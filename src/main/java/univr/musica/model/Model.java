@@ -2,6 +2,10 @@ package univr.musica.model;
 
 import univr.musica.view.ViewFactory;
 
+/**
+ * Classe che definisce il Model.
+ * Questo viene istanziato come un singleton e fa da parte centrale della logica del programma
+ */
 public class Model {
 
     private  static Model model;
@@ -14,7 +18,10 @@ public class Model {
     private  SongRepository songRepository;
 
 
-
+    /**
+     * Istanzia viewfactory, dbmanager e le varie repository del database
+     * Questo riimarrano nel model in caso di necessità saranno chiamate da qui
+     */
     private Model() {
         this.viewFactory = new ViewFactory(this);
         this.dbManager = new DatabaseManager();
@@ -27,6 +34,10 @@ public class Model {
         this.playbackManager = new PlaybackManager();
     }
 
+    /**
+     * ritorna l'oggetto richiesto
+     * @return
+     */
 
     public DatabaseManager getDatabaseManager() {
         return dbManager;
@@ -55,6 +66,10 @@ public class Model {
         return viewFactory;
     }
 
+    /**
+     * Ritorna un'istanza sincronizzata del model e lo crea solo se non + già istanziato
+     * @return
+     */
     public static synchronized Model getInstance() {
         if(model == null) {
             model = new Model();
