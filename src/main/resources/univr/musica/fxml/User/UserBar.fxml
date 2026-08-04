@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -11,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="800.0" prefWidth="250.0" spacing="20.0" styleClass="secondary-color" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.UserController">
+<VBox prefHeight="800.0" prefWidth="250.0" spacing="20.0" stylesheets="@../../css/global.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.UserController">
     <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
         <VBox.margin>
             <Insets left="20.0" top="20.0" />
@@ -19,7 +18,7 @@
         <Image url="@../../img/ic_more.png" />
     </ImageView>
     <VBox prefHeight="182.0" prefWidth="235.0" spacing="10.0">
-        <HBox fx:id="home_icon" alignment="CENTER" onMouseClicked="#go_home" prefHeight="50.0" prefWidth="200.0" spacing="20.0" stylesheets="@../../css/style.css">
+        <HBox fx:id="home_icon" alignment="CENTER" onMouseClicked="#go_home" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                 <Image url="@../../img/ic_home.png" />
             </ImageView>
@@ -33,7 +32,7 @@
             <String fx:value="sidebar-item" />
          </styleClass>
         </HBox>
-        <HBox fx:id="go_to_profile" alignment="CENTER" onMouseClicked="#go_to_profile" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar-item">
+        <HBox fx:id="go_to_profile" alignment="CENTER" onMouseClicked="#go_to_profile" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                 <Image url="@../../img/ic_browse.png" />
             </ImageView>
@@ -43,7 +42,7 @@
                 </font>
             </Label>
         </HBox>
-        <HBox fx:id="go_to_search" alignment="CENTER" onMouseClicked="#go_to_search" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar-item">
+        <HBox fx:id="go_to_search" alignment="CENTER" onMouseClicked="#go_to_search" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                 <Image url="@../../img/ic_radio.png" />
             </ImageView>
@@ -55,7 +54,7 @@
         </HBox>
     </VBox>
     <Pane prefHeight="12.0" prefWidth="235.0" VBox.vgrow="ALWAYS" />
-    <HBox fx:id="upload_btn" alignment="CENTER" onMouseClicked="#open_load_page" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="top-border" stylesheets="@../../css/style.css">
+    <HBox fx:id="upload_btn" alignment="CENTER" onMouseClicked="#open_load_page" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
         <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
             <Image url="@../../img/ic_add.png" />
         </ImageView>
@@ -65,7 +64,7 @@
             </font>
         </Label>
     </HBox>
-   <HBox fx:id="logout_btn" alignment="CENTER" onMouseClicked="#logout_request" prefHeight="50.0" prefWidth="200.0" spacing="20.0" styleClass="sidebar-item">
+   <HBox fx:id="logout_btn" alignment="CENTER" onMouseClicked="#logout_request" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
       <children>
          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -79,8 +78,4 @@
          </Label>
       </children>
    </HBox>
-   <stylesheets>
-      <URL value="@../../css/style.css" />
-      <URL value="@../../css/UserBar.css" />
-   </stylesheets>
 </VBox>

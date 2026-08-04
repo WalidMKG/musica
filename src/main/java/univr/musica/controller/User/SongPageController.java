@@ -89,14 +89,27 @@ public class SongPageController implements Initializable {
             comments_list.getChildren().clear();
             System.out.println("entro nel metodo IF");
             List<Comments> currentComments = model.getCommentsRepository().searchCommentsRep(song.getId());
+
+            /*if (currentComments.isEmpty()) {
+                Label placeholder = new Label("Nessun commento ancora.\nSii il primo a commentare!");
+                placeholder.setStyle(
+                        "-fx-text-fill: #535353;" +
+                                "-fx-font-size: 14px;" +
+                                "-fx-text-alignment: center;"
+                );
+                placeholder.setWrapText(true);
+                // GIUSTO: aggiungi alla VBox dentro la ScrollPane, non alla ScrollPane
+                comments_list.getChildren().add(placeholder);
+                return; // esci subito
+            }*/
+
+
             System.out.println(currentComments.size() + " " +  song.getTitle());
             for (Comments comment : currentComments) {
                 System.out.println("entro nel metodo FOR");
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/User/Comment.fxml"));
 
-                    // === LA RIGA CHIAVE ===
-                    // Diciamo all'FXMLLoader come istanziare CommentController passando il model
                     loader.setControllerFactory(clazz -> new CommentController(this.model));
 
                     Node commentNode = loader.load();
@@ -112,7 +125,13 @@ public class SongPageController implements Initializable {
                 }
             }
         }
+
+
     }
+
+
+    // Se non ci sono commenti mostra un placeholder
+
 
 
     public void close_popup(MouseEvent mouseEvent) {

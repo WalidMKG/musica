@@ -10,8 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="700.0" minWidth="1000.0" prefHeight="700.0" prefWidth="1100.0" styleClass="anchor-pane" stylesheets="@../../css/SongPage.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.SongPageController">
+<AnchorPane minHeight="700.0" minWidth="1000.0" prefHeight="700.0" prefWidth="1100.0" styleClass="anchor-pane" stylesheets="@../../css/global.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.SongPageController">
     <children>
 
         <HBox fx:id="close_popup" prefHeight="50.0" prefWidth="1100.0" styleClass="hbox" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -21,7 +22,7 @@
                         <Image url="@../../img/ic_back_arrow.png" />
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#close_popup" styleClass="back_lbl" text="BACK" translateY="10.0" />
+                <Label alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#close_popup" styleClass="back_lbl" text="BACK" textFill="WHITE" translateY="10.0" />
             </children>
         </HBox>
 
@@ -31,8 +32,11 @@
                 <VBox fx:id="vbox1" alignment="TOP_CENTER" spacing="15.0" HBox.hgrow="ALWAYS">
                     <children>
                         <ImageView fx:id="song_Cover" fitHeight="334.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label fx:id="song_title" styleClass="song_title" text="titolo" />
-                        <Label fx:id="artist_name" styleClass="artist_name" text="titolo" />
+                        <Label fx:id="song_title" styleClass="song_title" text="titolo" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font></Label>
+                        <Label fx:id="artist_name" styleClass="artist_name" text="titolo" textFill="WHITE" />
                         <Button fx:id="play_cur_song" mnemonicParsing="false" onAction="#play_cur_song">
                             <graphic>
                                 <ImageView fitHeight="29.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">

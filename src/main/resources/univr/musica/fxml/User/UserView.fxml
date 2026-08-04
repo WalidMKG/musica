@@ -2,13 +2,13 @@
 
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane  styleClass="secondary-color" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.UserController">
+<BorderPane  xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.UserController">
     <left>
         <fx:include source="UserBar.fxml" />
     </left>
 
     <center>
-        <BorderPane fx:id="mainView" >
+        <BorderPane fx:id="mainView">
 
             <center><fx:include source="UserDashboard.fxml" /></center>
 
