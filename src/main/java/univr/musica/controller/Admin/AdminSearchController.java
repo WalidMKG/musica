@@ -39,16 +39,13 @@ public class AdminSearchController implements Initializable {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/Admin/AdminSongPage.fxml"));
 
-                    // 1. Devi impostare la Factory per passare il Model al costruttore
                     loader.setControllerFactory(clazz -> new AdminSongPageController(model));
 
                     Parent overlayNode = loader.load();
 
-                    // 2. Assicurati di usare il tipo di controller corretto (AdminSongPageController)
                     AdminSongPageController detailController = loader.getController();
                     detailController.setSongData(newVal);
 
-                    // 3. Pulisci SearchUI prima di aggiungere per evitare sovrapposizioni
                     SearchUI.getChildren().clear();
                     SearchUI.getChildren().add(overlayNode);
 

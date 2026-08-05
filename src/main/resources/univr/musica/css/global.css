@@ -1,66 +1,200 @@
+/* ==========================================
+   VARIABLES & GLOBAL ROOT
+   ========================================== */
 .root {
     -fx-primary-color: #1DB954;
-    -fx-surface-color: #1F1F1F;
+    -fx-primary-hover: #1ED760;
+    -fx-bg-dark: #121212;
+    -fx-surface-color: #181818;
+    -fx-surface-card: #282828;
     -fx-text-color: #FFFFFF;
-    -fx-background-color: #121212;
+    -fx-text-secondary: #B3B3B3;
+    -fx-background-color: -fx-bg-dark;
 }
 
-AnchorPane,
-HBox,
-VBox,
-BorderPane,
-StackPane,
-GridPane {
-    -fx-background-color: #121212;
+/* ==========================================
+   TEXT INPUTS (TextField, TextArea, PasswordField)
+   ========================================== */
+.text-field,
+.password-field,
+.text-area {
+    -fx-background-color: #2A2A2A;
+    -fx-text-fill: #FFFFFF;
+    -fx-prompt-text-fill: #727272;
+    -fx-border-color: transparent;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 12px;
+    -fx-font-size: 13px;
 }
 
-.scroll-pane,
-.scroll-pane .viewport,
-.scroll-pane .content {
-    -fx-background-color: #121212;
+.text-field:focused,
+.password-field:focused,
+.text-area:focused {
+    -fx-background-color: #333333;
+    -fx-border-color: #1DB954;
+    -fx-border-width: 1px;
+}
+
+/* Fix per lo sfondo interno della TextArea */
+.text-area .content {
+    -fx-background-color: transparent;
+}
+
+/* ==========================================
+   BUTTONS
+   ========================================== */
+/* Bottoni Primari (Verdi) */
+.button {
+    -fx-background-color: #1DB954;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 18px;
+    -fx-cursor: hand;
     -fx-border-color: transparent;
 }
 
-.button {
-    -fx-background-color: #1DB954;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-background-radius: 20px;
-    -fx-padding: 8px 16px;
-    -fx-border-color: #1ed760;
-    -fx-border-radius: 20px;
-}
-
 .button:hover {
-    -fx-background-color: #1ed760;
-    -fx-cursor: hand;
+    -fx-background-color: #1ED760;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
 }
 
+.button:pressed {
+    -fx-background-color: #179843;
+}
 
+/* Bottoni Sidebar / Traspareti */
 .sidebar-btn {
-    -fx-background-color: #121212;
+    -fx-background-color: transparent;
+    -fx-text-fill: #B3B3B3;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
     -fx-padding: 10px 15px;
     -fx-cursor: hand;
-    -fx-transition: -fx-scale-x 0.15s ease-out, -fx-scale-y 0.15s ease-out;
 }
 
 .sidebar-btn:hover {
+    -fx-text-fill: #FFFFFF;
+}
+
+/* ==========================================
+   SCROLL PANES & SCROLL BARS
+   ========================================== */
+.scroll-pane,
+.scroll-pane .viewport,
+.scroll-pane .content {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Personalizzazione barra di scorrimento */
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #5A5A5A;
+    -fx-background-radius: 5px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #888888;
+}
+
+.scroll-bar .track,
+.scroll-bar .decrement-button,
+.scroll-bar .increment-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* ==========================================
+   MENU BUTTON & CONTEXT MENU (Tre Punti)
+   ========================================== */
+.menu-button,
+.menu-button .button,
+.menu-button .arrow-button {
+    -fx-background-color: transparent !important;
+    -fx-border-color: transparent !important;
+    -fx-text-fill: #FFFFFF;
+}
+
+.menu-button .arrow {
+    -fx-background-color: transparent; /* Nasconde la freccetta predefinita */
+}
+
+.context-menu {
+    -fx-background-color: #282828;
+    -fx-background-radius: 6px;
+    -fx-padding: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+}
+
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-padding: 6px 12px;
+}
+
+.menu-item .label {
+    -fx-text-fill: #FFFFFF;
+}
+
+.menu-item:focused,
+.menu-item:hover {
+    -fx-background-color: #3E3E3E;
+    -fx-background-radius: 4px;
+}
+
+/* ==========================================
+   LABELS & HEADINGS
+   ========================================== */
+.label {
+    -fx-text-fill: #FFFFFF;
+}
+
+.label-secondary {
+    -fx-text-fill: #B3B3B3;
+}
+
+/* --- CLASSI PER COMMENTI (Aggiungi queste) --- */
+.label-author {
+    -fx-text-fill: #1DB954 !important;
+    -fx-font-weight: bold;
+}
+
+.label-user {
+    -fx-text-fill: #FFFFFF !important;
+}
+
+.label-secondary {
+    -fx-text-fill: #B3B3B3;
+}
+
+/* ==========================================
+   LIST VIEW & LIST CELL (Risultati Ricerca)
+   ========================================== */
+.list-view {
+    -fx-background-color: #181818;
+    -fx-background-radius: 8px;
+    -fx-border-color: transparent;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 10px;
+    -fx-background-radius: 6px;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #2A2A2A;
     -fx-cursor: hand;
 }
 
-.sidebar-btn:hover .label {
-    -fx-text-fill: #ffffff;
-}
-
-.text-area {
-    -fx-background-color: #1F1F1F;
-    -fx-text-fill: #FFFFFF;
-    -fx-border-color: #333333;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 8px;
-}
-
-.text-area:focused {
-    -fx-border-color: #1DB954;
+.list-cell:filled:selected {
+    -fx-background-color: #333333;
+    -fx-text-fill: #1DB954;
 }

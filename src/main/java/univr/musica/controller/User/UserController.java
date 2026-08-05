@@ -52,7 +52,7 @@ public class UserController implements Initializable {
     }
 
     public void logout_request(MouseEvent mouseEvent) throws IOException {
-        System.out.println("logout request");
+        model.getViewFactory().logout();
     }
 }
 

@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import univr.musica.controller.User.AdminSongCardController;
 import univr.musica.controller.User.SongCardController;
 import univr.musica.model.Model;
 import univr.musica.model.Song;
@@ -46,25 +47,16 @@ public class AdminHomeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadMediaFromDatabase();
 
-        //songTest.setItems(songList);
-
-        /*songTest.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                System.out.println("Selezionato: " + newVal.getTitle());
-                System.out.println(newVal.getTitle());
-            }
-        });*/
-
         int column = 0;
         int row = 1;
 
         for (Song song : songList) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/User/song.fxml"));
-                fxmlLoader.setControllerFactory(clazz -> new SongCardController(model));
+                fxmlLoader.setControllerFactory(clazz -> new AdminSongCardController(model));
                 Node card = fxmlLoader.load();
 
-                SongCardController cardController = fxmlLoader.getController();
+                AdminSongCardController cardController = fxmlLoader.getController();
                 cardController.setData(song);
                 cardController.setParentContainer(homeStack);
 

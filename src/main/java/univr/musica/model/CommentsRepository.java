@@ -63,6 +63,21 @@ public class CommentsRepository {
         return false;
     }
 
+
+    public boolean removeComment(Comments comment) {
+        String sql = "DELETE FROM comments WHERE id = ?";
+
+        int rowsAffected = dbManager.executeUpdate(sql, comment.getId());
+
+        if (rowsAffected > 0) {
+            System.out.println("DEBUG: Commento con ID " + comment.getId() + " eliminato con successo dal DB.");
+            return true;
+        } else {
+            System.err.println("DEBUG: Errore durante l'eliminazione o commento con ID " + comment.getId() + " non trovato.");
+            return false;
+        }
+    }
+
     /**
      * Metodo che ritorna l'id dell'ultimo commento
      * @return

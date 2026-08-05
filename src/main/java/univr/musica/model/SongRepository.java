@@ -1,7 +1,5 @@
 package univr.musica.model;
 
-import javafx.event.ActionEvent;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +10,7 @@ import java.util.Map;
  */
 public class SongRepository {
     private final DatabaseManager dbManager;
-    private Map<Integer, Song> songCache = new HashMap<>();
+    private final Map<Integer, Song> songCache = new HashMap<>();
 
     public SongRepository(Model model, DatabaseManager dbManager) {
         this.dbManager = dbManager;
@@ -20,13 +18,13 @@ public class SongRepository {
     }
 
     /**
-     * Aggiornamento delal cache delle canzoni
+     * Aggiornamento della cache delle canzoni
      */
     private void refreshSongCache() {
         songCache.clear();
 
         dbManager.executeQuery(
-                "SELECT id, title, author, genre, year FROM songs",
+                "SELECT id, title, author, genre, year, uploader FROM songs",
                 rs -> {
                     while (rs.next()) {
                         int id = rs.getInt("id");
@@ -34,9 +32,9 @@ public class SongRepository {
                         String author = rs.getString("author");
                         String genre = rs.getString("genre");
                         String year = rs.getString("year");
+                        String uploader = rs.getString("uploader");
 
-
-                        Song song = new Song(id,title, author, genre, year);
+                        Song song = createSongInstance(id, title, author, genre, year, uploader);
                         songCache.put(id, song);
                     }
                     return null;
@@ -45,31 +43,44 @@ public class SongRepository {
     }
 
     /**
+     * Helper per istanziare l'oggetto Song impostando anche l'uploader
+     */
+    private Song createSongInstance(int id, String title, String author, String genre, String year, String uploader) {
+        Song song = new Song(id, title, author, genre, year);
+        song.setUploader(uploader); // Presuppone che la classe Song abbia setUploader()
+        return song;
+    }
+
+    /**
      * Partendo dall'id ritorna la canzone mappata nella cache
-     * @param id
-     * @return
      */
     public Song getSong(int id) {
         return songCache.get(id);
     }
 
     /**
-     * Salva la canzone nella base di dati e aggiorna la cache
-     * @param song
-     * @return
+     * Salva la canzone nella base di dati e aggiorna la cache includendo l'uploader
      */
-    public boolean saveSong(Song song) {
+    public boolean saveSong(Song song, String uploaderUsername) {
         int rowsAffected = dbManager.executeUpdate(
-                "INSERT INTO songs (title, author, genre, year) VALUES (?, ?, ?, ?)",
+                "INSERT INTO songs (title, author, genre, year, uploader) VALUES (?, ?, ?, ?, ?)",
                 song.getTitle(),
                 song.getAuthor(),
                 song.getGenre(),
-                song.getYear()
+                song.getYear(),
+                uploaderUsername
         );
 
         if (rowsAffected > 0) {
             int newId = getLastInsertedId();
-            Song savedSong = new Song(newId, song.getTitle(), song.getAuthor(), song.getGenre(), song.getYear());
+            Song savedSong = createSongInstance(
+                    newId,
+                    song.getTitle(),
+                    song.getAuthor(),
+                    song.getGenre(),
+                    song.getYear(),
+                    uploaderUsername
+            );
             songCache.put(newId, savedSong);
             return true;
         }
@@ -77,8 +88,7 @@ public class SongRepository {
     }
 
     /**
-     * Ritorna l'ultima canzone inserita
-     * @return
+     * Ritorna l'id dell'ultima canzone inserita
      */
     public int getLastInsertedId() {
         return dbManager.executeQuery("SELECT id FROM songs ORDER BY id DESC LIMIT 1", rs -> {
@@ -89,21 +99,20 @@ public class SongRepository {
         });
     }
 
-
     public List<Song> getAllSongs() {
         List<Song> songs = new ArrayList<>();
-        String sql = "SELECT id, title, author, genre, year FROM songs";
+        String sql = "SELECT id, title, author, genre, year, uploader FROM songs";
 
         dbManager.executeQuery(sql, rs -> {
             while (rs.next()) {
-                Song song = new Song(
+                songs.add(createSongInstance(
                         rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("author"),
                         rs.getString("genre"),
-                        rs.getString("year")
-                );
-                songs.add(song);
+                        rs.getString("year"),
+                        rs.getString("uploader")
+                ));
             }
             return null;
         });
@@ -113,21 +122,20 @@ public class SongRepository {
 
     /**
      * Ritorna le ultime n canzoni inserite, dove n = limit.
-     * @param limit
-     * @return
      */
     public List<Song> getLatestSongs(int limit) {
         List<Song> songs = new ArrayList<>();
-        String sql = "SELECT id, title, author, genre, year FROM songs ORDER BY id DESC LIMIT ?";
+        String sql = "SELECT id, title, author, genre, year, uploader FROM songs ORDER BY id DESC LIMIT ?";
 
         dbManager.executeQuery(sql, rs -> {
             while (rs.next()) {
-                songs.add(new Song(
+                songs.add(createSongInstance(
                         rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("author"),
                         rs.getString("genre"),
-                        rs.getString("year")
+                        rs.getString("year"),
+                        rs.getString("uploader")
                 ));
             }
             return null;
@@ -137,24 +145,23 @@ public class SongRepository {
     }
 
     /**
-     * Ricerca la base di dati delle canzoni a partire dalla stringa SearchTerm, che può essere titolo e autore.
-     * @param searchTerm
-     * @return
+     * Ricerca la base di dati delle canzoni a partire da searchTerm (titolo o autore).
      */
     public List<Song> searchSongRep(String searchTerm) {
         List<Song> songs = new ArrayList<>();
 
-        String sql = "SELECT id, title, author, genre, year FROM songs " +
+        String sql = "SELECT id, title, author, genre, year, uploader FROM songs " +
                 "WHERE title LIKE ? OR author LIKE ?";
 
         dbManager.executeQuery(sql, rs -> {
             while (rs.next()) {
-                songs.add(new Song(
+                songs.add(createSongInstance(
                         rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("author"),
                         rs.getString("genre"),
-                        rs.getString("year")
+                        rs.getString("year"),
+                        rs.getString("uploader")
                 ));
             }
             return null;
@@ -164,8 +171,7 @@ public class SongRepository {
     }
 
     /**
-     * Cancella la canzone dal db
-     * @param songID
+     * Cancella la canzone dal db e dalla cache
      */
     public void deleteSong(int songID) {
         Song songToDelete = getSong(songID);
@@ -186,5 +192,4 @@ public class SongRepository {
             System.out.println("DEBUG: Il database non ha eliminato alcuna riga per l'ID: " + songID);
         }
     }
-
 }

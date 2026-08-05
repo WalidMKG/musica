@@ -15,8 +15,7 @@ import univr.musica.config.AppConfig;
 import univr.musica.model.Model;
 import univr.musica.model.Song;
 
-
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -26,156 +25,178 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class LoadController implements Initializable {
-    public TextField load_song_title;
-    public Button load_song_btn;
-    public Button load_pdf_btn;
-    public Button Load_mp3_btn;
-    public ImageView loaded_cover;
-    public TextField load_song_Year;
-    public TextField load_song_Genre;
-    public TextField load_song_Art;
-    public Label error_lbl;
+    @FXML public TextField load_song_title;
+    @FXML public Button load_song_btn;
+    @FXML public Button load_pdf_btn;
+    @FXML public Button Load_mp3_btn;
+    @FXML public ImageView loaded_cover;
+    @FXML public TextField load_song_Year;
+    @FXML public TextField load_song_Genre;
+    @FXML public TextField load_song_Art;
+    @FXML public Label error_lbl;
+
     private File tempMp3File;
     private File tempPdfFile;
     private File tempCoverFile;
 
+    private Model model;
+
+    public LoadController() {
+        this.model = Model.getInstance();
+    }
+
+    public LoadController(Model model) {
+        this.model = model;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        if (this.model == null) {
+            this.model = Model.getInstance();
+        }
     }
-
 
     public void load_pdf(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Selecciona el archivo");
+        fileChooser.setTitle("Seleziona il file PDF");
 
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Documenti PDF (*.pdf)", "*.pdf");
         fileChooser.getExtensionFilters().add(filter);
 
         File selectedFile = fileChooser.showOpenDialog(load_pdf_btn.getScene().getWindow());
 
-        if(selectedFile != null){
-            System.out.println("PDF selezionato:" +  selectedFile.getAbsolutePath());
+        if (selectedFile != null) {
+            System.out.println("PDF selezionato: " + selectedFile.getAbsolutePath());
             tempPdfFile = selectedFile;
         }
     }
 
-    private void gestisciFilePDF(File file) {
-        try {
-            if (Desktop.isDesktopSupported()) {
-                Desktop.getDesktop().open(file);
-            } else {
-                System.err.println("Apertura file non supportata su questo sistema.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     public String saveFileLocally(File selectedFile, String type, String name) {
         try {
-            // Determiniamo la cartella di destinazione in base al tipo
-            String folder = /*type.equalsIgnoreCase("pdf") ? "@../../" : */AppConfig.DATA_DIR+"/"+type+"/";
+            String folder = AppConfig.DATA_DIR + "/" + type + "/";
             File destFolder = new File(folder);
-            if (!destFolder.exists())
+            if (!destFolder.exists()) {
                 destFolder.mkdirs();
+            }
 
-            // Creiamo il percorso di destinazione (mantenendo il nome originale o rinominandolo)
-            File destination = new File(folder + name  + "."+ type);
+            File destination = new File(folder + name + "." + type);
 
-            // Copia fisica del file (sovrascrive se esiste già con lo stesso nome)
             Files.copy(selectedFile.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
             System.out.println("File copiato in: " + destination.getAbsolutePath());
-
-            // Restituiamo il percorso relativo da salvare nel database SQLite
             return destination.getPath();
 
         } catch (Exception e) {
+            System.err.println("Errore salvataggio file locale: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
     }
 
-
     @FXML
     public void load_song(ActionEvent actionEvent) {
-        System.out.println("Loading song "+ load_song_title.getText());
+        System.out.println("Tentativo di caricamento canzone...");
+
+        // 1. Validazione Campi Vuoti
+        String title = load_song_title.getText() != null ? load_song_title.getText().trim() : "";
+        String author = load_song_Art.getText() != null ? load_song_Art.getText().trim() : "";
+        String genre = load_song_Genre.getText() != null ? load_song_Genre.getText().trim() : "";
+        String yearInput = load_song_Year.getText() != null ? load_song_Year.getText().trim() : "";
+
+        if (title.isEmpty() || author.isEmpty()) {
+            showError("Titolo e Autore sono obbligatori!");
+            return;
+        }
+
+        // 2. Parsing Anno Sicuro
+        String yearStr;
         try {
-            int yearValue = Integer.parseInt(load_song_Year.getText());
-            String yearStr = (yearValue > 0 && yearValue <= LocalDate.now().getYear())
-                    ? load_song_Year.getText()
-                    : String.valueOf(LocalDate.now().getYear());
+            int yearValue = Integer.parseInt(yearInput);
+            int currentYear = LocalDate.now().getYear();
+            yearStr = (yearValue > 0 && yearValue <= currentYear) ? String.valueOf(yearValue) : String.valueOf(currentYear);
+        } catch (NumberFormatException e) {
+            yearStr = String.valueOf(LocalDate.now().getYear());
+        }
 
-            Song song = new Song(load_song_title.getText(), load_song_Art.getText(), load_song_Genre.getText(), yearStr);
+        try {
+            Song song = new Song(title, author, genre.isEmpty() ? "Sconosciuto" : genre, yearStr);
 
-            // 1. Salva e controlla il boolean
-            boolean success = Model.getInstance().getSongRepository().saveSong(song);
+            // 3. Verifica Utente Loggato
+            String uploaderUsername = "Unknown";
+            if (model != null && model.getAuthenticatedUser() != null) {
+                uploaderUsername = model.getAuthenticatedUser().getUsername();
+            }
+
+            // 4. Salvataggio su DB
+            boolean success = model.getSongRepository().saveSong(song, uploaderUsername);
 
             if (success) {
-
-                int realId = Model.getInstance().getSongRepository().getLastInsertedId();
+                int realId = model.getSongRepository().getLastInsertedId();
                 String id = String.valueOf(realId);
 
-                System.out.println("Canzone salvata nel DB con ID: " + id);
+                System.out.println("Canzone salvata nel DB con ID: " + id + " dall'utente: " + uploaderUsername);
 
-
+                // Salvataggio File
                 if (tempMp3File != null) saveFileLocally(tempMp3File, "mp3", id);
                 if (tempPdfFile != null) saveFileLocally(tempPdfFile, "pdf", id);
 
                 if (tempCoverFile == null) {
-                    System.out.println("Cover nulla metto la DEFAULT");
                     File defaultFile = new File(AppConfig.DATA_DIR + "/jpg/default.jpg");
-                    System.out.println(defaultFile.getAbsolutePath());
                     if (defaultFile.exists()) {
-                        System.out.println("Default file esiste: " + defaultFile.getAbsolutePath());
-                        saveFileLocally(defaultFile, "jpg", id); // Forziamo .jpg per coerenza
-                    }
-                    else {
-                        System.out.println("Default file not esiste: " + defaultFile.getAbsolutePath());
+                        saveFileLocally(defaultFile, "jpg", id);
                     }
                 } else {
                     saveFileLocally(tempCoverFile, "jpg", id);
                 }
 
-                System.out.println("Salvataggio file completato per ID: " + id);
+                System.out.println("Salvataggio completato con successo!");
                 resetFields();
             } else {
-                error_lbl.setText("Errore nel salvataggio Database");
+                showError("Errore durante l'inserimento nel DB!");
             }
 
-        } catch (NumberFormatException e) {
-            error_lbl.setText("Anno non valido!");
         } catch (Exception e) {
+            System.err.println("Eccezione durante il caricamento della canzone:");
             e.printStackTrace();
+            showError("Errore imprevisto durante il salvataggio!");
         }
     }
 
+    private void showError(String message) {
+        System.err.println("ERRORE FORM: " + message);
+        if (error_lbl != null) {
+            error_lbl.setText(message);
+        }
+    }
 
-    private void resetFields(){
+    private void resetFields() {
         load_song_title.clear();
         load_song_Art.clear();
         load_song_Genre.clear();
         load_song_Year.clear();
-        loaded_cover.setImage(new Image(getClass().getResourceAsStream("/univr/musica/data/img/ic_upload.png")));
+
+        var stream = getClass().getResourceAsStream("/univr/musica/data/img/ic_upload.png");
+        if (loaded_cover != null && stream != null) {
+            loaded_cover.setImage(new Image(stream));
+        }
+
         tempMp3File = null;
         tempPdfFile = null;
         tempCoverFile = null;
+        if (error_lbl != null) error_lbl.setText("Canzone caricata con successo!");
     }
 
     public void load_mp3(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select mp3 file");
+        fileChooser.setTitle("Seleziona file MP3");
 
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("File mp3  (*.mp3)", "*.mp3");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("File MP3 (*.mp3)", "*.mp3");
         fileChooser.getExtensionFilters().add(filter);
 
-        File selectedFile = fileChooser.showOpenDialog(load_pdf_btn.getScene().getWindow());
+        File selectedFile = fileChooser.showOpenDialog(Load_mp3_btn.getScene().getWindow());
 
-        if(selectedFile != null){
-            System.out.println("PDF selezionato:" +  selectedFile.getAbsolutePath());
+        if (selectedFile != null) {
+            System.out.println("MP3 selezionato: " + selectedFile.getAbsolutePath());
             tempMp3File = selectedFile;
         }
     }
@@ -183,8 +204,8 @@ public class LoadController implements Initializable {
     @FXML
     public void load_cover(MouseEvent event) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Selecciona el archivo");
-        System.out.println("carica immagine");
+        fileChooser.setTitle("Seleziona copertina");
+
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter(
                 "Immagini (*.png, *.jpg, *.jpeg)",
                 "*.png", "*.jpg", "*.jpeg"
@@ -193,8 +214,8 @@ public class LoadController implements Initializable {
 
         File selectedFile = fileChooser.showOpenDialog(((Node) event.getSource()).getScene().getWindow());
 
-        if(selectedFile != null){
-            System.out.println("Immagine selezionata:" +  selectedFile.getAbsolutePath());
+        if (selectedFile != null) {
+            System.out.println("Immagine selezionata: " + selectedFile.getAbsolutePath());
             loaded_cover.setImage(new Image(selectedFile.toURI().toString()));
             tempCoverFile = selectedFile;
         }

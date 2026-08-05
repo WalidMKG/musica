@@ -1,10 +1,9 @@
 package univr.musica.model;
+
 import javafx.scene.image.Image;
 import univr.musica.config.AppConfig;
 
-import java.awt.Desktop;
 import java.io.File;
-import java.util.Objects;
 
 /**
  * Classe che descrive un oggetto song
@@ -15,34 +14,37 @@ public class Song {
     private String author;
     private String genre;
     private String year;
+    private String uploader; //Campo aggiunto dopo
     private String path = "/1.jpg";
 
     /**
      * Crea una canzone ricevuta con id, autore, titolo, genere e anno
      * Questo viene solitamente chiamato noto l'id ovvero con song presa dal database
-     * @param id
-     * @param title
-     * @param author
-     * @param genre
-     * @param year
      */
-    public Song(int id,String title, String author, String genre, String year){
+    public Song(int id, String title, String author, String genre, String year) {
         this.title = title;
         this.author = author;
         this.genre = genre;
         this.year = year;
         this.id = id;
-        path = "/"+ id + ".jpg";
+        this.path = "/" + id + ".jpg";
     }
 
     /**
-     *
+     * Costruttore completo comprensivo di uploader
+     */
+    public Song(int id, String title, String author, String genre, String year, String uploader) {
+        this(id, title, author, genre, year);
+        this.uploader = uploader;
+    }
+
+    /**
      * @param title
      * @param author
      * @param genre
      * @param year
      */
-    public Song(String title, String author, String genre, String year){
+    public Song(String title, String author, String genre, String year) {
         this.title = title;
         this.author = author;
         this.genre = genre;
@@ -50,12 +52,11 @@ public class Song {
     }
 
     /**
-     *
      * @param title
      * @param author
      * @param genre
      */
-    public Song(String title, String author, String genre){
+    public Song(String title, String author, String genre) {
         this.title = title;
         this.author = author;
         this.genre = genre;
@@ -69,9 +70,11 @@ public class Song {
     public String getAuthor() {
         return author;
     }
+
     public String getGenre() {
         return genre;
     }
+
     public String getYear() {
         return year;
     }
@@ -80,9 +83,18 @@ public class Song {
         return id;
     }
 
+    // <-- NUOVI METODI GETTER E SETTER PER UPLOADER -->
+    public String getUploader() {
+        return uploader;
+    }
+
+    public void setUploader(String uploader) {
+        this.uploader = uploader;
+    }
+
     @Override
     public String toString() {
-        return title+ "-"+author+"-"+year;
+        return title + "-" + author + "-" + year;
     }
 
     public String getPath(String pathType) {

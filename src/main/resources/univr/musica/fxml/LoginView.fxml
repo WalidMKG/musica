@@ -11,23 +11,23 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.LoginController">
-    <VBox prefHeight="200.0" prefWidth="100.0" />
-    <VBox styleClass="login_box">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.LoginController">
+    <VBox alignment="CENTER" prefHeight="400.0" prefWidth="625.0" spacing="10.0" styleClass="login_box">
 
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="wlc_text" text="BENVENUTO">
-         <font>
-            <Font size="54.0" />
-         </font></Text>
-        <TextField fx:id="username_txt">
+        <Label styleClass="wlc_text" text="BENVENUTO">
+            <font>
+                <Font size="42.0" />
+            </font>
+        </Label>
+        <TextField fx:id="username_txt" maxWidth="300.0" prefWidth="100.0">
             <VBox.margin>
                 <Insets />
             </VBox.margin>
         </TextField>
-      <PasswordField fx:id="pwd_fld" />
-      <ChoiceBox fx:id="login_choice" prefWidth="150.0" />
-        <Button fx:id="login_btn" mnemonicParsing="false" onAction="#login" text="LOGIN" />
-      <Button fx:id="register_btn" mnemonicParsing="false" onAction="#register" text="REGISTER" />
+      <PasswordField fx:id="pwd_fld" maxWidth="300.0" />
+      <ChoiceBox fx:id="login_choice" disable="true" prefWidth="150.0" />
+        <Button fx:id="login_btn" alignment="CENTER" maxWidth="70.0" mnemonicParsing="false" onAction="#login" prefWidth="70.0" text="LOGIN" />
+      <Button fx:id="register_btn" alignment="CENTER" maxWidth="70.0" mnemonicParsing="false" onAction="#register" prefWidth="70.0" text="REGISTER" />
       <Label fx:id="login_lbl" text="Label" visible="false" />
     </VBox>
 </HBox>

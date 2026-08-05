@@ -64,7 +64,8 @@ public class DatabaseManager {
                         title  TEXT NOT NULL,
                         author TEXT NOT NULL,
                         genre  TEXT,
-                        year   TEXT
+                        year   TEXT,
+                        uploader TEXT
                     )""");
 
 

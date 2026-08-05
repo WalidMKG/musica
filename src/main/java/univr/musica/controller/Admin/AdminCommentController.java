@@ -1,4 +1,4 @@
-    package univr.musica.controller.User;
+    package univr.musica.controller.Admin;
 
     import javafx.event.ActionEvent;
     import javafx.fxml.FXML;
@@ -6,8 +6,8 @@
     import javafx.scene.control.Label;
     import javafx.scene.control.MenuButton;
     import javafx.scene.control.MenuItem;
-    import javafx.scene.paint.Color;
     import javafx.scene.text.Text;
+    import univr.musica.controller.User.SongPageController;
     import univr.musica.model.Comments;
     import univr.musica.model.Model;
     import univr.musica.model.Song;
@@ -15,9 +15,9 @@
     import java.net.URL;
     import java.util.ResourceBundle;
 
-    public class CommentController implements Initializable {
+    public class AdminCommentController implements Initializable {
         private final Model model;
-        private final SongPageController songPageController;
+        private final AdminSongPageController songPageController;
 
         private Comments comment;
 
@@ -27,7 +27,7 @@
         @FXML public MenuItem reply_item;
         @FXML public MenuItem delete_item;
 
-        public CommentController(Model model, SongPageController songPageController) {
+        public AdminCommentController(Model model, AdminSongPageController songPageController) {
             this.model = model;
             this.songPageController = songPageController;
         }
