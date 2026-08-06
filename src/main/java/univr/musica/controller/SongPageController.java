@@ -21,7 +21,9 @@
     import univr.musica.model.PlaybackManager;
     import univr.musica.model.Song;
 
+    import java.awt.*;
     import java.io.File;
+    import java.io.IOException;
     import java.net.URL;
     import java.util.List;
     import java.util.ResourceBundle;
@@ -43,6 +45,7 @@
         public VBox comments_list;
         public ImageView song_Cover;
         public Button remove_btn;
+        public Button rem_song;
         private Song song;
 
         private static final int MAX_COMMENT_LENGTH = 200;
@@ -84,7 +87,7 @@
                 song_Cover.setImage(song.getCover());
 
                 // --- GESTIONE RUOLO UTENTE E UPLOADER SUL BOTTONE ELIMINA ---
-                if (remove_btn != null) {
+                if (rem_song != null) {
                     String currentUsername = model.getAuthenticatedUser() != null
                             ? model.getAuthenticatedUser().getUsername()
                             : "";
@@ -98,8 +101,8 @@
                     // Il pulsante viene mostrato se l'utente è Admin OPPURE se è l'uploader
                     boolean canDelete = isAdmin || isUploader;
 
-                    remove_btn.setVisible(canDelete);
-                    remove_btn.setManaged(canDelete);
+                    rem_song.setVisible(canDelete);
+                    rem_song.setManaged(canDelete);
                 }
 
                 loadComments();
@@ -212,5 +215,15 @@
             if (pageToClose.getParent() instanceof StackPane container) {
                 container.getChildren().remove(pageToClose);
             }
+        }
+
+        public void open_pdf(ActionEvent actionEvent) throws IOException {
+            System.out.println("Apro file pdf");
+            String fullPath = AppConfig.DATA_DIR + "/pdf/" + song.getId() + ".pdf";
+            File file = new File(fullPath);
+
+            Desktop desktop = Desktop.getDesktop();
+
+            desktop.open(file);
         }
     }

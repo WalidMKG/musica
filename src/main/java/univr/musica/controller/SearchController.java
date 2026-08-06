@@ -41,7 +41,7 @@ public class SearchController implements Initializable {
                 System.out.println(newVal.getTitle());
 
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/User/SongPage.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/SongPage.fxml"));
                     loader.setControllerFactory(clazz -> new SongPageController(model));
                     Parent overlayNode = loader.load();
                     SongPageController detailController = loader.getController();
