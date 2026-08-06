@@ -7,19 +7,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/25"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.RegistrationController">
-    <VBox layoutX="250.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.RegistrationController">
+    <VBox alignment="CENTER" layoutX="250.0" layoutY="100.0" spacing="10" prefHeight="200.0" prefWidth="100.0" styleClass="vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Label text="Username" />
-        <TextField fx:id="reg_user" />
+        <TextField fx:id="reg_user" maxWidth="300.0" />
         <Label text="Password" />
-        <PasswordField fx:id="reg_pwd" />
+        <PasswordField fx:id="reg_pwd" maxWidth="300.0" />
         <Label text="Confirm Password" />
-        <PasswordField fx:id="reg_pwd_confirm" />
-        <Button fx:id="register_btn" mnemonicParsing="false" onAction="#register" text="REGISTER" />
-        <Button fx:id="back_to_login" mnemonicParsing="false" onAction="#back_to_login" text="BACK" />
+        <PasswordField fx:id="reg_pwd_confirm" maxWidth="300.0" />
+        <Button fx:id="register_btn" maxWidth="120.0" mnemonicParsing="false" onAction="#register" prefWidth="120.0" text="REGISTER" />
+        <Button fx:id="back_to_login" maxWidth="120.0" mnemonicParsing="false" onAction="#back_to_login" prefWidth="120.0" text="BACK" />
         <Label fx:id="register_label" maxWidth="400.0" prefHeight="20.0" prefWidth="309.0" text="Label" visible="false" />
     </VBox>
 </AnchorPane>

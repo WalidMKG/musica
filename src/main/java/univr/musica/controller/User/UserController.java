@@ -5,7 +5,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import univr.musica.model.Model;
-import univr.musica.model.Song;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,21 +33,21 @@ public class UserController implements Initializable {
 
 
     public void go_home(MouseEvent mouseEvent) throws IOException {
-        model.getViewFactory().updateMainView("/univr/musica/fxml/User/UserDashboard.fxml");
+        model.getViewFactory().updateMainView("/univr/musica/fxml/UserDashboard.fxml");
     }
 
-    public void go_to_profile(MouseEvent mouseEvent) throws IOException {
+    /*public void go_to_profile(MouseEvent mouseEvent) throws IOException {
         System.out.println("click ricevuto");
         model.getViewFactory().updateMainView("/univr/musica/fxml/User/UserProfile.fxml");
-    }
+    }*/
 
     public void open_load_page(MouseEvent mouseEvent) throws IOException {
-        model.getViewFactory().updateMainView("/univr/musica/fxml/User/LoadPage.fxml");
+        model.getViewFactory().updateMainView("/univr/musica/fxml/LoadPage.fxml");
     }
 
     public void go_to_search(MouseEvent mouseEvent) throws IOException {
         System.out.println("Going to search");
-        model.getViewFactory().updateMainView("/univr/musica/fxml/User/SearchPage.fxml");
+        model.getViewFactory().updateMainView("/univr/musica/fxml/SearchPage.fxml");
     }
 
     public void logout_request(MouseEvent mouseEvent) throws IOException {

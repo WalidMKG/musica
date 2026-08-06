@@ -27,17 +27,18 @@ public class AdminController implements Initializable {
     }
 
     public void go_home(MouseEvent mouseEvent) {
-        model.getViewFactory().updateMainView("/univr/musica/fxml/Admin/AdminDash.fxml");
+        model.getViewFactory().updateMainView("/univr/musica/fxml/UserDashboard.fxml");
     }
 
     public void go_to_profile(MouseEvent mouseEvent) {
     }
 
     public void go_to_search(MouseEvent mouseEvent) {
-        model.getViewFactory().updateMainView("/univr/musica/fxml/Admin/AdminSearchPage.fxml");
+        model.getViewFactory().updateMainView("/univr/musica/fxml/SearchPage.fxml");
     }
 
     public void open_load_page(MouseEvent mouseEvent) {
+        model.getViewFactory().updateMainView("/univr/musica/fxml/LoadPage.fxml");
     }
 
     public void go_to_users(MouseEvent mouseEvent) {

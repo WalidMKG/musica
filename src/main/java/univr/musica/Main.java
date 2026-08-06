@@ -36,9 +36,13 @@ public class Main extends Application {
      */
     @Override
     public void stop() throws Exception {
-        String username = Model.getInstance().getAuthenticatedUser().getUsername();
-        System.out.println(Model.getInstance().getPlaybackManager().currentSongProperty());
-        Model.getInstance().getUserRepository().updateLastSong(username,1);
-        System.out.println("chiudioooo");
+
+
+        Model.getInstance().getUserRepository().saveLastSongSession();
+
+
+        Model.getInstance().getPlaybackManager().stop();
+
+        System.out.println("Applicazione chiusa con successo.");
     }
 }

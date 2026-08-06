@@ -1,4 +1,4 @@
-package univr.musica.controller.User;
+package univr.musica.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
+import univr.musica.controller.User.SongPageController;
 import univr.musica.model.Model;
 import univr.musica.model.Song;
 import univr.musica.model.CommentsRepository;

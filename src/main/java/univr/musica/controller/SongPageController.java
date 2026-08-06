@@ -1,6 +1,7 @@
-    package univr.musica.controller.Admin;
+    package univr.musica.controller;
 
     import javafx.event.ActionEvent;
+    import javafx.fxml.FXML;
     import javafx.fxml.FXMLLoader;
     import javafx.fxml.Initializable;
     import javafx.scene.Node;
@@ -13,16 +14,19 @@
     import javafx.scene.layout.HBox;
     import javafx.scene.layout.StackPane;
     import javafx.scene.layout.VBox;
+    import univr.musica.config.AppConfig;
+    import univr.musica.controller.Admin.AdminCommentController;
     import univr.musica.model.Comments;
     import univr.musica.model.Model;
     import univr.musica.model.PlaybackManager;
     import univr.musica.model.Song;
 
+    import java.io.File;
     import java.net.URL;
     import java.util.List;
     import java.util.ResourceBundle;
 
-    public class AdminSongPageController implements Initializable {
+    public class SongPageController implements Initializable {
         private final Model model;
         public Label song_title;
         public HBox close_popup;
@@ -44,7 +48,7 @@
         private static final int MAX_COMMENT_LENGTH = 200;
         public Label char_counter;
 
-        public AdminSongPageController(Model model) {
+        public SongPageController(Model model) {
             this.model = model;
         }
 
@@ -78,10 +82,36 @@
                 song_title.setText(song.getTitle());
                 artist_name.setText(song.getAuthor());
                 song_Cover.setImage(song.getCover());
+
+                // --- GESTIONE RUOLO UTENTE E UPLOADER SUL BOTTONE ELIMINA ---
+                if (remove_btn != null) {
+                    String currentUsername = model.getAuthenticatedUser() != null
+                            ? model.getAuthenticatedUser().getUsername()
+                            : "";
+
+                    boolean isAdmin = model.getAuthenticatedUser() != null
+                            && model.getAuthenticatedUser().isAdmin();
+
+                    // Verifica se l'utente attuale è l'autore/uploader della canzone
+                    boolean isUploader = currentUsername.equalsIgnoreCase(song.getUploader());
+
+                    // Il pulsante viene mostrato se l'utente è Admin OPPURE se è l'uploader
+                    boolean canDelete = isAdmin || isUploader;
+
+                    remove_btn.setVisible(canDelete);
+                    remove_btn.setManaged(canDelete);
+                }
+
                 loadComments();
+
+                String fullPath = AppConfig.DATA_DIR + "/pdf/" + song.getId() + ".pdf";
+                File file = new File(fullPath);
+
+                if (!file.exists()) {
+                    System.err.println("File pdf non trovato sul disco: " + file.getAbsolutePath());
+                    pdf_btn.setDisable(true);
+                }
             }
-
-
         }
 
         /**
@@ -168,7 +198,19 @@
          * Qui l'admin potra rimuovere una canzone dal databse e con eliminazione dai file
          * @param actionEvent
          */
+
+        @FXML
         public void removeSong(ActionEvent actionEvent) {
             System.out.println("RIMUOVO");
+            model.getSongRepository().deleteSong(song.getId());
+
+
+            Node pageToClose = (Node) actionEvent.getSource();
+            while (pageToClose.getParent() != null && !(pageToClose.getParent() instanceof StackPane)) {
+                pageToClose = pageToClose.getParent();
+            }
+            if (pageToClose.getParent() instanceof StackPane container) {
+                container.getChildren().remove(pageToClose);
+            }
         }
     }

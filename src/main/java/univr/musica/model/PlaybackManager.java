@@ -7,107 +7,73 @@ import javafx.scene.media.MediaPlayer;
 import univr.musica.config.AppConfig;
 
 import java.io.File;
-import java.net.URL;
 
 /**
- * Classe del palyback manager ch egestice la riproduzione dei brani el programma
+ * Singleton che gestisce la riproduzione audio globale dell'applicazione.
  */
 public class PlaybackManager {
     private static PlaybackManager instance;
     private MediaPlayer mediaPlayer;
-    private final ObjectProperty<Song> currentSong = new SimpleObjectProperty<>();
-    private final ObjectProperty<Song> nextSong = new SimpleObjectProperty<>();
-    private final ObjectProperty<Song> prevSong = new SimpleObjectProperty<>();
-    public PlaybackManager() {}
 
+    private final ObjectProperty<Song> currentSong = new SimpleObjectProperty<>();
     private final ObjectProperty<MediaPlayer.Status> playerStatus = new SimpleObjectProperty<>();
+
+    // 🔒 Costruttore PRIVATO: impedisce la creazione di istanze duplicate
+    private PlaybackManager() {}
+
+    public static PlaybackManager getInstance() {
+        if (instance == null) {
+            instance = new PlaybackManager();
+        }
+        return instance;
+    }
+
+    public ObjectProperty<Song> currentSongProperty() {
+        return currentSong;
+    }
+
+    public Song getCurrentSong() {
+        return currentSong.get();
+    }
 
     public ObjectProperty<MediaPlayer.Status> playerStatusProperty() {
         return playerStatus;
     }
 
-    public static PlaybackManager getInstance() {
-        if (instance == null) instance = new PlaybackManager();
-        return instance;
-    }
-
-
     /**
-     * Ritorna la canzone attualmente in riproduzione
-     * @return
-     */
-    public ObjectProperty<Song> currentSongProperty() {
-        return currentSong;
-    }
-
-    /**
-     * Cambia la proprietà currentsong ovvero rimane in ascolto e cambia la canzone attuale
-     * Gestisce poi la ricerca del file e esegue la canzone richiesta da song
-     * @param song canzone richiesta
-     */
-    public void setCurrentSong(Song song) {
-        this.currentSong.set(song); // Notifica la barra (titolo, autore, ecc.)
-
-        if (song != null) {
-            try {
-                String fullPath = AppConfig.DATA_DIR + "/mp3/" + song.getId() + ".mp3";
-                File file = new File(fullPath);
-
-                if (file.exists()) {
-                    if (mediaPlayer != null) {
-                        mediaPlayer.stop();
-                        mediaPlayer.dispose();
-                    }
-
-                    String mediaUri = file.toURI().toString();
-                    mediaPlayer = new MediaPlayer(new Media(mediaUri));
-
-                    mediaPlayer.statusProperty().addListener((obs, old, newStatus) -> {
-                        playerStatusProperty().set(newStatus);
-                    });
-
-                    System.out.println("Player pronto per la canzone: " + song.getTitle());
-                } else {
-                    System.err.println("Impossibile caricare: file non trovato in " + fullPath);
-                }
-            } catch (Exception e) {
-                System.err.println("Errore caricamento file audio: " + e.getMessage());
-            }
-        }
-    }
-
-    /**
-     * Riproduce la canzone ricevuta
-     * @param song canzone da mettere in play
+     * Imposta e avvia la riproduzione di una canzone
      */
     public void play(Song song) {
         if (song == null) return;
+
+        // 1. Aggiorna SUBITO la canzone corrente
+        this.currentSong.set(song);
 
         try {
             String fullPath = AppConfig.DATA_DIR + "/mp3/" + song.getId() + ".mp3";
             File file = new File(fullPath);
 
             if (!file.exists()) {
-                System.err.println("File audio non trovato sul disco: " + file.getAbsolutePath());
+                System.err.println("File audio non trovato: " + file.getAbsolutePath());
                 return;
             }
 
+            // 2. Libera il vecchio MediaPlayer se esisteva
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
                 mediaPlayer.dispose();
             }
 
+            // 3. Inizializza il nuovo player
             String mediaUri = file.toURI().toString();
-            Media hit = new Media(mediaUri);
-
-            mediaPlayer = new MediaPlayer(hit);
+            mediaPlayer = new MediaPlayer(new Media(mediaUri));
 
             mediaPlayer.statusProperty().addListener((obs, oldStatus, newStatus) -> {
                 playerStatus.set(newStatus);
             });
 
-            currentSong.set(song);
             mediaPlayer.play();
+            System.out.println("Riproduzione avviata: " + song.getTitle() + " (ID: " + song.getId() + ")");
 
         } catch (Exception e) {
             System.err.println("Errore durante il play: " + e.getMessage());
@@ -116,7 +82,7 @@ public class PlaybackManager {
     }
 
     /**
-     * Gestisce il play button
+     * Alterna tra Play e Pause
      */
     public void togglePlayPause() {
         if (mediaPlayer == null) return;
@@ -133,7 +99,7 @@ public class PlaybackManager {
     }
 
     /**
-     * Ferma la riproduzione
+     * Ferma la riproduzione e libera la memoria
      */
     public void stop() {
         if (mediaPlayer != null) {
@@ -144,7 +110,4 @@ public class PlaybackManager {
             System.out.println("Riproduzione interrotta e risorse liberate.");
         }
     }
-
-
-
 }

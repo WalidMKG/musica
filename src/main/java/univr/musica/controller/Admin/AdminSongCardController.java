@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import univr.musica.controller.Admin.AdminSongPageController;
+import univr.musica.controller.SongPageController;
 import univr.musica.model.Model;
 import univr.musica.model.Song;
 
@@ -65,11 +65,11 @@ public class AdminSongCardController {
     private void onCardClicked() {
         if (song != null && parentContainer != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/Admin/AdminSongPage.fxml"));
-                loader.setControllerFactory(clazz -> new AdminSongPageController(model));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/SongPage.fxml"));
+                loader.setControllerFactory(clazz -> new SongPageController(model));
 
                 Node songPage = loader.load();
-                AdminSongPageController controller = loader.getController();
+                SongPageController controller = loader.getController();
                 controller.setSongData(song);
 
 

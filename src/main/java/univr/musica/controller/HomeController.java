@@ -1,4 +1,4 @@
-package univr.musica.controller.User;
+package univr.musica.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,24 +15,21 @@ import javafx.scene.layout.StackPane;
 import univr.musica.model.Model;
 import univr.musica.model.Song;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 public class HomeController implements Initializable {
 
     private final Model model;
-    public HBox song_container;
-    public Label songName;
-    public Label artist;
-    public ImageView img;
-    public ScrollPane scroll_view;
-    public StackPane homeStack;
-    public GridPane songGrid;
-    @FXML
-    //private ListView<Song> songTest;
+
+    @FXML public HBox song_container;
+    @FXML public Label songName;
+    @FXML public Label artist;
+    @FXML public ImageView img;
+    @FXML public ScrollPane scroll_view;
+    @FXML public StackPane homeStack;
+    @FXML public GridPane songGrid;
 
     private ObservableList<Song> songList = FXCollections.observableArrayList();
 
@@ -40,26 +37,26 @@ public class HomeController implements Initializable {
         this.model = model;
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("Carico la home...");
         loadMediaFromDatabase();
-
 
         int column = 0;
         int row = 1;
 
         for (Song song : songList) {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/User/song.fxml"));
-                fxmlLoader.setControllerFactory(clazz -> new univr.musica.controller.User.AdminSongCardController(model));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/song.fxml"));
+
+                fxmlLoader.setControllerFactory(clazz -> new SongCardController(model));
+
                 Node card = fxmlLoader.load();
 
-                univr.musica.controller.User.AdminSongCardController cardController = fxmlLoader.getController();
+                SongCardController cardController = fxmlLoader.getController();
                 cardController.setData(song);
                 cardController.setParentContainer(homeStack);
 
-                // Gestione della griglia: 5 colonne per riga
                 if (column == 5) {
                     column = 0;
                     row++;
@@ -68,31 +65,14 @@ public class HomeController implements Initializable {
                 songGrid.add(card, column++, row);
 
             } catch (IOException e) {
+                System.err.println("Errore nel caricamento della card per la canzone: " + song.getTitle());
                 e.printStackTrace();
             }
         }
     }
 
-
-
-
-
-
-
-    /*private void scrollLeft() {
-        double currentH = scrollPane.getHvalue();
-        scrollPane.setHvalue(Math.max(currentH - scrollAmount, 0.0));
-    }*/
-
-
-    /*private void scrollRight() {
-        double currentH = scrollPane.getHvalue();
-        scrollPane.setHvalue(Math.min(currentH + scrollAmount, 1.0));
-    }*/
-
     private void loadMediaFromDatabase() {
+        songList.clear();
         songList.addAll(model.getSongRepository().getLatestSongs(10));
     }
-
-
 }

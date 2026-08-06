@@ -5,16 +5,27 @@
     import javafx.fxml.Initializable;
     import javafx.scene.Node;
     import javafx.scene.control.*;
+    import javafx.scene.control.Button;
+    import javafx.scene.control.Label;
+    import javafx.scene.control.ScrollPane;
+    import javafx.scene.control.TextArea;
     import javafx.scene.image.ImageView;
     import javafx.scene.input.MouseEvent;
     import javafx.scene.layout.HBox;
     import javafx.scene.layout.StackPane;
     import javafx.scene.layout.VBox;
+    import javafx.scene.media.Media;
+    import javafx.scene.media.MediaPlayer;
+    import javafx.stage.FileChooser;
+    import univr.musica.config.AppConfig;
     import univr.musica.model.Comments;
     import univr.musica.model.Model;
     import univr.musica.model.PlaybackManager;
     import univr.musica.model.Song;
 
+    import java.awt.*;
+    import java.io.File;
+    import java.io.IOException;
     import java.net.URL;
     import java.util.List;
     import java.util.ResourceBundle;
@@ -76,6 +87,15 @@
                 artist_name.setText(song.getAuthor());
                 song_Cover.setImage(song.getCover());
                 loadComments();
+
+                String fullPath = AppConfig.DATA_DIR + "/pdf/" + song.getId() + ".pdf";
+                File file = new File(fullPath);
+
+                if (!file.exists()) {
+                    System.err.println("File pdf non trovato sul disco: " + file.getAbsolutePath());
+                    pdf_btn.setDisable(true);
+                    return;
+                }
             }
 
 
@@ -159,5 +179,16 @@
              */
             loadComments();
             comment_text.clear();
+        }
+
+        public void open_pdf(ActionEvent actionEvent) throws IOException {
+            System.out.println("Apro file pdf");
+            String fullPath = AppConfig.DATA_DIR + "/pdf/" + song.getId() + ".pdf";
+            File file = new File(fullPath);
+
+            Desktop desktop = Desktop.getDesktop();
+
+            desktop.open(file);
+
         }
     }

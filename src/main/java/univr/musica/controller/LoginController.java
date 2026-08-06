@@ -48,8 +48,8 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userRepository = Model.getInstance().getUserRepository();
-        login_choice.getItems().addAll("Admin","User");
-        login_choice.setValue("User");
+        //login_choice.getItems().addAll("Admin","User");
+        //login_choice.setValue("User");
     }
 
 
@@ -71,17 +71,8 @@ public class LoginController implements Initializable {
         }
         User user = userRepository.getUser(username);
 
-        if(login_choice.getValue().equals("User")) {
-            checkLogin(password, user);
-        }
-        else{
-            if(!user.isAdmin()) {
-                login_lbl.setVisible(true);
-                login_lbl.setText("Login Error");
-                login_lbl.setTextFill(Color.DARKRED);
-            }else
-                checkLogin(password, user);
-        }
+        checkLogin(password, user);
+
     }
 
 
@@ -107,7 +98,7 @@ public class LoginController implements Initializable {
             if (lastId > 0) {
                 Song s = model.getSongRepository().getSong(lastId);
                 if (s != null) {
-                    model.getPlaybackManager().setCurrentSong(s);
+                    model.getPlaybackManager().currentSongProperty().set(s);
                     System.out.println("DEBUG: Sessione ripristinata per " + s.getTitle());
                 }
             }

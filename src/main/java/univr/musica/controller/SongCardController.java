@@ -1,4 +1,4 @@
-package univr.musica.controller.User;
+package univr.musica.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,11 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+// USIAMO IL CONTROLLER UNIFICATO (rimosso .User)
+import univr.musica.controller.SongPageController;
 import univr.musica.model.Model;
 import univr.musica.model.Song;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class SongCardController {
 
@@ -41,7 +42,6 @@ public class SongCardController {
         String defaultPath = "file:" + univr.musica.config.AppConfig.DATA_DIR + "/jpg/default.jpg";
 
         try {
-
             Image image = new Image(path, true);
 
             image.errorProperty().addListener((obs, old, hasError) -> {
@@ -65,17 +65,18 @@ public class SongCardController {
     private void onCardClicked() {
         if (song != null && parentContainer != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/User/SongPage.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/SongPage.fxml"));
+
+                // USIAMO IL CONTROLLER UNIFICATO (senza .User)
                 loader.setControllerFactory(clazz -> new SongPageController(model));
 
                 Node songPage = loader.load();
                 SongPageController controller = loader.getController();
                 controller.setSongData(song);
 
-
                 parentContainer.getChildren().add(songPage);
 
-            } catch ( IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

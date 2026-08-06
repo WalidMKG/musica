@@ -10,6 +10,7 @@ import univr.musica.model.Model;
 import univr.musica.model.PlaybackManager;
 import univr.musica.model.Song;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -31,19 +32,16 @@ public class ViewFactory {
      */
     private void applyGlobalStyle(Scene scene) {
         if (scene != null) {
-            // Usa "global.css" e "univr.musica" esatto
-            URL cssUrl = getClass().getResource("/univr.musica/css/global.css");
+            URL cssUrl = getClass().getResource("/univr/musica/css/global.css");
 
-            // Se non lo trova col punto, tenta con la barra (fallback)
             if (cssUrl == null) {
-                cssUrl = getClass().getResource("/univr/musica/css/global.css");
+                cssUrl = getClass().getResource("/univr.musica/css/global.css");
             }
 
             if (cssUrl != null) {
                 scene.getStylesheets().add(cssUrl.toExternalForm());
-                System.out.println("CSS caricato con successo: " + cssUrl.toExternalForm());
             } else {
-                System.err.println("WARNING: Impossibile trovare global.css in /univr.musica/css/global.css");
+                System.err.println("WARNING: Impossibile trovare global.css");
             }
         }
     }
@@ -68,7 +66,7 @@ public class ViewFactory {
             });
 
             Scene scene = new Scene(loader.load());
-            applyGlobalStyle(scene); // Applica lo stile scuro globale
+            applyGlobalStyle(scene);
             return scene;
 
         } catch (IOException e) {
@@ -122,19 +120,22 @@ public class ViewFactory {
         Scene scene = loadScene("/univr/musica/fxml/LoginView.fxml");
         if (stage == null) {
             stage = new Stage();
-            stage.setResizable(false);
         }
         stage.setScene(scene);
         stage.setTitle(AppConfig.APP_TITLE);
+        stage.setResizable(false);
         stage.show();
     }
 
     public void showRegisterWindow() {
         Scene scene = loadScene("/univr/musica/fxml/RegisterView.fxml");
-        if (stage != null) {
-            stage.setScene(scene);
-            stage.setTitle("Registrazione");
+        if (stage == null) {
+            stage = new Stage();
         }
+        stage.setScene(scene);
+        stage.setTitle("Registrazione");
+        stage.setResizable(false);
+        stage.show();
     }
 
     public void showMainWindow() {
@@ -159,25 +160,35 @@ public class ViewFactory {
         }
     }
 
+    /**
+     * Ripristina l'ultima canzone ascoltata impostando la proprietà della canzone corrente
+     */
     public void loadLastUserSession() {
         if (model.getAuthenticatedUser() != null) {
             int lastSongId = model.getAuthenticatedUser().getLastSongId();
             if (lastSongId > 0) {
-                Song lastSong = Model.getInstance().getSongRepository().getSong(lastSongId);
+                Song lastSong = model.getSongRepository().getSong(lastSongId);
                 if (lastSong != null) {
-                    PlaybackManager.getInstance().setCurrentSong(lastSong);
-                    System.out.println("Sessione ripristinata: " + lastSong.getTitle());
+                    // Imposta la property (notifica la MediaBar senza far partire il play automatico)
+                    model.getPlaybackManager().currentSongProperty().set(lastSong);
+                    System.out.println("DEBUG ViewFactory: Sessione ripristinata per " + lastSong.getTitle());
                 }
             }
         }
     }
 
     public void logout() {
-        PlaybackManager.getInstance().stop();
+        Model.getInstance().getUserRepository().saveLastSongSession();
+        // Interrompe l'audio
+        model.getPlaybackManager().stop();
 
+        // Pulisce la sessione utente
+        model.setAuthenticatedUser(null);
+
+        // Chiude e resetta lo stage e il mainView
         if (this.stage != null) {
             this.stage.close();
-            this.stage = null; // Resetta lo stage per ricrearne uno pulito al login
+            this.stage = null;
         }
 
         this.mainView = null;

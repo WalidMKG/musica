@@ -7,7 +7,7 @@
     import javafx.scene.control.MenuButton;
     import javafx.scene.control.MenuItem;
     import javafx.scene.text.Text;
-    import univr.musica.controller.User.SongPageController;
+    import univr.musica.controller.SongPageController;
     import univr.musica.model.Comments;
     import univr.musica.model.Model;
     import univr.musica.model.Song;
@@ -17,7 +17,7 @@
 
     public class AdminCommentController implements Initializable {
         private final Model model;
-        private final AdminSongPageController songPageController;
+        private final SongPageController songPageController;
 
         private Comments comment;
 
@@ -27,7 +27,7 @@
         @FXML public MenuItem reply_item;
         @FXML public MenuItem delete_item;
 
-        public AdminCommentController(Model model, AdminSongPageController songPageController) {
+        public AdminCommentController(Model model, SongPageController songPageController) {
             this.model = model;
             this.songPageController = songPageController;
         }

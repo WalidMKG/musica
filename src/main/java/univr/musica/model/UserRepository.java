@@ -123,6 +123,23 @@ public class UserRepository {
         // refreshUserCache();
     }
 
+    public void saveLastSongSession() {
+        User currentUser = model.getAuthenticatedUser();
+
+        if (currentUser != null) {
+            Song currentSong = PlaybackManager.getInstance().getCurrentSong();
+
+            if (currentSong != null) {
+                int lastSongId = currentSong.getId();
+                currentUser.setLastSongId(lastSongId);
+
+                updateLastSong(currentUser.getUsername(), lastSongId);
+
+                System.out.println("DEBUG Session: Salvata ultima canzone (ID " + lastSongId + ") per " + currentUser.getUsername());
+            }
+        }
+    }
+
 
 
 

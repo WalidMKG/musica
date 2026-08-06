@@ -10,10 +10,10 @@
     <center>
         <BorderPane fx:id="mainView">
 
-            <center><fx:include source="UserDashboard.fxml" /></center>
+            <center><fx:include source="../UserDashboard.fxml" /></center>
 
             <bottom>
-                <fx:include source="MediaBar.fxml" />
+                <fx:include source="../MediaBar.fxml" />
             </bottom>
         </BorderPane>
 

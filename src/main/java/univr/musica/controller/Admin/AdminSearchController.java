@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
+import univr.musica.controller.SongPageController;
 import univr.musica.model.CommentsRepository;
 import univr.musica.model.Model;
 import univr.musica.model.Song;
@@ -37,13 +38,13 @@ public class AdminSearchController implements Initializable {
         search_results.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/Admin/AdminSongPage.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/SongPage.fxml"));
 
-                    loader.setControllerFactory(clazz -> new AdminSongPageController(model));
+                    loader.setControllerFactory(clazz -> new SongPageController(model));
 
                     Parent overlayNode = loader.load();
 
-                    AdminSongPageController detailController = loader.getController();
+                    SongPageController detailController = loader.getController();
                     detailController.setSongData(newVal);
 
                     SearchUI.getChildren().clear();

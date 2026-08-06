@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onCardClicked" prefHeight="230.0" prefWidth="180.0" styleClass="primary_color" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.AdminSongCardController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onCardClicked" prefHeight="230.0" prefWidth="180.0" styleClass="primary_color" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.AdminSongCardController">
    <children>
       <ImageView fx:id="img" fitHeight="170.0" fitWidth="180.0" pickOnBounds="true" smooth="false">
          <image>
-            <Image url="@../../data/img/1.jpg" />
+            <Image url="@../data/img/1.jpg" />
          </image>
       </ImageView>
       <Label fx:id="songName" prefHeight="20.0" prefWidth="229.0" text="No surprises" textFill="WHITE">
@@ -24,4 +25,7 @@
          </font>
       </Label>
    </children>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
 </VBox>

@@ -2,13 +2,13 @@
    VARIABLES & GLOBAL ROOT
    ========================================== */
 .root {
-    -fx-primary-color: #1DB954;
-    -fx-primary-hover: #1ED760;
-    -fx-bg-dark: #121212;
-    -fx-surface-color: #181818;
-    -fx-surface-card: #282828;
-    -fx-text-color: #FFFFFF;
-    -fx-text-secondary: #B3B3B3;
+    -fx-primary-color: #2563EB;        /* Blu Elettrico */
+    -fx-primary-hover: #3B82F6;        /* Blu Lighter per Hover */
+    -fx-bg-dark: #0A0D14;              /* Nero pece profondo */
+    -fx-surface-color: #161B26;        /* Superficie scura con sfumatura blu */
+    -fx-surface-card: #1F2633;         /* Card / Modali / Tabelle */
+    -fx-text-color: #F0F6FC;           /* Bianco freddo */
+    -fx-text-secondary: #8B949E;      /* Grigio freddo */
     -fx-background-color: -fx-bg-dark;
 }
 
@@ -18,10 +18,10 @@
 .text-field,
 .password-field,
 .text-area {
-    -fx-background-color: #2A2A2A;
-    -fx-text-fill: #FFFFFF;
-    -fx-prompt-text-fill: #727272;
-    -fx-border-color: transparent;
+    -fx-background-color: -fx-surface-color;
+    -fx-text-fill: -fx-text-color;
+    -fx-prompt-text-fill: -fx-text-secondary;
+    -fx-border-color: #2A3447;
     -fx-border-radius: 6px;
     -fx-background-radius: 6px;
     -fx-padding: 8px 12px;
@@ -31,12 +31,11 @@
 .text-field:focused,
 .password-field:focused,
 .text-area:focused {
-    -fx-background-color: #333333;
-    -fx-border-color: #1DB954;
+    -fx-background-color: -fx-surface-card;
+    -fx-border-color: -fx-primary-color;
     -fx-border-width: 1px;
 }
 
-/* Fix per lo sfondo interno della TextArea */
 .text-area .content {
     -fx-background-color: transparent;
 }
@@ -44,9 +43,8 @@
 /* ==========================================
    BUTTONS
    ========================================== */
-/* Bottoni Primari (Verdi) */
 .button {
-    -fx-background-color: #1DB954;
+    -fx-background-color: -fx-primary-color;
     -fx-text-fill: #FFFFFF;
     -fx-font-weight: bold;
     -fx-background-radius: 20px;
@@ -56,19 +54,19 @@
 }
 
 .button:hover {
-    -fx-background-color: #1ED760;
+    -fx-background-color: -fx-primary-hover;
     -fx-scale-x: 1.02;
     -fx-scale-y: 1.02;
 }
 
 .button:pressed {
-    -fx-background-color: #179843;
+    -fx-background-color: -fx-primary-color;
 }
 
-/* Bottoni Sidebar / Traspareti */
+/* Bottoni Sidebar / Trasparenti */
 .sidebar-btn {
     -fx-background-color: transparent;
-    -fx-text-fill: #B3B3B3;
+    -fx-text-fill: -fx-text-secondary;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-padding: 10px 15px;
@@ -76,7 +74,7 @@
 }
 
 .sidebar-btn:hover {
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: -fx-text-color;
 }
 
 /* ==========================================
@@ -89,19 +87,18 @@
     -fx-border-color: transparent;
 }
 
-/* Personalizzazione barra di scorrimento */
 .scroll-bar:vertical,
 .scroll-bar:horizontal {
     -fx-background-color: transparent;
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #5A5A5A;
+    -fx-background-color: #2A3447;
     -fx-background-radius: 5px;
 }
 
 .scroll-bar .thumb:hover {
-    -fx-background-color: #888888;
+    -fx-background-color: #3B82F6;
 }
 
 .scroll-bar .track,
@@ -112,25 +109,25 @@
 }
 
 /* ==========================================
-   MENU BUTTON & CONTEXT MENU (Tre Punti)
+   MENU BUTTON & CONTEXT MENU
    ========================================== */
 .menu-button,
 .menu-button .button,
 .menu-button .arrow-button {
     -fx-background-color: transparent !important;
     -fx-border-color: transparent !important;
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: -fx-text-color;
 }
 
 .menu-button .arrow {
-    -fx-background-color: transparent; /* Nasconde la freccetta predefinita */
+    -fx-background-color: transparent;
 }
 
 .context-menu {
-    -fx-background-color: #282828;
+    -fx-background-color: -fx-surface-card;
     -fx-background-radius: 6px;
     -fx-padding: 5px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 12, 0, 0, 4);
 }
 
 .menu-item {
@@ -139,12 +136,12 @@
 }
 
 .menu-item .label {
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: -fx-text-color;
 }
 
 .menu-item:focused,
 .menu-item:hover {
-    -fx-background-color: #3E3E3E;
+    -fx-background-color: -fx-primary-color;
     -fx-background-radius: 4px;
 }
 
@@ -152,49 +149,176 @@
    LABELS & HEADINGS
    ========================================== */
 .label {
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: -fx-text-color;
 }
 
 .label-secondary {
-    -fx-text-fill: #B3B3B3;
+    -fx-text-fill: -fx-text-secondary;
 }
 
-/* --- CLASSI PER COMMENTI (Aggiungi queste) --- */
+/* --- CLASSI PER COMMENTI --- */
 .label-author {
-    -fx-text-fill: #1DB954 !important;
+    -fx-text-fill: -fx-primary-hover !important; /* Ex verde -> ora blu luminoso */
     -fx-font-weight: bold;
 }
 
 .label-user {
-    -fx-text-fill: #FFFFFF !important;
-}
-
-.label-secondary {
-    -fx-text-fill: #B3B3B3;
+    -fx-text-fill: -fx-text-color !important;
 }
 
 /* ==========================================
-   LIST VIEW & LIST CELL (Risultati Ricerca)
+   LIST VIEW & LIST CELL
    ========================================== */
 .list-view {
-    -fx-background-color: #181818;
+    -fx-background-color: -fx-surface-color;
     -fx-background-radius: 8px;
     -fx-border-color: transparent;
 }
 
 .list-cell {
     -fx-background-color: transparent;
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: -fx-text-color;
     -fx-padding: 10px;
     -fx-background-radius: 6px;
 }
 
 .list-cell:filled:hover {
-    -fx-background-color: #2A2A2A;
+    -fx-background-color: -fx-surface-card;
     -fx-cursor: hand;
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #333333;
-    -fx-text-fill: #1DB954;
+    -fx-background-color: rgba(37, 99, 235, 0.2); /* Sfondo blu trasparente */
+    -fx-text-fill: #60A5FA;                      /* Azzurro brillante */
+}
+
+/* ==========================================
+   GESTIONE LISTA UTENTI (Sezione Users Admin)
+   ========================================== */
+.user-item-card {
+    -fx-background-color: -fx-surface-color;
+    -fx-background-radius: 8px;
+    -fx-padding: 12px 16px;
+    -fx-spacing: 15px;
+    -fx-alignment: center-left;
+}
+
+.user-item-card:hover {
+    -fx-background-color: -fx-surface-card;
+}
+
+.user-username {
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-text-fill: -fx-text-color;
+}
+
+.role-badge {
+    -fx-background-color: #2A3447;
+    -fx-text-fill: -fx-text-secondary;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3px 8px;
+    -fx-background-radius: 12px;
+}
+
+.role-badge-admin {
+    -fx-background-color: rgba(37, 99, 235, 0.25);
+    -fx-text-fill: #60A5FA;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 3px 8px;
+    -fx-background-radius: 12px;
+}
+
+/* Pulsanti Azione Utente */
+.button-approve {
+    -fx-background-color: -fx-primary-color;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-background-radius: 15px;
+    -fx-padding: 6px 14px;
+    -fx-cursor: hand;
+}
+
+.button-approve:hover {
+    -fx-background-color: -fx-primary-hover;
+}
+
+.button-reject {
+    -fx-background-color: transparent;
+    -fx-text-fill: #EF4444;
+    -fx-border-color: #EF4444;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 13px;
+    -fx-cursor: hand;
+}
+
+.button-reject:hover {
+    -fx-background-color: #EF4444;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* ==========================================
+   TABLE VIEW
+   ========================================== */
+.table-view {
+    -fx-background-color: -fx-surface-color;
+    -fx-base: -fx-surface-color;
+    -fx-control-inner-background: -fx-surface-color;
+    -fx-background-radius: 8px;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: -fx-surface-card;
+    -fx-background-radius: 8px 8px 0 0;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-size: 40px;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: -fx-text-secondary;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER-LEFT;
+}
+
+.table-row-cell {
+    -fx-background-color: -fx-surface-color;
+    -fx-border-color: transparent;
+    -fx-text-fill: -fx-text-color;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #121721; /* Leggerissima alternanza scura */
+}
+
+.table-row-cell:hover {
+    -fx-background-color: -fx-surface-card;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(37, 99, 235, 0.3);
+}
+
+.table-cell {
+    -fx-text-fill: -fx-text-color;
+    -fx-alignment: CENTER-LEFT;
+    -fx-border-color: transparent;
+}
+
+.table-view .table-cell {
+    -fx-border-color: transparent;
 }

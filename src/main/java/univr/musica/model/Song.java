@@ -83,7 +83,6 @@ public class Song {
         return id;
     }
 
-    // <-- NUOVI METODI GETTER E SETTER PER UPLOADER -->
     public String getUploader() {
         return uploader;
     }

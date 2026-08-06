@@ -31,7 +31,7 @@ public class Model {
         this.songRepository = new SongRepository(this, dbManager);
         this.commentsRepository = new CommentsRepository(this, dbManager);
 
-        this.playbackManager = new PlaybackManager();
+        this.playbackManager = PlaybackManager.getInstance();
     }
 
     /**
@@ -75,6 +75,10 @@ public class Model {
             model = new Model();
         }
         return model;
+    }
+
+    public boolean isCurrentUserAdmin() {
+        return authenticatedUser != null && authenticatedUser.isAdmin();
     }
 
 }

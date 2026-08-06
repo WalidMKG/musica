@@ -13,7 +13,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import univr.musica.controller.User.AdminSongCardController;
-import univr.musica.controller.User.SongCardController;
 import univr.musica.model.Model;
 import univr.musica.model.Song;
 
@@ -52,7 +51,7 @@ public class AdminHomeController implements Initializable {
 
         for (Song song : songList) {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/User/song.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/univr/musica/fxml/song.fxml"));
                 fxmlLoader.setControllerFactory(clazz -> new AdminSongCardController(model));
                 Node card = fxmlLoader.load();
 
