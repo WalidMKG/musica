@@ -9,7 +9,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="homeStack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="primary_color"  xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.HomeController">
+<StackPane fx:id="homeStack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+           prefHeight="800.0" prefWidth="1200.0"   xmlns="http://javafx.com/javafx/26"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.HomeController">
     <children>
         <AnchorPane>
            <children>

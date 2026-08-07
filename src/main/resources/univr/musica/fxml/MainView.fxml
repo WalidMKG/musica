@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            maxHeight="860" maxWidth="1480"
+            fx:controller="univr.musica.controller.ViewController">
+    <left>
+        <fx:include source="SideBar.fxml" />
+    </left>
+
+    <center>
+        <!-- Lasciamo il centro vuoto: verrà gestito dinamicamente da ViewFactory -->
+        <BorderPane fx:id="mainView">
+            <bottom>
+                <fx:include source="MediaBar.fxml" />
+            </bottom>
+        </BorderPane>
+    </center>
+</BorderPane>

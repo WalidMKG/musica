@@ -15,8 +15,6 @@ module univr.musica {
     exports univr.musica.view;
     exports univr.musica.controller.Admin;
     opens univr.musica.controller.Admin to javafx.fxml;
-    exports univr.musica.controller.User;
-    opens univr.musica.controller.User to javafx.fxml;
     exports univr.musica.controller;
     opens univr.musica.controller to javafx.fxml;
 }

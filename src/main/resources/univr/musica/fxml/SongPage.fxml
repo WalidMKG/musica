@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -22,8 +23,20 @@
                     <image>
                         <Image url="@../img/ic_back_arrow.png" />
                     </image>
+               <HBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </ImageView>
-                <Label alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#close_popup" styleClass="label-secondary" text="Indietro" translateY="5.0" />
+                <Label alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#close_popup" prefHeight="20.0" styleClass="label-secondary" text="Back" translateY="5.0">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Label>
             </children>
         </HBox>
 

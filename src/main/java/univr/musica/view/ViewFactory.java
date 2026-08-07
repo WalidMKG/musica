@@ -7,17 +7,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import univr.musica.config.AppConfig;
 import univr.musica.model.Model;
-import univr.musica.model.PlaybackManager;
 import univr.musica.model.Song;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-/**
- * Classe ViewFactory.
- * Gestisce la creazione delle scene, il passaggio tra le schermate e l'applicazione dello stile globale.
- */
 public class ViewFactory {
     private final Model model;
     private BorderPane mainView;
@@ -27,17 +21,12 @@ public class ViewFactory {
         this.model = model;
     }
 
-    /**
-     * Applica il CSS globale a una scena JavaFX
-     */
     private void applyGlobalStyle(Scene scene) {
         if (scene != null) {
             URL cssUrl = getClass().getResource("/univr/musica/css/global.css");
-
             if (cssUrl == null) {
                 cssUrl = getClass().getResource("/univr.musica/css/global.css");
             }
-
             if (cssUrl != null) {
                 scene.getStylesheets().add(cssUrl.toExternalForm());
             } else {
@@ -46,9 +35,6 @@ public class ViewFactory {
         }
     }
 
-    /**
-     * Carica una scena da FXML applicandovi il controller factory ed il CSS globale.
-     */
     private Scene loadScene(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -76,16 +62,10 @@ public class ViewFactory {
         }
     }
 
-    /**
-     * Setta la mainView centrale
-     */
     public void setMainView(BorderPane mainView) {
         this.mainView = mainView;
     }
 
-    /**
-     * Aggiorna il centro della mainView con un nuovo FXML ricevuto
-     */
     public void updateMainView(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -124,6 +104,8 @@ public class ViewFactory {
         stage.setScene(scene);
         stage.setTitle(AppConfig.APP_TITLE);
         stage.setResizable(false);
+        stage.sizeToScene();
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -135,41 +117,35 @@ public class ViewFactory {
         stage.setScene(scene);
         stage.setTitle("Registrazione");
         stage.setResizable(false);
+        stage.sizeToScene();
+        stage.centerOnScreen();
         stage.show();
     }
 
+    /**
+     * Unica finestra principale per tutti gli utenti (Admin e User base).
+     */
     public void showMainWindow() {
         loadLastUserSession();
-        Scene scene = loadScene("/univr/musica/fxml/User/UserView.fxml");
+        Scene scene = loadScene("/univr/musica/fxml/MainView.fxml");
         if (stage != null) {
             stage.setScene(scene);
             stage.setTitle(AppConfig.APP_TITLE);
-            stage.setResizable(true);
+            stage.setResizable(false);
+            stage.sizeToScene();
             stage.centerOnScreen();
+            if (!stage.isShowing()) {
+                stage.show();
+            }
         }
     }
 
-    public void showAdminWindow() {
-        loadLastUserSession();
-        Scene scene = loadScene("/univr/musica/fxml/Admin/AdminView.fxml");
-        if (stage != null) {
-            stage.setScene(scene);
-            stage.setTitle(AppConfig.APP_TITLE);
-            stage.setResizable(true);
-            stage.centerOnScreen();
-        }
-    }
-
-    /**
-     * Ripristina l'ultima canzone ascoltata impostando la proprietà della canzone corrente
-     */
     public void loadLastUserSession() {
         if (model.getAuthenticatedUser() != null) {
             int lastSongId = model.getAuthenticatedUser().getLastSongId();
             if (lastSongId > 0) {
                 Song lastSong = model.getSongRepository().getSong(lastSongId);
                 if (lastSong != null) {
-                    // Imposta la property (notifica la MediaBar senza far partire il play automatico)
                     model.getPlaybackManager().currentSongProperty().set(lastSong);
                     System.out.println("DEBUG ViewFactory: Sessione ripristinata per " + lastSong.getTitle());
                 }
@@ -179,13 +155,9 @@ public class ViewFactory {
 
     public void logout() {
         Model.getInstance().getUserRepository().saveLastSongSession();
-        // Interrompe l'audio
         model.getPlaybackManager().stop();
-
-        // Pulisce la sessione utente
         model.setAuthenticatedUser(null);
 
-        // Chiude e resetta lo stage e il mainView
         if (this.stage != null) {
             this.stage.close();
             this.stage = null;

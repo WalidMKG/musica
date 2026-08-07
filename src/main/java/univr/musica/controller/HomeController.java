@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -31,6 +32,12 @@ public class HomeController implements Initializable {
     @FXML public StackPane homeStack;
     @FXML public GridPane songGrid;
 
+    @FXML public HBox upload_btn;
+    @FXML public HBox logout_btn;
+    @FXML public HBox go_to_users;
+    @FXML public HBox go_to_search;
+    @FXML public HBox home_icon;
+
     private ObservableList<Song> songList = FXCollections.observableArrayList();
 
     public HomeController(Model model) {
@@ -41,6 +48,11 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Carico la home...");
         loadMediaFromDatabase();
+
+        if (songGrid == null) {
+            System.err.println("ERRORE: songGrid è null! Verifica che l'fx:id='songGrid' sia presente nel file FXML associato a HomeController.");
+            return;
+        }
 
         int column = 0;
         int row = 1;
@@ -55,7 +67,10 @@ public class HomeController implements Initializable {
 
                 SongCardController cardController = fxmlLoader.getController();
                 cardController.setData(song);
-                cardController.setParentContainer(homeStack);
+
+                if (homeStack != null) {
+                    cardController.setParentContainer(homeStack);
+                }
 
                 if (column == 5) {
                     column = 0;
@@ -74,5 +89,30 @@ public class HomeController implements Initializable {
     private void loadMediaFromDatabase() {
         songList.clear();
         songList.addAll(model.getSongRepository().getLatestSongs(10));
+    }
+
+    @FXML
+    public void go_home(MouseEvent mouseEvent) {
+        model.getViewFactory().updateMainView("/univr/musica/fxml/HomeView.fxml");
+    }
+
+    @FXML
+    public void go_to_search(MouseEvent mouseEvent) {
+        model.getViewFactory().updateMainView("/univr/musica/fxml/SearchPage.fxml");
+    }
+
+    @FXML
+    public void go_to_users(MouseEvent mouseEvent) {
+        model.getViewFactory().updateMainView("/univr/musica/fxml/UsersxView.fxml");
+    }
+
+    @FXML
+    public void logout_request(MouseEvent mouseEvent) {
+        model.getViewFactory().logout();
+    }
+
+    @FXML
+    public void open_load_page(MouseEvent mouseEvent) {
+        model.getViewFactory().updateMainView("/univr/musica/fxml/LoadPage.fxml");
     }
 }

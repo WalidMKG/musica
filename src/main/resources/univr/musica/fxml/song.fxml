@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onCardClicked" prefHeight="230.0" prefWidth="180.0" styleClass="primary_color" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.User.AdminSongCardController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onCardClicked" prefHeight="230.0" prefWidth="180.0" styleClass="primary_color"  xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="univr.musica.controller.SongCardController">
    <children>
       <ImageView fx:id="img" fitHeight="170.0" fitWidth="180.0" pickOnBounds="true" smooth="false">
          <image>

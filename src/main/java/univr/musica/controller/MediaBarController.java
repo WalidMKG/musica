@@ -31,14 +31,17 @@ public class MediaBarController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        currentSongTitle.setVisible(false);
+        currentArtName.setVisible(false);
+        currentSongCover.setVisible(false);
         PlaybackManager playbackManager = model.getPlaybackManager();
 
-        // 1. Ascolta i cambiamenti della canzone corrente (aggiorna la UI indipendentemente da se sta suonando o no)
+        // Ascolta i cambiamenti della canzone corrente (aggiorna la UI indipendentemente da se sta suonando o no)
         playbackManager.currentSongProperty().addListener((obs, oldSong, newSong) -> {
             updateSongUI(newSong);
         });
 
-        // 2. Ascolta lo stato del player per cambiare l'icona Play/Pause
+        // Ascolta lo stato del player per cambiare l'icona Play/Pause
         playbackManager.playerStatusProperty().addListener((obs, oldStatus, newStatus) -> {
             if (newStatus == MediaPlayer.Status.PLAYING) {
                 setPlayIcon("/univr/musica/img/ic_pause.png");
@@ -47,7 +50,7 @@ public class MediaBarController implements Initializable {
             }
         });
 
-        // 3. Caricamento iniziale dell'interfaccia se c'è già una canzone presente (es. sessione ripristinata)
+        // Caricamento iniziale dell'interfaccia se c'è già una canzone presente (es. sessione ripristinata)
         Song initialSong = playbackManager.getCurrentSong();
         if (initialSong != null) {
             updateSongUI(initialSong);
@@ -59,6 +62,9 @@ public class MediaBarController implements Initializable {
      */
     private void updateSongUI(Song song) {
         if (song != null) {
+            currentSongTitle.setVisible(true);
+            currentArtName.setVisible(true);
+            currentSongCover.setVisible(true);
             if (currentSongTitle != null) currentSongTitle.setText(song.getTitle());
             if (currentArtName != null) currentArtName.setText(song.getAuthor());
 

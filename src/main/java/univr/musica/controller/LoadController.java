@@ -175,6 +175,8 @@ public class LoadController implements Initializable {
             loaded_cover.setImage(new Image(stream));
         }
 
+        load_song_btn.setDisable(true);
+
         tempMp3File = null;
         tempPdfFile = null;
         tempCoverFile = null;

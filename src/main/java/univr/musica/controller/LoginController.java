@@ -17,74 +17,51 @@ import java.util.ResourceBundle;
 /**
  * Controller della login view
  */
-
-
 public class LoginController implements Initializable {
     private final Model model;
-    public Button login_btn;
-    public TextField username_txt;
-    public ChoiceBox<String> login_choice;
-    public PasswordField pwd_fld;
-    public Button register_btn;
-    public Label login_lbl;
-    @FXML
-    private Label welcomeText;
+
+    @FXML public Button login_btn;
+    @FXML public TextField username_txt;
+    @FXML public ChoiceBox<String> login_choice;
+    @FXML public PasswordField pwd_fld;
+    @FXML public Button register_btn;
+    @FXML public Label login_lbl;
+    @FXML private Label welcomeText;
+
     private UserRepository userRepository;
 
-
-    /**
-     * inizializza il controller con il model singleton
-     * @param model
-     */
     public LoginController(Model model) {
         this.model = model;
     }
 
-    /**
-     * Inizializza caricando la userRep e la choiceBox
-     * @param url
-     * @param resourceBundle
-     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userRepository = Model.getInstance().getUserRepository();
-        //login_choice.getItems().addAll("Admin","User");
-        //login_choice.setValue("User");
     }
 
-
-    /**
-     * Metodo chiamato dal click del login button
-     * @param actionEvent
-     */
     public void login(ActionEvent actionEvent) {
-        String username = username_txt.getText();
+        String username = username_txt.getText().trim();
         String password = pwd_fld.getText();
 
-        //Se al login i campi sono vuoti da errore
-
-        if(username.isEmpty() || password.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty()) {
             login_lbl.setVisible(true);
             login_lbl.setText("Inserire username e password validi");
             login_lbl.setTextFill(Color.RED);
             return;
         }
+
         User user = userRepository.getUser(username);
-
         checkLogin(password, user);
-
     }
 
-
     /**
-     * Metodo che controlla la validita del login,
-     * gestisce : controllo password, controllo attivazione user
-     * @param password
-     * @param user
+     * Metodo che controlla la validità del login.
+     * Gestisce: controllo password, controllo attivazione account e reindirizzamento
      */
     private void checkLogin(String password, User user) {
         if (user != null && user.checkPassword(password)) {
 
+            // Se non è admin ed è disattivato/in attesa
             if (!user.isAdmin() && !user.getStatus()) {
                 login_lbl.setVisible(true);
                 login_lbl.setText("Account in attesa di approvazione admin.");
@@ -92,8 +69,10 @@ public class LoginController implements Initializable {
                 return;
             }
 
+            // Imposta l'utente autenticato nel Model
             model.setAuthenticatedUser(user);
 
+            // Ripristina l'ultima sessione di riproduzione se presente
             int lastId = user.getLastSongId();
             if (lastId > 0) {
                 Song s = model.getSongRepository().getSong(lastId);
@@ -102,25 +81,18 @@ public class LoginController implements Initializable {
                     System.out.println("DEBUG: Sessione ripristinata per " + s.getTitle());
                 }
             }
-            if (user.isAdmin()) {
-                model.getViewFactory().showAdminWindow();
-            } else {
-                model.getViewFactory().showMainWindow();
-            }
+
+
+            model.getViewFactory().showMainWindow();
+
         } else {
             login_lbl.setVisible(true);
-            login_lbl.setText("Login Error");
+            login_lbl.setText("Login Error: Credenziali errate");
             login_lbl.setTextFill(Color.DARKRED);
         }
-        System.out.println("ciaone");
     }
 
-    /**
-     * Metodo che rimanda alla registrazione
-     * @param actionEvent
-     */
     public void register(ActionEvent actionEvent) {
-        Stage currentStage = (Stage) register_btn.getScene().getWindow();
         model.getViewFactory().showRegisterWindow();
     }
 }
