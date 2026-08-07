@@ -35,7 +35,8 @@ public class Main extends Application {
      * @throws Exception
      */
     @Override
-    public void stop() throws Exception {
+    public void stop() throws Exception
+    {
 
 
         Model.getInstance().getUserRepository().saveLastSongSession();
