@@ -9,7 +9,7 @@ import univr.musica.config.AppConfig;
 import java.io.File;
 
 /**
- * Singleton che gestisce la riproduzione audio globale dell'applicazione.
+ * Singleton che gestisce la riproduzione audio
  */
 public class PlaybackManager {
     private static PlaybackManager instance;
@@ -18,7 +18,6 @@ public class PlaybackManager {
     private final ObjectProperty<Song> currentSong = new SimpleObjectProperty<>();
     private final ObjectProperty<MediaPlayer.Status> playerStatus = new SimpleObjectProperty<>();
 
-    // 🔒 Costruttore PRIVATO: impedisce la creazione di istanze duplicate
     private PlaybackManager() {}
 
     public static PlaybackManager getInstance() {
@@ -46,7 +45,7 @@ public class PlaybackManager {
     public void play(Song song) {
         if (song == null) return;
 
-        // 1. Aggiorna SUBITO la canzone corrente
+        // Aggiorna la canzone corrente
         this.currentSong.set(song);
 
         try {
@@ -58,13 +57,13 @@ public class PlaybackManager {
                 return;
             }
 
-            // 2. Libera il vecchio MediaPlayer se esisteva
+            // Libera il vecchio MediaPlayer se esisteva
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
                 mediaPlayer.dispose();
             }
 
-            // 3. Inizializza il nuovo player
+            // Inizializza il nuovo player
             String mediaUri = file.toURI().toString();
             mediaPlayer = new MediaPlayer(new Media(mediaUri));
 
@@ -82,7 +81,7 @@ public class PlaybackManager {
     }
 
     /**
-     * Alterna tra Play e Pause
+     * Play e Pause
      */
     public void togglePlayPause() {
         if (mediaPlayer == null) return;

@@ -11,11 +11,11 @@ import static javafx.application.Application.launch;
 /**
  * Main dell'applicazione
  */
-
+//COmmento
 public class Main extends Application {
 
     /**
-     * Start del main, ottiene l'istanza del modello e mostra la scena del login
+     * Start del main
      * @param stage
      * @throws IOException
      */

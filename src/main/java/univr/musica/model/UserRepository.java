@@ -101,7 +101,7 @@ public class UserRepository {
     }
 
     public ObservableList<User> getPendingUsers() {
-        // DEVE essere una nuova lista ad ogni chiamata
+        // deve essere una nuova lista ad ogni chiamata
         ObservableList<User> list = FXCollections.observableArrayList();
         for (User u : userCache.values()) {
             if (!u.getStatus() && !u.isAdmin()) {

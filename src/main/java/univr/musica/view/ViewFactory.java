@@ -123,7 +123,7 @@ public class ViewFactory {
     }
 
     /**
-     * Unica finestra principale per tutti gli utenti (Admin e User base).
+     * Unica finestra principale per tutti gli utenti
      */
     public void showMainWindow() {
         loadLastUserSession();

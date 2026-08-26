@@ -32,7 +32,7 @@ public class RegistrationController {
     }
 
     /**
-     * Controlla la validità del sign-in, l'user deve essere non preso e la password di conferma deve coincidere, genera errori
+     * Controlla la validità del sign-in, l'user deve essere non preso e la password di conferma deve concidere, genera errori
      * mostrati aall'utente in caso
      * @param actionEvent
      */

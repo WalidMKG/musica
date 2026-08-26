@@ -36,12 +36,12 @@ public class MediaBarController implements Initializable {
         currentSongCover.setVisible(false);
         PlaybackManager playbackManager = model.getPlaybackManager();
 
-        // Ascolta i cambiamenti della canzone corrente (aggiorna la UI indipendentemente da se sta suonando o no)
+        // Ascolta i cambiamenti della canzone corrente
         playbackManager.currentSongProperty().addListener((obs, oldSong, newSong) -> {
             updateSongUI(newSong);
         });
 
-        // Ascolta lo stato del player per cambiare l'icona Play/Pause
+        // getsione icona Play/Pause
         playbackManager.playerStatusProperty().addListener((obs, oldStatus, newStatus) -> {
             if (newStatus == MediaPlayer.Status.PLAYING) {
                 setPlayIcon("/univr/musica/img/ic_pause.png");
@@ -50,7 +50,7 @@ public class MediaBarController implements Initializable {
             }
         });
 
-        // Caricamento iniziale dell'interfaccia se c'è già una canzone presente (es. sessione ripristinata)
+        // Caricamento iniziale dell'interfaccia se c'è già una canzone presente
         Song initialSong = playbackManager.getCurrentSong();
         if (initialSong != null) {
             updateSongUI(initialSong);
@@ -78,7 +78,7 @@ public class MediaBarController implements Initializable {
     }
 
     /**
-     * Helper per cambiare l'icona del pulsante Play/Pause in modo sicuro
+     * cambio icona play
      */
     private void setPlayIcon(String resourcePath) {
         if (play_music != null) {
@@ -102,7 +102,6 @@ public class MediaBarController implements Initializable {
         MediaPlayer player = playbackManager.getMediaPlayer();
         Song currentSong = playbackManager.getCurrentSong();
 
-        // Se non c'è il mediaPlayer pronto ma c'è una canzone selezionata/ripristinata, la avvia!
         if (player == null && currentSong != null) {
             playbackManager.play(currentSong);
             return;

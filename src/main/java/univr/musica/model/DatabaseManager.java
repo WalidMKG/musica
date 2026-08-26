@@ -46,7 +46,7 @@ public class DatabaseManager {
                     "last_song_id INTEGER" +
                     ")");
 
-// 2. Tabella Comments con Foreign Keys
+// Tabella Comments con Foreign Keys
             stmt.execute("CREATE TABLE IF NOT EXISTS comments (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "text TEXT NOT NULL, " +

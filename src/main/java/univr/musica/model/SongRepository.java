@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Repository che gestisce la tabella delle canzoni nel Database e la persistenza dei File su Disco.
+ * Repository per gestire le canzoni su database e il salvataggio dei file su disco
  */
 public class SongRepository {
     private final DatabaseManager dbManager;
@@ -23,7 +23,7 @@ public class SongRepository {
     }
 
     /**
-     * Aggiornamento della cache delle canzoni
+     * Ricarica la cache locale con tutte le canzoni presenti nel db
      */
     private void refreshSongCache() {
         songCache.clear();
@@ -48,7 +48,7 @@ public class SongRepository {
     }
 
     /**
-     * Helper per istanziare l'oggetto Song impostando anche l'uploader
+     * Crea l'oggetto Song impostando anche chi l'ha caricato
      */
     private Song createSongInstance(int id, String title, String author, String genre, String year, String uploader) {
         Song song = new Song(id, title, author, genre, year);
@@ -57,23 +57,23 @@ public class SongRepository {
     }
 
     /**
-     * Partendo dall'id ritorna la canzone mappata nella cache
+     * Prende la canzone dalla cache tramite id
      */
     public Song getSong(int id) {
         return songCache.get(id);
     }
 
     /**
-     * Salva la canzone nel DB e copia fisicamente i file associati (MP3, PDF, Copertina) nelle relative cartelle.
+     * Salva la canzone nel db e copia mp3, pdf e copertina nelle cartelle
      */
     public boolean saveSongComplete(Song song, String uploaderUsername, File mp3File, File pdfFile, File coverFile) {
-        // 0. Controllo Bloccante: Il file MP3 è OBBLIGATORIO
+        // mp3 obbligatorio, se non c'e' blocca tutto
         if (mp3File == null || !mp3File.exists()) {
             System.err.println("ERRORE: Impossibile salvare la canzone senza un file MP3!");
             return false;
         }
 
-        // 1. Inserimento nel Database
+        // Inserimento a DB
         boolean dbSuccess = saveSong(song, uploaderUsername);
 
         if (!dbSuccess) {
@@ -81,20 +81,21 @@ public class SongRepository {
             return false;
         }
 
-        // 2. Recupera l'ID univoco generato dal DB
+        // Prendo l'id generato da sqlite
         int realId = getLastInsertedId();
         String idStr = String.valueOf(realId);
 
-        // 3. Gestione salvataggio fisico dei file
+        // Copio i file fisici rinominandoli con l'id
         try {
-            // Salva l'MP3 (sicuro che non sia null grazie al check iniziale)
+            // Salvo l'mp3
             saveFileLocally(mp3File, "mp3", idStr);
 
+            // Salvo il pdf se l'ha messo
             if (pdfFile != null) {
                 saveFileLocally(pdfFile, "pdf", idStr);
             }
 
-            // Se l'utente non seleziona una copertina, viene usata quella di default
+            // Se non c'e' la copertina metto quella di default
             if (coverFile == null) {
                 File defaultFile = new File(AppConfig.DATA_DIR + "/jpg/default.jpg");
                 if (defaultFile.exists()) {
@@ -115,7 +116,7 @@ public class SongRepository {
     }
 
     /**
-     * Salva la riga nella tabella DB e aggiorna la cache locale.
+     * Esegue la query di insert e aggiorna la cache
      */
     public boolean saveSong(Song song, String uploaderUsername) {
         int rowsAffected = dbManager.executeUpdate(
@@ -144,7 +145,7 @@ public class SongRepository {
     }
 
     /**
-     * Helper privato per copiare un file nella relativa sottocartella (mp3, pdf, jpg)
+     * Copia il file selezionato dentro data/(mp3|pdf|jpg)
      */
     private String saveFileLocally(File selectedFile, String type, String name) {
         try {
@@ -167,7 +168,7 @@ public class SongRepository {
     }
 
     /**
-     * Cancella la canzone dal DB, dalla cache e rimuove i file fisici (.mp3, .jpg, .pdf) da disco.
+     * Elimina la canzone da db, cache e cancella i file collegati su disco
      */
     public void deleteSong(int songID) {
         Song songToDelete = getSong(songID);
@@ -179,14 +180,14 @@ public class SongRepository {
 
         String title = songToDelete.getTitle();
 
-        // Elimina dal Database
+        // Elimino la riga dal DB
         int success = dbManager.executeUpdate("DELETE FROM songs WHERE id = ?", songID);
 
         if (success > 0) {
-            // Rimuovi dalla cache
+            // Rimuovo da cache
             songCache.remove(songID);
 
-            // Rimuovi i file fisici su disco
+            // Cancello i file fisici
             deleteSongFiles(songID);
 
             System.out.println("DEBUG: Song '" + title + "' (ID: " + songID + ") rimossa con successo dal DB, dalla cache e da Disco.");
@@ -196,7 +197,7 @@ public class SongRepository {
     }
 
     /**
-     * Helper privato per eliminare i file fisici su disco legati a un'ID canzone
+     * Elimina mp3, jpg e pdf associati all'id della canzone
      */
     private void deleteSongFiles(int songId) {
         String[] extensions = {".mp3", ".jpg", ".pdf"};
@@ -215,7 +216,7 @@ public class SongRepository {
     }
 
     /**
-     * Ritorna l'id dell'ultima canzone inserita
+     * Prende l'ultimo id inserito nella tabella
      */
     public int getLastInsertedId() {
         return dbManager.executeQuery("SELECT id FROM songs ORDER BY id DESC LIMIT 1", rs -> {
@@ -226,6 +227,9 @@ public class SongRepository {
         });
     }
 
+    /**
+     * Ritorna la lista di tutte le canzoni nel db
+     */
     public List<Song> getAllSongs() {
         List<Song> songs = new ArrayList<>();
         String sql = "SELECT id, title, author, genre, year, uploader FROM songs";
@@ -248,7 +252,7 @@ public class SongRepository {
     }
 
     /**
-     * Ritorna le ultime n canzoni inserite, dove n = limit.
+     * Ritorna le ultime canzoni caricate in base al limite passato
      */
     public List<Song> getLatestSongs(int limit) {
         List<Song> songs = new ArrayList<>();
@@ -272,7 +276,7 @@ public class SongRepository {
     }
 
     /**
-     * Ricerca la base di dati delle canzoni a partire da searchTerm (titolo o autore).
+     * Cerca le canzoni per titolo o autore con LIKE
      */
     public List<Song> searchSongRep(String searchTerm) {
         List<Song> songs = new ArrayList<>();

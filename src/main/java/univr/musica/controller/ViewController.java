@@ -21,10 +21,10 @@ public class ViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // 1. Registra il riferimento di mainView dentro la ViewFactory
+        // Registra il mainView dentro la ViewFactory
         model.getViewFactory().setMainView(mainView);
 
-        // 2. Carica la vista iniziale di default (es. la Home)
+        //  Carica la vista iniziale di default
         model.getViewFactory().updateMainView("/univr/musica/fxml/HomeView.fxml");
     }
 }

@@ -101,7 +101,7 @@ public class LoadController implements Initializable {
     public void load_song(ActionEvent actionEvent) {
         System.out.println("Tentativo di caricamento canzone...");
 
-        // 1. Validazione Campi Obbligatori (Titolo e Autore)
+        // Validazione Campi Obbligatori (Titolo e Autore)
         String title = load_song_title.getText() != null ? load_song_title.getText().trim() : "";
         String author = load_song_Art.getText() != null ? load_song_Art.getText().trim() : "";
         String genre = load_song_Genre.getText() != null ? load_song_Genre.getText().trim() : "";
@@ -112,13 +112,13 @@ public class LoadController implements Initializable {
             return;
         }
 
-        // 2. Validation Bloccante File MP3
+        // Validation File MP3
         if (tempMp3File == null || !tempMp3File.exists()) {
             showError("Seleziona prima un file MP3!");
             return;
         }
 
-        // 3. Parsing Anno Sicuro
+        //  Parsing Anno
         String yearStr;
         try {
             int yearValue = Integer.parseInt(yearInput);
@@ -131,12 +131,12 @@ public class LoadController implements Initializable {
         try {
             Song song = new Song(title, author, genre.isEmpty() ? "Sconosciuto" : genre, yearStr);
 
-            // 4. Username dell'Uploader
+            // Username dell'Uploader
             String uploaderUsername = (model != null && model.getAuthenticatedUser() != null)
                     ? model.getAuthenticatedUser().getUsername()
                     : "Unknown";
 
-            // 5. Delegamento Completo al SongRepository (DB + File System)
+            // passo al SongRepository (DB + File System)
             boolean success = model.getSongRepository().saveSongComplete(
                     song, uploaderUsername, tempMp3File, tempPdfFile, tempCoverFile
             );
